@@ -1,0 +1,35 @@
+/* Vendor */
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/inter.css);
+
+/* Page */
+@import url(../blocks/page/page.css);
+
+/* Header */
+@import url(../blocks/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+
+
+/* Profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/info/info.css);
+@import url(../blocks/title/title.css);
+@import url(../blocks/title/__icon/title__icon.css);
+@import url(../blocks/title/__name/title__name.css);
+@import url(../blocks/title/__button/title__button.css);
+@import url(../blocks/info/__job/info__job.css);
+@import url(../blocks/profile/__button/profile__button.css);
+@import url(../blocks/profile/__icon/profile__icon.css);
+
+/* Elements */
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/element/element.css);
+@import url(../blocks/text//text.css);
+@import url(../blocks/text/__label/text__label.css);
+@import url(../blocks/text/__heart/text__heart.css);
+@import url(../blocks/text/__icon/text__icon.css);
+
+/* Footer */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);

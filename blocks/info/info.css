@@ -1,0 +1,9 @@
+.info {
+    margin-right: 120px;
+}
+
+@media screen and (max-width: 500px) {
+    .info {
+        margin: 0 auto;
+    }
+}

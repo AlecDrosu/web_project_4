@@ -1,0 +1,15 @@
+.info__job {
+    font-size: 18px;
+    line-height: 22px;
+    margin: 16px 0 0;
+}
+
+@media screen and (max-width: 500px) {
+    .info__job {
+        margin: 0 auto;
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+        margin: 14px 0 48px;
+    }
+}

@@ -1,0 +1,17 @@
+.profile__icon {
+    padding: 14px 64px;
+    border: 2px solid #FFFFFF;
+}
+
+@media screen and (max-width: 500px) {
+    .profile__icon {
+        height: 16px;
+        width: 16px;
+        padding: 17px 133px;
+        margin: 0 auto;
+    }
+}
+
+.profile__icon:hover {
+    opacity: 0.6;
+}
