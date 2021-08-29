@@ -30,6 +30,17 @@
 @import url(../blocks/text/__heart/text__heart.css);
 @import url(../blocks/text/__icon/text__icon.css);
 
+/* Modal */
+@import url(../blocks/modal/modal.css);
+@import url(../blocks/form/form.css);
+@import url(../blocks/modal/__body/modal__body.css);
+@import url(../blocks/modal/__close-btn/modal__close-btn.css);
+@import url(../blocks/modal/__title/modal__title.css);
+@import url(../blocks/close/close.css);
+@import url(../blocks/form/__label/form__label.css);
+@import url(../blocks/form/__input/form__input.css);
+@import url(../blocks/form/__submit/form__submit.css);
+
 /* Footer */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);

@@ -16,7 +16,7 @@
             <img src="./images/man.jpg" alt="Man in Hat" class="profile__avatar">
             <div class="info">
                 <div class="title">
-                    <h2 class="title__name">Jacques Cousteau</h2>
+                    <h2 class="title__name">Jacques Cousteau</h2> <!-- Try box-sizing: border-box; to fix the borders. -->
                     <a href="#" class="title__button">
                         <img src="./images/edit.svg" alt="edit" class="title__icon">
                     </a>
@@ -83,9 +83,30 @@
                 </div>
             </div>
         </section>
+
+        <section class="modal">
+            <div class="modal__body">
+                <button class="modal__close-btn">
+                    <img src="./images/Close Icon.png" alt="Close" class="close">
+                </button>
+                <h2 class="modal__title">Edit Profile</h2>
+                <form action="" method="GET" class="form">
+                    <label class="form__label">
+                        <input type="text" name="list-title" id="list-title" class="form__input">
+                    </label>
+                    <label class="form__label">
+                        <input type="text" name="list-subtitle" id="list-subtitle" class="form__input">
+                    </label>
+                    <button class="form__submit">Save</button>
+                </form>
+            </div>
+        </section>
     </main>
     <footer class="footer">
         <p class="footer__copyright">© 2021 Around The U.S.</p>
     </footer>
+
+    <script src="./scripts/index.js"></script>
+    
 </body>
 </html>

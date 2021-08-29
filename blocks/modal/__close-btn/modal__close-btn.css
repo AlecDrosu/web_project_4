@@ -1,0 +1,21 @@
+.modal__close-btn {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -38px;
+    right: -38px;
+    color: #000;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 500px) {
+    .modal__close-btn {
+        width: 26px;
+        height: 26px;
+        right: 0;
+        top: -42px;
+    }
+}
