@@ -6,7 +6,6 @@
     margin: 45px auto 0;
 }
 
-
 @media screen and (max-width: 500px) {
     .header {
         margin: 0 auto;
