@@ -15,19 +15,18 @@
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/info/info.css);
 @import url(../blocks/title/title.css);
-@import url(../blocks/title/__icon/title__icon.css);
 @import url(../blocks/title/__name/title__name.css);
 @import url(../blocks/title/__button/title__button.css);
 @import url(../blocks/info/__job/info__job.css);
-@import url(../blocks/profile/__icon/profile__icon.css);
+@import url(../blocks/profile/__button/profile__button.css);
 
 /* Elements */
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
-@import url(../blocks/text//text.css);
+@import url(../blocks/text/text.css);
 @import url(../blocks/text/__label/text__label.css);
 @import url(../blocks/text/__heart/text__heart.css);
-@import url(../blocks/text/__icon/text__icon.css);
+@import url(../blocks/element/__img/element__img.css);
 
 /* Modal */
 @import url(../blocks/modal/modal.css);
@@ -35,10 +34,10 @@
 @import url(../blocks/modal/__body/modal__body.css);
 @import url(../blocks/modal/__close-btn/modal__close-btn.css);
 @import url(../blocks/modal/__title/modal__title.css);
-@import url(../blocks/close/close.css);
 @import url(../blocks/form/__label/form__label.css);
 @import url(../blocks/form/__input/form__input.css);
 @import url(../blocks/form/__submit/form__submit.css);
+@import url(../blocks/modal/_is-open/modal_is-open.css);
 
 /* Footer */
 @import url(../blocks/footer/footer.css);

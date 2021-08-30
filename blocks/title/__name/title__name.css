@@ -6,11 +6,13 @@
     line-height: 1.14;
     padding-right: 18px;
     align-self: flex-end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 500px) {
     .title__name {
-        font-weight: 500;
         font-size: 22px;
         line-height: 27px;
         text-align: center;

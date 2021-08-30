@@ -5,17 +5,29 @@
     top: -38px;
     right: -38px;
     color: #000;
-    visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url(../../../images/CloseIcon.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: transparent;
+    background-size: auto;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
     .modal__close-btn {
-        width: 26px;
-        height: 26px;
-        right: 0;
+        width: 24px;
+        height: 24px;
+        right: 10px;
         top: -42px;
+        background-size: auto;
     }
+}
+
+.modal__close-btn:hover {
+    opacity: 0.6;
 }

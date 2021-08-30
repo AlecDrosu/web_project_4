@@ -10,7 +10,3 @@
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 10000;
 }
-
-.modal_is-open {
-    display: flex;
-}

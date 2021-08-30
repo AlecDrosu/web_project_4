@@ -1,6 +1,7 @@
 .title__icon {
     padding: 7px;
     border: 1px solid #FFFFFF;
+    visibility: visible;
 }
 
 @media screen and (max-width: 500px) {

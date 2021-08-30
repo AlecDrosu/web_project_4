@@ -1,6 +1,6 @@
 // Query Selectors
 
-let editProfileButton = document.querySelector('.title__icon');
+let editProfileButton = document.querySelector('.title__button');
 let infoTitle = document.querySelector('.title__name');
 let infoSubtitle = document.querySelector('.info__job');
 
@@ -11,13 +11,15 @@ let form = document.querySelector('.form');
 let listTitle = document.querySelector('#list-title');
 let listSubtitle = document.querySelector('#list-subtitle');
 
-listTitle.value = infoTitle.textContent;
-listSubtitle.value = infoSubtitle.textContent;
-
 // Functions
 
 function toggleForm() {
     modal.classList.toggle('modal_is-open');
+
+    if (listTitle.value == "" && listSubtitle.value == "") {
+        listTitle.value = infoTitle.textContent;
+        listSubtitle.value = infoSubtitle.textContent;
+    }
 }
 
 function saveProfile(event) {

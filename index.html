@@ -16,88 +16,70 @@
             <img src="./images/man.jpg" alt="Man in Hat" class="profile__avatar">
             <div class="info">
                 <div class="title">
-                    <h2 class="title__name">Jacques Cousteau</h2> <!-- Try box-sizing: border-box; to fix the borders. -->
-                    <a href="#" class="title__button" target="_self">
-                        <img src="./images/edit.svg" alt="edit" class="title__icon">
-                    </a>
+                    <h1 class="title__name">Jacques Cousteau</h1>
+                    <button type="reset" class="title__button"></button>
                 </div>
                 <p class="info__job">Explorer</p>
             </div>
-            <a class="profile__button" href="#" target="_self">
-                <img src="./images/plus.svg" alt="add" class="profile__icon">
-            </a>
+            <button type="button" type="button"class="profile__button"></button>
         </section>
         <section class="elements">
             <div class="element">
                 <img src="./images/yosemite.png" alt="Yosemite" class="element__img">
                 <div class="text">
-                    <p class="text__label">Yosemite Valley</p>
-                    <a href="#" class="text__heart" target="_self">
-                        <img src="./images/heart.svg" alt="heart" class="text__icon">
-                    </a>
+                    <h2 class="text__label">Yosemite Valley</h2>
+                    <button type="button" class="text__heart"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./images/louise.png" alt="louise" class="element__img">
                 <div class="text">
-                    <p class="text__label">Lake Louise</p>
-                    <a href="#" class="text__heart" target="_self">
-                        <img src="./images/heart.svg" alt="heart" class="text__icon">
-                    </a>
+                    <h2 class="text__label">Lake Louise</h2>
+                    <button type="button" class="text__heart"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./images/bald.png" alt="bald" class="element__img">
                 <div class="text">
-                    <p class="text__label">Bald Mountains</p>
-                    <a href="#" class="text__heart" target="_self">
-                        <img src="./images/heart.svg" alt="heart" class="text__icon">
-                    </a>
+                    <h2 class="text__label">Bald Mountains</h2>
+                    <button type="button" class="text__heart"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./images/latemar.png" alt="latemar" class="element__img">
                 <div class="text">
-                    <p class="text__label">Latemar</p>
-                    <a href="#" class="text__heart" target="_self">
-                        <img src="./images/heart.svg" alt="heart" class="text__icon">
-                    </a>
+                    <h2 class="text__label">Latemar</h2>
+                    <button type="button" class="text__heart"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./images/vanoise.png" alt="vanoise" class="element__img">
                 <div class="text">
-                    <p class="text__label">Vanoise National Park</p>
-                    <a href="#" class="text__heart" target="_self">
-                        <img src="./images/heart.svg" alt="heart" class="text__icon">
-                    </a>
+                    <h2 class="text__label">Vanoise National Park</h2>
+                    <button type="button" class="text__heart"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./images/braies.png" alt="braies" class="element__img">
                 <div class="text">
-                    <p class="text__label">Lago di Braies</p>
-                    <a href="#" class="text__heart" target="_self">
-                        <img src="./images/heart.svg" alt="heart" class="text__icon">
-                    </a>
+                    <h2 class="text__label">Lago di Braies</h2>
+                    <button type="button" class="text__heart"></button>
                 </div>
             </div>
         </section>
 
         <section class="modal">
             <div class="modal__body">
-                <button class="modal__close-btn">
-                    <img src="./images/Close Icon.png" alt="Close" class="close">
-                </button>
+                <button type="button" class="modal__close-btn"></button>
                 <h2 class="modal__title">Edit Profile</h2>
-                <form action="" method="GET" class="form">
-                    <label class="form__label">
+                <form action="" method="GET" class="form" name="myForm">
+                    <div class="form__label">
                         <input type="text" name="list-title" id="list-title" class="form__input">
-                    </label>
-                    <label class="form__label">
+                    </div>
+                    <div class="form__label">
                         <input type="text" name="list-subtitle" id="list-subtitle" class="form__input">
-                    </label>
-                    <button class="form__submit">Save</button>
+                    </div>
+                    <button type="submit" class="form__submit">Save</button>
                 </form>
             </div>
         </section>
