@@ -5,7 +5,7 @@
     margin: 0 0 54px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 575px) {
     .modal__title {
         font-size: 18px;
         line-height: 22px;

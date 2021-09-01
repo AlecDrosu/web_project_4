@@ -3,14 +3,23 @@
     display: grid;
     margin: 0 auto 68px;
     grid-gap: 17px;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    grid-template-rows: repeat(2, minmax(0,1fr));
+}
+
+@media screen and (max-width: 575px) {
+    .elements {
+        margin: 0 auto 50px;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        grid-template-rows: repeat(3, minmax(0,1fr));
+    }
 }
 
 @media screen and (max-width: 500px) {
     .elements {
         margin: 0 auto 50px;
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(6, 1fr);
+        grid-template-columns: repeat(1, minmax(0,1fr));
+        grid-template-rows: repeat(6, minmax(0,1fr));
     }
 }
+

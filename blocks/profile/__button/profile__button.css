@@ -10,7 +10,7 @@
     cursor: pointer;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 575px) {
     .profile__button {
         padding: 23px 139px;
         margin: 0 auto;

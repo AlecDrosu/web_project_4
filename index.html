@@ -13,14 +13,17 @@
     </header>
     <main class="main">
         <section class="profile">
-            <img src="./images/man.jpg" alt="Man in Hat" class="profile__avatar">
-            <div class="info">
-                <div class="title">
-                    <h1 class="title__name">Jacques Cousteau</h1>
-                    <button type="button" class="title__button"></button>
-                </div>
-                <p class="info__job">Explorer</p>
+            <div class="profile__holder">
+                <img src="./images/man.jpg" alt="Man in Hat" class="profile__avatar">
+                <div class="info">
+                    <div class="title">
+                        <h1 class="title__name">Jacques Cousteau</h1>
+                        <button type="button" class="title__button"></button>
+                    </div>
+                    <p class="info__job">Explorer</p>
+                </div> 
             </div>
+
             <button type="button" class="profile__button"></button>
         </section>
         <section class="elements">
@@ -73,7 +76,7 @@
                 <button type="button" class="modal__close-btn"></button>
                 <h2 class="modal__title">Edit Profile</h2>
                 <form method="GET" class="form" name="myForm">
-                    
+
                     <input type="text" name="list-title" id="list-title" class="form__input">
                     <input type="text" name="list-subtitle" id="list-subtitle" class="form__input">
 

@@ -3,7 +3,6 @@
 @import url(../vendor/fonts/inter.css);
 
 /* Page */
-@import url(../blocks/main/main.css);
 @import url(../blocks/page/page.css);
 
 /* Header */
@@ -13,6 +12,7 @@
 
 /* Profile */
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__holder/profile__holder.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/info/info.css);
 @import url(../blocks/title/title.css);

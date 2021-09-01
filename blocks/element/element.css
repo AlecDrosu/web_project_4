@@ -2,9 +2,10 @@
     background: #FFFFFF;
     border-radius: 10px;
     max-width: 282px;
+    width: 100%;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 575px) {
     .element {
         margin: 0 auto;
     }

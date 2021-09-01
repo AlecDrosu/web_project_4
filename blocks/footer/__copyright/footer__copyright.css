@@ -6,7 +6,7 @@
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 575px) {
     .footer__copyright {
         margin: 0 auto 36px;
         width: 282px;
