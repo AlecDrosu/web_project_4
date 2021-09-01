@@ -9,6 +9,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    max-width: 440px;
 }
 
 @media screen and (max-width: 500px) {
@@ -18,5 +19,6 @@
         text-align: center;
         margin: 28px auto 0;
         padding-right: 10px;
+        max-width: calc(282px - 10px - 18px);
     }
 }

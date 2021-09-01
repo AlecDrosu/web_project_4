@@ -16,7 +16,7 @@ let listSubtitle = document.querySelector('#list-subtitle');
 function toggleForm() {
     modal.classList.toggle('modal_is-open');
 
-    if (listTitle.value == "" && listSubtitle.value == "") {
+    if (modal.classList.contains('modal_is-open')) {
         listTitle.value = infoTitle.textContent;
         listSubtitle.value = infoSubtitle.textContent;
     }

@@ -3,6 +3,7 @@
 @import url(../vendor/fonts/inter.css);
 
 /* Page */
+@import url(../blocks/main/main.css);
 @import url(../blocks/page/page.css);
 
 /* Header */

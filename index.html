@@ -17,7 +17,7 @@
             <div class="info">
                 <div class="title">
                     <h1 class="title__name">Jacques Cousteau</h1>
-                    <button type="reset" class="title__button"></button>
+                    <button type="button" class="title__button"></button>
                 </div>
                 <p class="info__job">Explorer</p>
             </div>
@@ -72,13 +72,11 @@
             <div class="modal__body">
                 <button type="button" class="modal__close-btn"></button>
                 <h2 class="modal__title">Edit Profile</h2>
-                <form action="" method="GET" class="form" name="myForm">
-                    <div class="form__label">
-                        <input type="text" name="list-title" id="list-title" class="form__input">
-                    </div>
-                    <div class="form__label">
-                        <input type="text" name="list-subtitle" id="list-subtitle" class="form__input">
-                    </div>
+                <form method="GET" class="form" name="myForm">
+                    
+                    <input type="text" name="list-title" id="list-title" class="form__input">
+                    <input type="text" name="list-subtitle" id="list-subtitle" class="form__input">
+
                     <button type="submit" class="form__submit">Save</button>
                 </form>
             </div>
