@@ -1,15 +1,21 @@
+
+
+
 // Query Selectors
 
-let editProfileButton = document.querySelector('.title__button');
-let infoTitle = document.querySelector('.title__name');
-let infoSubtitle = document.querySelector('.info__job');
+const editProfileButton = document.querySelector('.title__button');
+const infoTitle = document.querySelector('.title__name');
+const infoSubtitle = document.querySelector('.info__job');
 
-let modal = document.querySelector('.modal');
-let closeButton = document.querySelector('.modal__close-btn');
+const modal = document.querySelector('.modal');
+const closeButton = document.querySelector('.modal__close-btn');
+const elementTemplate = document.querySelector('#elementTemplate').content.querySelector('.element');
+const elements = document.querySelector('.elements');
 
-let form = document.querySelector('.form');
-let listTitle = document.querySelector('#list-title');
-let listSubtitle = document.querySelector('#list-subtitle');
+const form = document.querySelector('.form');
+const listTitle = document.querySelector('#list-title');
+const listSubtitle = document.querySelector('#list-subtitle');
+
 
 // Functions
 
@@ -35,3 +41,16 @@ function saveProfile(event) {
 form.addEventListener('submit', saveProfile, false);
 editProfileButton.addEventListener('click', toggleForm, false);
 closeButton.addEventListener('click', toggleForm, false);
+
+// Actions
+
+initialCards.forEach(card => {
+    // use template
+    const cardEl = elementTemplate.cloneNode(true);
+    // set title
+    cardEl.querySelector('.text__label').textContent = card.title;
+    // set image
+    cardEl.querySelector('.element__img').src = card.image;
+    // append to list
+    elements.append(cardEl);
+})
