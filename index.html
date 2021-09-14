@@ -18,13 +18,13 @@
                 <div class="info">
                     <div class="title">
                         <h1 class="title__name">Jacques Cousteau</h1>
-                        <button type="button" class="title__button"></button>
+                        <button type="button" class="title__button" ></button>
                     </div>
                     <p class="info__job">Explorer</p>
                 </div> 
             </div>
 
-            <button type="button" class="profile__button"></button>
+            <button type="button" class="profile__button" ></button>
         </section>
         <section class="elements">
 
@@ -58,9 +58,18 @@
             </div>
         </div>
 
+        <div class="modal modal_type_preview">
+            <div class="modal__body modal__body_type_preview">
+                <button type="button" class="modal__close-btn"></button>
+                <img class="modal__img">
+                <h2 class="modal__caption"></h2>
+            </div>
+        </div>
+
         <template id="elementTemplate">
             <div class="element">
                 <img src="./images/braies.png" alt="braies" class="element__img">
+                <button type="button"class="element__trash"></button>
                 <div class="text">
                     <h2 class="text__label"></h2>
                     <button type="button" class="text__heart"></button>

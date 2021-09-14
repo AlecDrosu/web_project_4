@@ -6,6 +6,7 @@
     max-height: 364px;
     height: 40vh;
     object-fit: cover;
+    position: relative;
 }
 
 @media screen and (max-width: 575px) {
