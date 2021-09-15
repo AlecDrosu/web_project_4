@@ -7,7 +7,7 @@
     line-height: 17px;
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 650px) {
     .form__input {
         padding: 0 0 9px;
     }

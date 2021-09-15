@@ -1,4 +1,5 @@
 .modal_is-open {
-    display: flex;
-    visibility: visible;
+    /* visibility: visible; */
+    opacity: 1;
+    z-index: 10000;
 }

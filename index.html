@@ -36,8 +36,8 @@
                 <h2 class="modal__title">Edit Profile</h2>
                 <form method="GET" class="form" name="edit">
 
-                    <input type="text" name="list-title" id="list-title" class="form__input" placeholder="Name">
-                    <input type="text" name="list-subtitle" id="list-subtitle" class="form__input" placeholder="About me">
+                    <input type="text" name="list-title" id="list-title" class="form__input" placeholder="Name" required>
+                    <input type="text" name="list-subtitle" id="list-subtitle" class="form__input" placeholder="About me" required>
 
                     <button type="submit" class="form__submit">Save</button>
                 </form>
@@ -50,8 +50,8 @@
                 <h2 class="modal__title">New Place</h2>
                 <form method="GET" class="form" name="add">
 
-                    <input type="text" name="title" class="form__input form__input_type_title" placeholder="Title">
-                    <input type="text" name="image-url" class="form__input form__input_type_image-url" placeholder="Image Link">
+                    <input type="text" name="title" class="form__input form__input_type_title" placeholder="Title" required>
+                    <input type="text" name="image-url" class="form__input form__input_type_image-url" placeholder="Image Link" required>
 
                     <button type="submit" class="form__submit">Create</button>
                 </form>
@@ -68,7 +68,7 @@
 
         <template id="elementTemplate">
             <div class="element">
-                <img src="./images/braies.png" alt="braies" class="element__img">
+                <img src="./images/braies.png" alt="" class="element__img">
                 <button type="button" class="element__trash"></button>
                 <div class="text">
                     <h2 class="text__label"></h2>

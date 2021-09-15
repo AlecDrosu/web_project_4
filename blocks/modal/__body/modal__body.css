@@ -9,7 +9,7 @@
     box-sizing: border-box;
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 650px) {
     .modal__body {
         width: 282px;
         padding: 25px 22px;
