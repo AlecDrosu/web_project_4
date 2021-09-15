@@ -27,7 +27,7 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
-const fadeModal = document.querySelectorAll('.modal');
+const fadeModal = document.querySelectorAll(".modal");
 // Functions
 
 function fillEditForm(modal) {

@@ -22,8 +22,9 @@ is working on this project, however I will make sure to use feature branches in 
 
 link to GitHub pages: https://alecdrosu.github.io/web_project_4/
 
-**EMERGENCY CHANGES** It turned out that while I already submitted my project for the last review, I realised that I made a huge mistake, where I solved my overflow error by using 
-*overflow: hidden* for the main page. I asked my tutor and realised this would be marked incorrect. I went back and changed most of the code in order to fix everything. I completely changed the widths of the profile and elements blocks, in order to adjust for the decrease page width. I also added a new block that combined the profile avatar and profile name, as this was the only way I could think of to solve the overflow of the profile block. I also made more breakpoints, in order to make the page look better on smaller devices. This was mostly just changing the grid to be 2 columns by 3 rows on devices closer to a tablet, while having it still be 1 column by 6 rows on phones, and 3 columns by 2 rows on computers.
-
 I did not know how much padding for the elements, so I chose 20px. I also figured it was unnecessary to use the (max-width: 880px) @media for .elements and .footer. I just changed the margin and width a bit so now there is padding. I did create the @media for the rest though. I also replaced the max-width: 575px with 650px, since I think it looks nicer with two columns on smaller screens.
+
+**Animation**
+
+This was very difficult and filled with bugs, but my github pages has it working well. I beleive the problem was caused by display flex not being on modal. For some reason when I fixed that, the normal code worked. (I tried using the 'all' in transition before, but it didn't work then for some reason).
 
