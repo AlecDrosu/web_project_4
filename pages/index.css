@@ -34,12 +34,17 @@
 /* Modal */
 @import url(../blocks/modal/modal.css);
 @import url(../blocks/form/form.css);
+@import url(../blocks/form/__label/form__label.css);
+@import url(../blocks/form/__error/form__error.css);
 @import url(../blocks/modal/__body/modal__body.css);
+@import url(../blocks/modal/__overlay/modal__overlay.css);
 @import url(../blocks/modal/__close-btn/modal__close-btn.css);
 @import url(../blocks/modal/__title/modal__title.css);
 @import url(../blocks/modal/__caption/modal__caption.css);
 @import url(../blocks/form/__input/form__input.css);
+@import url(../blocks/form/__input/_type/form__input_type_error.css);
 @import url(../blocks/form/__submit/form__submit.css);
+@import url(../blocks/form/__submit/_inactive/form__submit_inactive.css);
 @import url(../blocks/modal/_is-open/modal_is-open.css);
 @import url(../blocks/modal/__image/modal__image.css);
 @import url(../blocks/modal/__body/_type/modal__body_type_preview.css);

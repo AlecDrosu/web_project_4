@@ -27,13 +27,16 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
-const fadeModal = document.querySelectorAll(".modal");
+const modalOverlays = Array.from(document.querySelectorAll(".modal__overlay"));
+
+
 // Functions
 
 function fillEditForm(modal) {
 	if (!modal.classList.contains("modal_is-open")) {
 		listTitle.value = infoTitle.textContent;
 		listSubtitle.value = infoSubtitle.textContent;
+		// document.addEventListener('keydown', keyHandler);
 	}
 }
 
@@ -94,6 +97,19 @@ function createCard(event) {
 	toggleForm(addModal);
 }
 
+// Escape Functions
+
+function removeForm(modal) {
+	modal.classList.remove("modal_is-open");
+}
+
+document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+        removeForm(modal);
+    }
+})
+
+
 // Event Listeners
 
 editForm.addEventListener("submit", saveProfile);
@@ -101,11 +117,17 @@ editProfileButton.addEventListener("click", () => {
 	fillEditForm(modal);
 	toggleForm(modal);
 });
+
+modalOverlays.forEach((modalOverlay) => {
+    modalOverlay.addEventListener("click", () => toggleForm(modal));
+})
 modalCloseBtn.addEventListener("click", () => toggleForm(modal));
 addForm.addEventListener("submit", createCard);
 addCard.addEventListener("click", () => toggleForm(addModal));
 addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
 previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
+
+
 
 // Actions
 
