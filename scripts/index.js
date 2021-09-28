@@ -27,8 +27,9 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
-
-
+const modalOverlayEdit = modal.querySelector(".modal__overlay");
+const modalOverlayAdd = addModal.querySelector(".modal__overlay");
+const modalOverlayPreview = previewModal.querySelector(".modal__overlay");
 
 // Functions
 
@@ -36,12 +37,16 @@ function fillEditForm(modal) {
 	if (!modal.classList.contains("modal_is-open")) {
 		listTitle.value = infoTitle.textContent;
 		listSubtitle.value = infoSubtitle.textContent;
-		// document.addEventListener('keydown', keyHandler);
 	}
 }
 
 function toggleForm(modal) {
 	modal.classList.toggle("modal_is-open");
+	document.addEventListener("keydown", (evt) => {
+		if (evt.key === "Escape") {
+			removeForm(modal);
+		}
+	});
 }
 
 function saveProfile(event) {
@@ -103,12 +108,6 @@ function removeForm(modal) {
 	modal.classList.remove("modal_is-open");
 }
 
-document.addEventListener("keydown", (evt) => {
-	if (evt.key === "Escape") {
-		removeForm(modal);
-	}
-});
-
 // Event Listeners
 
 editForm.addEventListener("submit", saveProfile);
@@ -117,12 +116,9 @@ editProfileButton.addEventListener("click", () => {
 	toggleForm(modal);
 });
 
-const modalOverlays = Array.from(document.querySelectorAll(".modal__overlay"));
-modalOverlays.forEach((modalOverlay) => {
-	modalOverlay.addEventListener("click", () => removeForm(modal));
-});
-
-
+modalOverlayEdit.addEventListener("click", () => removeForm(modal));
+modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
+modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
 modalCloseBtn.addEventListener("click", () => toggleForm(modal));
 addForm.addEventListener("submit", createCard);
 addCard.addEventListener("click", () => toggleForm(addModal));
