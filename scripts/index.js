@@ -5,15 +5,15 @@ const infoTitle = document.querySelector(".title__name");
 const infoSubtitle = document.querySelector(".info__job");
 const previewModal = document.querySelector(".modal_type_preview");
 
-const modal = document.querySelector(".modal_type_edit");
+const modalContainer = document.querySelector(".modal_type_edit");
 const addModal = document.querySelector(".modal_type_add");
-const modalCloseBtn = modal.querySelector(".modal__close-btn");
+const modalCloseBtn = modalContainer.querySelector(".modal__close-btn");
 const elementTemplate = document
 	.querySelector("#elementTemplate")
 	.content.querySelector(".element");
 const elements = document.querySelector(".elements");
 
-const editForm = modal.querySelector(".form");
+const editForm = modalContainer.querySelector(".form");
 const addForm = addModal.querySelector(".form");
 
 const listTitle = document.querySelector("#list-title");
@@ -27,7 +27,7 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
-const modalOverlayEdit = modal.querySelector(".modal__overlay");
+const modalOverlayEdit = modalContainer.querySelector(".modal__overlay");
 const modalOverlayAdd = addModal.querySelector(".modal__overlay");
 const modalOverlayPreview = previewModal.querySelector(".modal__overlay");
 
@@ -40,13 +40,21 @@ function fillEditForm(modal) {
 	}
 }
 
+function keyHandler(evt) {
+	const modal = document.querySelector(".modal_is-open");
+	if (evt.key === "Escape") {
+		removeForm(modal);
+	}
+}
+
+function removeForm(modal) {
+	modal.classList.remove("modal_is-open");
+	document.removeEventListener("keydown", keyHandler);
+}
+
 function toggleForm(modal) {
 	modal.classList.toggle("modal_is-open");
-	document.addEventListener("keydown", (evt) => {
-		if (evt.key === "Escape") {
-			removeForm(modal);
-		}
-	});
+	document.addEventListener("keydown", keyHandler);
 }
 
 function saveProfile(event) {
@@ -54,7 +62,7 @@ function saveProfile(event) {
 	infoTitle.textContent = listTitle.value;
 	infoSubtitle.textContent = listSubtitle.value;
 
-	toggleForm(modal);
+	toggleForm(modalContainer);
 }
 
 function showPreview(card) {
@@ -102,24 +110,18 @@ function createCard(event) {
 	toggleForm(addModal);
 }
 
-// Escape Functions
-
-function removeForm(modal) {
-	modal.classList.remove("modal_is-open");
-}
-
 // Event Listeners
 
 editForm.addEventListener("submit", saveProfile);
 editProfileButton.addEventListener("click", () => {
-	fillEditForm(modal);
-	toggleForm(modal);
+	fillEditForm(modalContainer);
+	toggleForm(modalContainer);
 });
 
-modalOverlayEdit.addEventListener("click", () => removeForm(modal));
+modalOverlayEdit.addEventListener("click", () => removeForm(modalContainer));
 modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
 modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
-modalCloseBtn.addEventListener("click", () => toggleForm(modal));
+modalCloseBtn.addEventListener("click", () => toggleForm(modalContainer));
 addForm.addEventListener("submit", createCard);
 addCard.addEventListener("click", () => toggleForm(addModal));
 addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));

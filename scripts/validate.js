@@ -1,10 +1,8 @@
-const isValid = (inputEl) => {
-	return inputEl.validity.valid;
-};
+const checkIfInputValid = (inputEl) => (inputEl.validity.valid)
 
 const checkInputValidity = (formEl, inputEl, settings) => {
 	const errorEl = formEl.querySelector(`#${inputEl.id}-error`);
-	if (!isValid(inputEl)) {
+	if (!checkIfInputValid(inputEl)) {
 		// show error message and add error class
 		inputEl.classList.add(settings.inputErrorClass);
 		errorEl.innerText = inputEl.validationMessage;
@@ -18,7 +16,7 @@ const checkInputValidity = (formEl, inputEl, settings) => {
 };
 
 toggleButtonState = (inputList, buttonEl, { inactiveButtonClass }) => {
-	const allValid = inputList.every((inputEl) => isValid(inputEl));
+	const allValid = inputList.every((inputEl) => checkIfInputValid(inputEl));
 	if (!allValid) {
 		// lock
 		buttonEl.classList.add(inactiveButtonClass);
@@ -38,10 +36,10 @@ const setupEventListeners = (
 	const inputList = Array.from(formEl.querySelectorAll(inputSelector));
 	const buttonEl = formEl.querySelector(submitButtonSelector);
 	// setup listeners for the form elements
-    // toggleButtonState(inputList, buttonEl);
+    toggleButtonState(inputList, buttonEl, moreSettings);
 
 	inputList.forEach((inputEl) => {
-		inputEl.addEventListener("input", (evt) => {
+		inputEl.addEventListener("input", () => {
 			// check if input is valid
 			checkInputValidity(formEl, inputEl, moreSettings);
 			toggleButtonState(inputList, buttonEl, moreSettings);
