@@ -27,7 +27,7 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
-const modalOverlays = Array.from(document.querySelectorAll(".modal__overlay"));
+
 
 
 // Functions
@@ -103,12 +103,11 @@ function removeForm(modal) {
 	modal.classList.remove("modal_is-open");
 }
 
-document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-        removeForm(modal);
-    }
-})
-
+document.addEventListener("keydown", (evt) => {
+	if (evt.key === "Escape") {
+		removeForm(modal);
+	}
+});
 
 // Event Listeners
 
@@ -118,16 +117,17 @@ editProfileButton.addEventListener("click", () => {
 	toggleForm(modal);
 });
 
+const modalOverlays = Array.from(document.querySelectorAll(".modal__overlay"));
 modalOverlays.forEach((modalOverlay) => {
-    modalOverlay.addEventListener("click", () => toggleForm(modal));
-})
+	modalOverlay.addEventListener("click", () => removeForm(modal));
+});
+
+
 modalCloseBtn.addEventListener("click", () => toggleForm(modal));
 addForm.addEventListener("submit", createCard);
 addCard.addEventListener("click", () => toggleForm(addModal));
 addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
 previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
-
-
 
 // Actions
 
