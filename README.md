@@ -15,6 +15,6 @@ The way you'll do this at work is by exporting images directly from Figma — we
 
 Have fun with JavaScript!
 
-This is the finished product. (After sprint 6), the JavaScript was more complicated but it works well. I can't find any problems besides maybe color discrepencies, but those would be easy to fix.
+This is the finished product. (After sprint 6), the JavaScript was more complicated but it works well. I can't find any problems besides maybe color discrepencies, but those would be easy to fix. Overall the JavaScript was very frustrating, but was als very fun :)
 
 link to GitHub pages: https://alecdrosu.github.io/web_project_4/

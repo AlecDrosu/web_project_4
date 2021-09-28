@@ -19,14 +19,14 @@ const checkInputValidity = (formEl, inputEl, settings) => {
 
 toggleButtonState = (inputList, buttonEl, { inactiveButtonClass }) => {
 	const allValid = inputList.every((inputEl) => isValid(inputEl));
-	if (allValid) {
+	if (!allValid) {
 		// lock
-		buttonEl.classList.remove(inactiveButtonClass);
-		buttonEl.disabled = false;
-	} else {
-		// unlock
 		buttonEl.classList.add(inactiveButtonClass);
 		buttonEl.disabled = true;
+	} else {
+		// unlock
+		buttonEl.classList.remove(inactiveButtonClass);
+		buttonEl.disabled = false;
 	}
 };
 
@@ -38,6 +38,7 @@ const setupEventListeners = (
 	const inputList = Array.from(formEl.querySelectorAll(inputSelector));
 	const buttonEl = formEl.querySelector(submitButtonSelector);
 	// setup listeners for the form elements
+    // toggleButtonState(inputList, buttonEl);
 
 	inputList.forEach((inputEl) => {
 		inputEl.addEventListener("input", (evt) => {
