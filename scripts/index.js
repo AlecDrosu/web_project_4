@@ -1,3 +1,7 @@
+import FormValidator from "./FormValidator.js";
+import initialCards from "./data.js";
+import Card from "./Card.js";
+
 // Query Selectors
 
 const editProfileButton = document.querySelector(".title__button");
@@ -99,7 +103,7 @@ function generateCard(card) {
 }
 
 function createCard(event) {
-	event.preventDefault(addForm);
+	event.preventDefault();
 	const card = {
 		title: addTitle.value,
 		image: addImage.value,
@@ -107,7 +111,11 @@ function createCard(event) {
 	const cardEl = generateCard(card);
 	elements.prepend(cardEl);
 
+	addForm.reset();
+
 	toggleForm(addModal);
+
+	// Fix This (Does not reset after placing a card)
 }
 
 // Event Listeners
@@ -130,7 +138,21 @@ previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
 // Actions
 
 initialCards.forEach((card) => {
-	cardEl = generateCard(card);
+	const cardEl = new Card(card, "#elementTemplate").generateCards();
 
-	elements.append(cardEl);
+	elements.append(card);
 });
+
+const formValidationConfig = {
+	inputSelector: ".form__input",
+	submitButtonSelector: ".form__submit",
+	inactiveButtonClass: "form__submit_inactive",
+	inputErrorClass: "form__input_type_error",
+	errorClass: "popup__error_visible",
+};
+
+const addFormValidator = new FormValidator(formValidationConfig, addForm);
+addFormValidator.enableValidation();
+
+const editFormValidator = new FormValidator(formValidationConfig, editForm);
+editFormValidator.enableValidation();

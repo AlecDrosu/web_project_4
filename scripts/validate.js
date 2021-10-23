@@ -1,4 +1,4 @@
-const checkIfInputValid = (inputEl) => (inputEl.validity.valid)
+const checkIfInputValid = (inputEl) => inputEl.validity.valid;
 
 const checkInputValidity = (formEl, inputEl, settings) => {
 	const errorEl = formEl.querySelector(`#${inputEl.id}-error`);
@@ -36,7 +36,7 @@ const setupEventListeners = (
 	const inputList = Array.from(formEl.querySelectorAll(inputSelector));
 	const buttonEl = formEl.querySelector(submitButtonSelector);
 	// setup listeners for the form elements
-    toggleButtonState(inputList, buttonEl, moreSettings);
+	toggleButtonState(inputList, buttonEl, moreSettings);
 
 	inputList.forEach((inputEl) => {
 		inputEl.addEventListener("input", () => {
