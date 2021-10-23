@@ -3,6 +3,7 @@ const previewModalCaption = previewModal.querySelector(".modal__caption");
 const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_image-url");
 const previewModal = document.querySelector(".modal_type_preview");
+const addModal = document.querySelector(".modal_type_add");
 
 function fillEditForm(modal) {
 	if (!modal.classList.contains("modal_is-open")) {
@@ -45,19 +46,18 @@ class Card {
 	}
 
 	_setupEventListeners() {
-        // ??
-		this._element.querySelector(".");
+		// ??
+		// this._element.querySelector(".");
 
-        // Do I add all of these?
 
-        // modalOverlayEdit.addEventListener("click", () => removeForm(modalContainer));
-        // modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
-        // modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
-        // modalCloseBtn.addEventListener("click", () => toggleForm(modalContainer));
-        // addForm.addEventListener("submit", createCard);
-        // addCard.addEventListener("click", () => toggleForm(addModal));
-        // addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
-        // previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
+		// modalOverlayEdit.addEventListener("click", () => removeForm(modalContainer));
+		// modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
+		// modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
+		// modalCloseBtn.addEventListener("click", () => toggleForm(modalContainer));
+		// addForm.addEventListener("submit", createCard);
+		addCard.addEventListener("click", () => toggleForm(addModal));
+		// addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
+		// previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
 	}
 
 	_handleLike() {
