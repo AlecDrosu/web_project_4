@@ -10,8 +10,8 @@ class FormValidator {
 	}
 
 	_checkInputValidity(inputEl) {
-		const errorEl = formEl.querySelector(`#${inputEl.id}-error`);
-		if (!checkIfInputValid(inputEl)) {
+		const errorEl = this._formEl.querySelector(`#${inputEl.id}-error`);
+		if (!_checkIfInputValid(inputEl)) {
 			// show error message and add error class
 			inputEl.classList.add(settings.inputErrorClass);
 			errorEl.innerText = inputEl.validationMessage;
@@ -25,7 +25,7 @@ class FormValidator {
 	}
 
 	_toggleButtonState(inputList, buttonEl) {
-		const allValid = inputList.every((inputEl) => checkIfInputValid(inputEl));
+		const allValid = inputList.every((inputEl) => _checkIfInputValid(inputEl));
 		if (!allValid) {
 			// lock
 			buttonEl.classList.add(inactiveButtonClass);
@@ -42,12 +42,12 @@ class FormValidator {
 	}
 
 	_setupEventListeners() {
-		toggleButtonState(inputList, buttonEl, moreSettings);
+		toggleButtonState(inputList, buttonEl);
 
 		inputEl.addEventListener("input", () => {
 			// check if input is valid
-			checkInputValidity(formEl, inputEl, moreSettings);
-			toggleButtonState(inputList, buttonEl, moreSettings);
+			_checkInputValidity(inputEl);
+			_toggleButtonState(inputList, buttonEl);
 		});
 	}
 

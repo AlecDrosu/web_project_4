@@ -4,6 +4,13 @@ const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_image-url");
 const previewModal = document.querySelector(".modal_type_preview");
 
+function fillEditForm(modal) {
+	if (!modal.classList.contains("modal_is-open")) {
+		listTitle.value = infoTitle.textContent;
+		listSubtitle.value = infoSubtitle.textContent;
+	}
+}
+
 function keyHandler(evt) {
 	const modal = document.querySelector(".modal_is-open");
 	if (evt.key === "Escape") {
@@ -37,15 +44,20 @@ class Card {
 		return cardEl;
 	}
 
+	_setupEventListeners() {
+        // ??
+		this._element.querySelector(".");
+	}
+
 	_handleLike() {
-		this._element.addEventListener("click", function (evt) {
+		this._element.addEventListener("click", (evt) => {
 			evt.target.classList.toggle("text__heart_active");
 		});
 	}
 
 	_handleDelete() {
 		const trash = this._element.querySelector(".element__trash");
-		trash.addEventListener("click", function () {
+		trash.addEventListener("click", () => {
 			this._element.parentNode.removeChild(this._element);
 		});
 	}
@@ -56,8 +68,6 @@ class Card {
 		previewModalCaption.textContent = this._title;
 		toggleForm(previewModal);
 	}
-
-	_setupEventListeners() {}
 
 	generateCards() {
 		this._element = this._getTemplate();
