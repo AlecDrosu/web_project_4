@@ -47,6 +47,17 @@ class Card {
 	_setupEventListeners() {
         // ??
 		this._element.querySelector(".");
+
+        // Do I add all of these?
+
+        // modalOverlayEdit.addEventListener("click", () => removeForm(modalContainer));
+        // modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
+        // modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
+        // modalCloseBtn.addEventListener("click", () => toggleForm(modalContainer));
+        // addForm.addEventListener("submit", createCard);
+        // addCard.addEventListener("click", () => toggleForm(addModal));
+        // addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
+        // previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
 	}
 
 	_handleLike() {
