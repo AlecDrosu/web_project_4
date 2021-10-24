@@ -4,6 +4,7 @@ const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_image-url");
 const previewModal = document.querySelector(".modal_type_preview");
 const addModal = document.querySelector(".modal_type_add");
+const addCard = document.querySelector(".profile__button");
 
 function fillEditForm(modal) {
 	if (!modal.classList.contains("modal_is-open")) {
@@ -46,18 +47,10 @@ class Card {
 	}
 
 	_setupEventListeners() {
-		// ??
-		// this._element.querySelector(".");
-
-
-		// modalOverlayEdit.addEventListener("click", () => removeForm(modalContainer));
-		// modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
-		// modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
-		// modalCloseBtn.addEventListener("click", () => toggleForm(modalContainer));
-		// addForm.addEventListener("submit", createCard);
 		addCard.addEventListener("click", () => toggleForm(addModal));
-		// addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
-		// previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
+		this._element
+			.querySelector(".element__img")
+			.addEventListener("click", () => showPreview(this));
 	}
 
 	_handleLike() {
