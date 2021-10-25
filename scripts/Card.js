@@ -1,35 +1,8 @@
+import { toggleForm } from "./index.js";
+
 const previewModal = document.querySelector(".modal_type_preview");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
-const addModal = document.querySelector(".modal_type_add");
-const addForm = addModal.querySelector(".form");
-const addTitle = addForm.querySelector(".form__input_type_title");
-const addImage = addForm.querySelector(".form__input_type_image-url");
-const addCard = document.querySelector(".profile__button");
-
-function fillEditForm(modal) {
-	if (!modal.classList.contains("modal_is-open")) {
-		listTitle.value = infoTitle.textContent;
-		listSubtitle.value = infoSubtitle.textContent;
-	}
-}
-
-function keyHandler(evt) {
-	const modal = document.querySelector(".modal_is-open");
-	if (evt.key === "Escape") {
-		removeForm(modal);
-	}
-}
-
-function removeForm(modal) {
-	modal.classList.remove("modal_is-open");
-	document.removeEventListener("keydown", keyHandler);
-}
-
-function toggleForm(modal) {
-	modal.classList.toggle("modal_is-open");
-	document.addEventListener("keydown", keyHandler);
-}
 
 class Card {
 	constructor(card, cardSelector) {
@@ -111,6 +84,21 @@ class Card {
 
 		return this._element;
 	}
+
+	createCard(event) { // <---???
+		event.preventDefault();
+		const card = {
+			title: addTitle.value,
+			image: addImage.value,
+		};
+		const cardEl = this._generateCards();
+		document.querySelector(".elements").prepend(cardEl);
+	
+		addForm.reset();
+	
+		toggleForm(addModal);
+	} 
+	
 }
 
 export default Card;

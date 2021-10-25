@@ -56,7 +56,7 @@ function removeForm(modal) {
 	document.removeEventListener("keydown", keyHandler);
 }
 
-function toggleForm(modal) {
+export function toggleForm(modal) {
 	modal.classList.toggle("modal_is-open");
 	document.addEventListener("keydown", keyHandler);
 }
@@ -69,38 +69,38 @@ function saveProfile(event) {
 	toggleForm(modalContainer);
 }
 
-function showPreview(card) {
-	previewModalImg.src = card.image;
-	previewModalImg.alt = card.title;
-	previewModalCaption.textContent = card.title;
-	toggleForm(previewModal);
-}
+// function showPreview(card) {
+// 	previewModalImg.src = card.image;
+// 	previewModalImg.alt = card.title;
+// 	previewModalCaption.textContent = card.title;
+// 	toggleForm(previewModal);
+// }
 
-function generateCard(card) {
-	// use template
-	const cardEl = elementTemplate.cloneNode(true);
+// function generateCard(card) {
+// 	// use template
+// 	const cardEl = elementTemplate.cloneNode(true);
 
-	const cardImage = cardEl.querySelector(".element__img");
-	const trash = cardEl.querySelector(".element__trash");
+// 	const cardImage = cardEl.querySelector(".element__img");
+// 	const trash = cardEl.querySelector(".element__trash");
 
-	// set title
-	cardEl.querySelector(".text__label").textContent = card.title;
-	// set image
-	cardEl.querySelector(".element__img").src = card.image;
-	cardEl.querySelector(".element__img").alt = card.title;
-	// Attach Events
-	cardImage.addEventListener("click", () => showPreview(card));
+// 	// set title
+// 	cardEl.querySelector(".text__label").textContent = card.title;
+// 	// set image
+// 	cardEl.querySelector(".element__img").src = card.image;
+// 	cardEl.querySelector(".element__img").alt = card.title;
+// 	// Attach Events
+// 	cardImage.addEventListener("click", () => showPreview(card));
 
-	cardEl.addEventListener("click", function (evt) {
-		evt.target.classList.toggle("text__heart_active");
-	});
+// 	cardEl.addEventListener("click", function (evt) {
+// 		evt.target.classList.toggle("text__heart_active");
+// 	});
 
-	trash.addEventListener("click", function () {
-		cardEl.parentNode.removeChild(cardEl);
-	});
+// 	trash.addEventListener("click", function () {
+// 		cardEl.parentNode.removeChild(cardEl);
+// 	});
 
-	return cardEl;
-}
+// 	return cardEl;
+// }
 
 function createCard(event) {
 	event.preventDefault();
