@@ -1,9 +1,10 @@
+const previewModal = document.querySelector(".modal_type_preview");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
+const addModal = document.querySelector(".modal_type_add");
+const addForm = addModal.querySelector(".form");
 const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_image-url");
-const previewModal = document.querySelector(".modal_type_preview");
-const addModal = document.querySelector(".modal_type_add");
 const addCard = document.querySelector(".profile__button");
 
 function fillEditForm(modal) {
@@ -46,11 +47,38 @@ class Card {
 		return cardEl;
 	}
 
+	// _setupEventListeners() {
+	// 	addCard.addEventListener("click", () => toggleForm(addModal));
+	// 	this._element
+	// 		.querySelector(".element__img")
+	// 		.addEventListener("click", () => showPreview(this));
+	// }
+
+	//  Option A:
+
 	_setupEventListeners() {
-		addCard.addEventListener("click", () => toggleForm(addModal));
 		this._element
 			.querySelector(".element__img")
-			.addEventListener("click", () => showPreview(this));
+			.addEventListener("click", () => this._showPreview());
+		this._element
+			.querySelector(".element__label")
+			.addEventListener("click", () => this._showPreview());
+		this._element
+			.querySelector(".element__trash")
+			.addEventListener("click", () => this._handleDelete());
+		this._element
+			.querySelector(".element__heart")
+			.addEventListener("click", () => this._handleLike());
+	}
+
+	// Option B:
+
+	_setupEventListeners() {
+		this._handleLike();
+		this._handleDelete();
+		this._element
+			.querySelector(".element__img")
+			.addEventListener("click", () => this._showPreview());
 	}
 
 	_handleLike() {
