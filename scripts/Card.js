@@ -20,51 +20,29 @@ class Card {
 		return cardEl;
 	}
 
-	// _setupEventListeners() {
-	// 	addCard.addEventListener("click", () => toggleForm(addModal));
-	// 	this._element
-	// 		.querySelector(".element__img")
-	// 		.addEventListener("click", () => showPreview(this));
-	// }
-
-	//  Option A:
-
 	_setupEventListeners() {
 		this._element
 			.querySelector(".element__img")
 			.addEventListener("click", () => this._showPreview());
 		this._element
-			.querySelector(".element__label")
+			.querySelector(".text__label")
 			.addEventListener("click", () => this._showPreview());
 		this._element
 			.querySelector(".element__trash")
 			.addEventListener("click", () => this._handleDelete());
 		this._element
-			.querySelector(".element__heart")
+			.querySelector(".text__heart")
 			.addEventListener("click", () => this._handleLike());
 	}
 
-	// Option B:
-
-	_setupEventListeners() {
-		this._handleLike();
-		this._handleDelete();
-		this._element
-			.querySelector(".element__img")
-			.addEventListener("click", () => this._showPreview());
-	}
-
 	_handleLike() {
-		this._element.addEventListener("click", (evt) => {
-			evt.target.classList.toggle("text__heart_active");
-		});
+		this._element
+			.querySelector(".text__heart")
+			.classList.toggle("text__heart_active");
 	}
 
 	_handleDelete() {
-		const trash = this._element.querySelector(".element__trash");
-		trash.addEventListener("click", () => {
-			this._element.parentNode.removeChild(this._element);
-		});
+		this._element.remove();
 	}
 
 	_showPreview() {
@@ -84,21 +62,6 @@ class Card {
 
 		return this._element;
 	}
-
-	createCard(event) { // <---???
-		event.preventDefault();
-		const card = {
-			title: addTitle.value,
-			image: addImage.value,
-		};
-		const cardEl = this._generateCards();
-		document.querySelector(".elements").prepend(cardEl);
-	
-		addForm.reset();
-	
-		toggleForm(addModal);
-	} 
-	
 }
 
 export default Card;

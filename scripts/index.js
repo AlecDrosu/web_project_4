@@ -69,46 +69,13 @@ function saveProfile(event) {
 	toggleForm(modalContainer);
 }
 
-// function showPreview(card) {
-// 	previewModalImg.src = card.image;
-// 	previewModalImg.alt = card.title;
-// 	previewModalCaption.textContent = card.title;
-// 	toggleForm(previewModal);
-// }
-
-// function generateCard(card) {
-// 	// use template
-// 	const cardEl = elementTemplate.cloneNode(true);
-
-// 	const cardImage = cardEl.querySelector(".element__img");
-// 	const trash = cardEl.querySelector(".element__trash");
-
-// 	// set title
-// 	cardEl.querySelector(".text__label").textContent = card.title;
-// 	// set image
-// 	cardEl.querySelector(".element__img").src = card.image;
-// 	cardEl.querySelector(".element__img").alt = card.title;
-// 	// Attach Events
-// 	cardImage.addEventListener("click", () => showPreview(card));
-
-// 	cardEl.addEventListener("click", function (evt) {
-// 		evt.target.classList.toggle("text__heart_active");
-// 	});
-
-// 	trash.addEventListener("click", function () {
-// 		cardEl.parentNode.removeChild(cardEl);
-// 	});
-
-// 	return cardEl;
-// }
-
 function createCard(event) {
 	event.preventDefault();
 	const card = {
 		title: addTitle.value,
 		image: addImage.value,
 	};
-	const cardEl = generateCard(card);
+	const cardEl = new Card(card, "#elementTemplate").generateCards();
 	elements.prepend(cardEl);
 
 	addForm.reset();
@@ -139,8 +106,7 @@ previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
 
 initialCards.forEach((card) => {
 	const cardEl = new Card(card, "#elementTemplate").generateCards();
-
-	elements.append(card);
+	elements.prepend(cardEl);
 });
 
 const formValidationConfig = {
