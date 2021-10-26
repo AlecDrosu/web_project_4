@@ -1,4 +1,4 @@
-import { toggleForm } from "./index.js";
+import { openModal } from "./index.js";
 
 const previewModal = document.querySelector(".modal_type_preview");
 const previewModalImg = previewModal.querySelector(".modal__img");
@@ -49,16 +49,18 @@ class Card {
 		previewModalImg.src = this._image;
 		previewModalImg.alt = this._title;
 		previewModalCaption.textContent = this._title;
-		toggleForm(previewModal);
+		openModal(previewModal);
 	}
 
-	generateCards() {
+	generateCard() {
 		this._element = this._getTemplate();
 		this._setupEventListeners();
 
 		this._element.querySelector(".text__label").textContent = this._title;
 		// set image
 		this._element.querySelector(".element__img").src = this._image;
+		// set alt
+		this._element.querySelector(".element__img").alt = this._title;
 
 		return this._element;
 	}

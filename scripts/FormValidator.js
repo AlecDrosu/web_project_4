@@ -29,7 +29,9 @@ class FormValidator {
 	}
 
 	_toggleButtonState(inputList, buttonEl) {
-		const allValid = inputList.every((inputEl) => this._checkIfInputValid(inputEl));
+		const allValid = inputList.every((inputEl) =>
+			this._checkIfInputValid(inputEl)
+		);
 		if (!allValid) {
 			// lock
 			buttonEl.classList.add(this._inactiveButtonClass);
@@ -41,31 +43,11 @@ class FormValidator {
 		}
 	}
 
-
-
-	// _setupEventListeners() {
-	// 	toggleButtonState(inputList, buttonEl);
-
-	// 	inputEl.addEventListener("input", () => {
-	// 		// check if input is valid
-	// 		_checkInputValidity(inputEl);
-	// 		_toggleButtonState(inputList, buttonEl);
-	// 	});
-
-	// }
-
 	_setupEventListeners() {
 		const inputList = Array.from(
 			this._formEl.querySelectorAll(this._inputSelector)
 		);
 		const buttonEl = this._formEl.querySelector(this._submitButtonSelector);
-		// toggleButtonState(inputList, buttonEl);
-
-		inputList.forEach((inputEl) => {
-			this._checkInputValidity(inputEl);
-		});
-
-		this._toggleButtonState(inputList, buttonEl);
 
 		inputList.forEach((inputEl) => {
 			inputEl.addEventListener("input", () => {
@@ -73,6 +55,8 @@ class FormValidator {
 				this._toggleButtonState(inputList, buttonEl);
 			});
 		});
+
+		this._toggleButtonState(inputList, buttonEl);
 	}
 
 	enableValidation() {

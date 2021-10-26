@@ -47,17 +47,17 @@ function fillEditForm(modal) {
 function keyHandler(evt) {
 	const modal = document.querySelector(".modal_is-open");
 	if (evt.key === "Escape") {
-		removeForm(modal);
+		closeModal(modal);
 	}
 }
 
-function removeForm(modal) {
+function closeModal(modal) {
 	modal.classList.remove("modal_is-open");
 	document.removeEventListener("keydown", keyHandler);
 }
 
-export function toggleForm(modal) {
-	modal.classList.toggle("modal_is-open");
+export function openModal(modal) {
+	modal.classList.add("modal_is-open");
 	document.addEventListener("keydown", keyHandler);
 }
 
@@ -66,7 +66,7 @@ function saveProfile(event) {
 	infoTitle.textContent = listTitle.value;
 	infoSubtitle.textContent = listSubtitle.value;
 
-	toggleForm(modalContainer);
+	closeModal(modalContainer);
 }
 
 function createCard(event) {
@@ -75,14 +75,12 @@ function createCard(event) {
 		title: addTitle.value,
 		image: addImage.value,
 	};
-	const cardEl = new Card(card, "#elementTemplate").generateCards();
+	const cardEl = new Card(card, "#elementTemplate").generateCard();
 	elements.prepend(cardEl);
 
 	addForm.reset();
 
-	toggleForm(addModal);
-
-	// Fix This (Does not reset after placing a card)
+	closeModal(addModal);
 }
 
 // Event Listeners
@@ -90,22 +88,22 @@ function createCard(event) {
 editForm.addEventListener("submit", saveProfile);
 editProfileButton.addEventListener("click", () => {
 	fillEditForm(modalContainer);
-	toggleForm(modalContainer);
+	openModal(modalContainer);
 });
 
-modalOverlayEdit.addEventListener("click", () => removeForm(modalContainer));
-modalOverlayAdd.addEventListener("click", () => removeForm(addModal));
-modalOverlayPreview.addEventListener("click", () => removeForm(previewModal));
-modalCloseBtn.addEventListener("click", () => toggleForm(modalContainer));
+modalOverlayEdit.addEventListener("click", () => closeModal(modalContainer));
+modalOverlayAdd.addEventListener("click", () => closeModal(addModal));
+modalOverlayPreview.addEventListener("click", () => closeModal(previewModal));
+modalCloseBtn.addEventListener("click", () => closeModal(modalContainer));
 addForm.addEventListener("submit", createCard);
-addCard.addEventListener("click", () => toggleForm(addModal));
-addModalCloseBtn.addEventListener("click", () => toggleForm(addModal));
-previewModalCloseBtn.addEventListener("click", () => toggleForm(previewModal));
+addCard.addEventListener("click", () => openModal(addModal));
+addModalCloseBtn.addEventListener("click", () => closeModal(addModal));
+previewModalCloseBtn.addEventListener("click", () => closeModal(previewModal));
 
 // Actions
 
 initialCards.forEach((card) => {
-	const cardEl = new Card(card, "#elementTemplate").generateCards();
+	const cardEl = new Card(card, "#elementTemplate").generateCard();
 	elements.prepend(cardEl);
 });
 
