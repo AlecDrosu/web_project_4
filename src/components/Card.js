@@ -1,11 +1,12 @@
-import { openModal } from "./index.js";
+import { openModal } from "../pages/index.js";
+import Popup from "./Popup.js";
 
 const previewModal = document.querySelector(".modal_type_preview");
 const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
 class Card {
-	constructor(card, cardSelector) {
+	constructor(card, cardSelector, _keyHandler) {
 		this._title = card.title;
 		this._image = card.image;
 

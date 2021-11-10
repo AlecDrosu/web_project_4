@@ -4,18 +4,22 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="pages/index.css" />
+		<!-- <link rel="stylesheet" href="pages/index.css" /> -->
 		<title>Project 4: Around the US</title>
 	</head>
 	<body class="page">
 		<header class="header">
-			<img src="./images/Vector.svg" alt="AroundUS" class="header__logo" />
+			<img
+				src="<%=require('./images/Vector.svg')%>"
+				alt="AroundUS"
+				class="header__logo"
+			/>
 		</header>
 		<main class="main">
 			<section class="profile">
 				<div class="profile__holder">
 					<img
-						src="./images/man.jpg"
+						src="<%=require('./images/man.jpg')%>"
 						alt="Man in Hat"
 						class="profile__avatar"
 					/>
@@ -109,7 +113,11 @@
 			<div class="modal modal_type_preview">
 				<div class="modal__body modal__body_type_preview">
 					<button type="button" class="modal__close-btn"></button>
-					<img class="modal__img" src="./images/braies.png" alt="empty" />
+					<img
+						class="modal__img"
+						src="<%=require('./images/braies.png')%>"
+						alt="empty"
+					/>
 					<h2 class="modal__caption"></h2>
 				</div>
 				<div class="modal__overlay"></div>
@@ -117,7 +125,11 @@
 
 			<template id="elementTemplate">
 				<div class="element">
-					<img src="./images/braies.png" alt="" class="element__img" />
+					<img
+						src="<%=require('./images/braies.png')%>"
+						alt=""
+						class="element__img"
+					/>
 					<button type="button" class="element__trash"></button>
 					<div class="text">
 						<h2 class="text__label"></h2>
@@ -130,6 +142,6 @@
 			<p class="footer__copyright">© 2021 Around The U.S.</p>
 		</footer>
 
-		<script type="module" src="./scripts/index.js"></script>
+		<script type="module" src="./pages/index.js"></script>
 	</body>
 </html>

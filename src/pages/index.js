@@ -1,6 +1,8 @@
-import FormValidator from "./FormValidator.js";
-import initialCards from "./data.js";
-import Card from "./Card.js";
+import "./index.css";
+
+import FormValidator from "../components/FormValidator.js";
+import initialCards from "../components/utils.js";
+import Card from "../components/Card.js";
 
 // Query Selectors
 
