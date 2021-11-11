@@ -3,6 +3,12 @@ import "./index.css";
 import FormValidator from "../components/FormValidator.js";
 import initialCards from "../components/utils.js";
 import Card from "../components/Card.js";
+// import the rest of the javascript files
+import UserInfo from "../components/UserInfo.js";
+import PopupWithImages from "../components/PopupWithImages.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import Popup from "../components/Popup.js";
+import Section from "../components/Section.js";
 
 // Query Selectors
 
