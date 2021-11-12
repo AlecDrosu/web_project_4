@@ -45,11 +45,22 @@ const modalOverlayPreview = previewModal.querySelector(".modal__overlay");
 
 // Functions
 
-function fillEditForm(modal) {
-	if (!modal.classList.contains("modal_is-open")) {
-		listTitle.value = infoTitle.textContent;
-		listSubtitle.value = infoSubtitle.textContent;
-	}
+// create an instance of the Popup class
+const popup = new Popup(".modal_is-open");
+// create an instance of the class userInfo and pass in the user info
+const userInfo = new UserInfo(
+	document.querySelector("#list-title"),
+	document.querySelector("#list-subtitle")
+);
+// getUserInfo should take care of fillEditForm
+// setUserInfo should take care of saveProfile
+
+function fillEditForm() {
+	// if (!modal.classList.contains("modal_is-open")) {
+	// 	listTitle.value = infoTitle.textContent;
+	// 	listSubtitle.value = infoSubtitle.textContent;
+	// }
+	return userInfo.getUserInfo();
 }
 
 function keyHandler(evt) {
@@ -60,21 +71,30 @@ function keyHandler(evt) {
 }
 
 function closeModal(modal) {
-	modal.classList.remove("modal_is-open");
-	document.removeEventListener("keydown", keyHandler);
+	// modal.classList.remove("modal_is-open");
+	// document.removeEventListener("keydown", keyHandler);
+
+	// close the modal using the popup class
+
+	return popup.close(modal);
 }
 
 export function openModal(modal) {
-	modal.classList.add("modal_is-open");
-	document.addEventListener("keydown", keyHandler);
+	// modal.classList.add("modal_is-open");
+	// document.addEventListener("keydown", keyHandler);
+
+	// open the modal using the popup class
+
+	return popup.open(modal);
 }
 
 function saveProfile(event) {
-	event.preventDefault(editForm);
-	infoTitle.textContent = listTitle.value;
-	infoSubtitle.textContent = listSubtitle.value;
+	// event.preventDefault(editForm);
+	// infoTitle.textContent = listTitle.value;
+	// infoSubtitle.textContent = listSubtitle.value;
 
-	closeModal(modalContainer);
+	// closeModal(modalContainer);
+	return userInfo.setUserInfo(listTitle.value, listSubtitle.value);
 }
 
 function createCard(event) {
@@ -98,6 +118,10 @@ editProfileButton.addEventListener("click", () => {
 	fillEditForm(modalContainer);
 	openModal(modalContainer);
 });
+
+// const popup = new Popup('.modal_is-open');
+// // make the following eventListener work on the popup instead of the closeModal function
+// popup.setEventListeners();
 
 modalOverlayEdit.addEventListener("click", () => closeModal(modalContainer));
 modalOverlayAdd.addEventListener("click", () => closeModal(addModal));

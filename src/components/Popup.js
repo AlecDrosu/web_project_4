@@ -16,12 +16,12 @@ export default class Popup {
 	}
 
 	open() {
-		this._popupElement.classList.add("modal_is-open");
+		this._popupElement.classList.add(this._popupElement);
 		document.addEventListener("keydown", this._keyHandler);
 	}
 
 	close() {
-		this._popupElement.classList.remove("modal_is-open");
+		this._popupElement.classList.remove(this._popupElement);
 		document.removeEventListener("keydown", this._keyHandler);
 	}
 }
