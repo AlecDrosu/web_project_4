@@ -63,8 +63,9 @@ const userInfoPopup = new PopupWithForm({
 	popupSelector: ".modal_type_add",
 	// handle saving the use info data
 	handleFormSubmit: (data) => {
-		userInfo.setUserInfo(listTitle.value, listSubtitle.value);
-		// what is the purpose of passing the data to the function?
+		const card = new Card(data, "#elementTemplate").generateCard();
+		cardsList.addItem(card);
+		// userInfo.setUserInfo(listTitle.value, listSubtitle.value);
 	},
 });
 
@@ -91,6 +92,32 @@ previewModalCloseBtn.addEventListener("click", () => popupImage.close());
 
 // ! ==========================================================================
 // ! ============================== Section ===================================
+
+// initialize the cards
+const cardsList = new Section({
+	items: initialCards,
+	// render each card
+	renderer: (card) => {
+		const cardEl = new Card(card, "#elementTemplate").generateCard();
+		// elements.prepend(cardEl);
+		cardsList.addItem(cardEl);
+	},
+}, ".elements");
+
+// render the cards
+cardsList.renderer();
+
+// initialize the form
+const formRenderer = new Section(
+	{
+		items: [],
+	},
+	".form"
+);
+// finish initializing the form using formRenderer
+formRenderer.setEventListeners();
+
+
 
 // ! ==========================================================================
 
