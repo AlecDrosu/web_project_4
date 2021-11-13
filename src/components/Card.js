@@ -1,5 +1,6 @@
 import { openModal } from "../pages/index.js";
 import Popup from "./Popup.js";
+import PopupWithImages from "./PopupWithImages.js";
 
 const previewModal = document.querySelector(".modal_type_preview");
 const previewModalImg = previewModal.querySelector(".modal__img");
@@ -50,7 +51,12 @@ class Card {
 		previewModalImg.src = this._image;
 		previewModalImg.alt = this._title;
 		previewModalCaption.textContent = this._title;
-		openModal(previewModal);
+
+		const popupWithImage = new PopupWithImages(".modal_type_preview");
+		popupWithImage.open({
+			link: this._image,
+			name: this._title,
+		});
 	}
 
 	generateCard() {

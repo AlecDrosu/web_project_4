@@ -46,8 +46,11 @@ const modalOverlayPreview = previewModal.querySelector(".modal__overlay");
 // Functions
 
 // create an instance of the Popup class
+
 const popup = new Popup(".modal_is-open");
-// create an instance of the class userInfo and pass in the user info
+
+// ! ================ UserInfo, popupWithForm, PopupWithImages ==================
+
 const userInfo = new UserInfo(
 	document.querySelector("#list-title"),
 	document.querySelector("#list-subtitle")
@@ -55,12 +58,48 @@ const userInfo = new UserInfo(
 // getUserInfo should take care of fillEditForm
 // setUserInfo should take care of saveProfile
 
-function fillEditForm() {
-	// if (!modal.classList.contains("modal_is-open")) {
-	// 	listTitle.value = infoTitle.textContent;
-	// 	listSubtitle.value = infoSubtitle.textContent;
-	// }
-	return userInfo.getUserInfo();
+// create the user info popup
+const userInfoPopup = new PopupWithForm({
+	popupSelector: ".modal_type_add",
+	// handle saving the use info data
+	handleFormSubmit: (data) => {
+		userInfo.setUserInfo(listTitle.value, listSubtitle.value);
+		// what is the purpose of passing the data to the function?
+	},
+});
+
+// run setEventListeners on the userInfoPopup
+userInfoPopup.setEventListeners();
+
+// editProfileButton opens the profile
+
+editProfileButton.addEventListener("click", () => {
+	// set the user info from what is stored before opening the popup
+	userInfoPopup.getUserInfo();
+
+	userInfoPopup.open();
+});
+
+// create the add card popup using the popupWithImages class
+const popupImage = new PopupWithImages(".modal_type_preview");
+
+// run setEventListeners on the popupImage
+popupImage.setEventListeners();
+
+modalOverlayPreview.addEventListener("click", () => popupImage.close());
+previewModalCloseBtn.addEventListener("click", () => popupImage.close());
+
+// ! ==========================================================================
+// ! ============================== Section ===================================
+
+// ! ==========================================================================
+
+function fillEditForm(modal) {
+	if (!modal.classList.contains("modal_is-open")) {
+		// listTitle.value = infoTitle.textContent;
+		// listSubtitle.value = infoSubtitle.textContent;
+		return userInfo.getUserInfo(modal);
+	}
 }
 
 function keyHandler(evt) {
@@ -70,30 +109,9 @@ function keyHandler(evt) {
 	}
 }
 
-function closeModal(modal) {
-	// modal.classList.remove("modal_is-open");
-	// document.removeEventListener("keydown", keyHandler);
-
-	// close the modal using the popup class
-
-	return popup.close(modal);
-}
-
-export function openModal(modal) {
-	// modal.classList.add("modal_is-open");
-	// document.addEventListener("keydown", keyHandler);
-
-	// open the modal using the popup class
-
-	return popup.open(modal);
-}
-
 function saveProfile(event) {
-	// event.preventDefault(editForm);
-	// infoTitle.textContent = listTitle.value;
-	// infoSubtitle.textContent = listSubtitle.value;
+	event.preventDefault(editForm);
 
-	// closeModal(modalContainer);
 	return userInfo.setUserInfo(listTitle.value, listSubtitle.value);
 }
 
@@ -114,23 +132,13 @@ function createCard(event) {
 // Event Listeners
 
 editForm.addEventListener("submit", saveProfile);
-editProfileButton.addEventListener("click", () => {
-	fillEditForm(modalContainer);
-	openModal(modalContainer);
-});
 
-// const popup = new Popup('.modal_is-open');
-// // make the following eventListener work on the popup instead of the closeModal function
-// popup.setEventListeners();
-
-modalOverlayEdit.addEventListener("click", () => closeModal(modalContainer));
-modalOverlayAdd.addEventListener("click", () => closeModal(addModal));
-modalOverlayPreview.addEventListener("click", () => closeModal(previewModal));
-modalCloseBtn.addEventListener("click", () => closeModal(modalContainer));
+modalOverlayEdit.addEventListener("click", () => popup.close(modalContainer));
+modalOverlayAdd.addEventListener("click", () => popup.close(addModal));
+modalCloseBtn.addEventListener("click", () => popup.close(modalContainer));
 addForm.addEventListener("submit", createCard);
-addCard.addEventListener("click", () => openModal(addModal));
-addModalCloseBtn.addEventListener("click", () => closeModal(addModal));
-previewModalCloseBtn.addEventListener("click", () => closeModal(previewModal));
+addCard.addEventListener("click", () => popup.open(addModal));
+addModalCloseBtn.addEventListener("click", () => popup.close(addModal));
 
 // Actions
 

@@ -25,3 +25,4 @@ export default class Popup {
 		document.removeEventListener("keydown", this._keyHandler);
 	}
 }
+ 
