@@ -12,7 +12,14 @@ export default class Popup {
 	}
 
 	setEventListeners() {
-		this._popupElement.addEventListener("click", () => this.close());
+		this._popupElement.addEventListener("click", (evt) => {
+			if (
+				evt.target.classList.contains("modal") ||
+				evt.target.classList.contains("modal__close-btn")
+			) {
+				this.close();
+			}
+		});
 	}
 
 	open() {
@@ -25,4 +32,3 @@ export default class Popup {
 		document.removeEventListener("keydown", this._keyHandler);
 	}
 }
- 

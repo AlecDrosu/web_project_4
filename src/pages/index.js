@@ -94,15 +94,18 @@ previewModalCloseBtn.addEventListener("click", () => popupImage.close());
 // ! ============================== Section ===================================
 
 // initialize the cards
-const cardsList = new Section({
-	items: initialCards,
-	// render each card
-	renderer: (card) => {
-		const cardEl = new Card(card, "#elementTemplate").generateCard();
-		// elements.prepend(cardEl);
-		cardsList.addItem(cardEl);
+const cardsList = new Section(
+	{
+		items: initialCards,
+		// render each card
+		renderer: (card) => {
+			const cardEl = new Card(card, "#elementTemplate").generateCard();
+			// elements.prepend(cardEl);
+			cardsList.addItem(cardEl);
+		},
 	},
-}, ".elements");
+	".elements"
+);
 
 // render the cards
 cardsList.renderer();
@@ -117,24 +120,7 @@ const formRenderer = new Section(
 // finish initializing the form using formRenderer
 formRenderer.setEventListeners();
 
-
-
 // ! ==========================================================================
-
-function fillEditForm(modal) {
-	if (!modal.classList.contains("modal_is-open")) {
-		// listTitle.value = infoTitle.textContent;
-		// listSubtitle.value = infoSubtitle.textContent;
-		return userInfo.getUserInfo(modal);
-	}
-}
-
-function keyHandler(evt) {
-	const modal = document.querySelector(".modal_is-open");
-	if (evt.key === "Escape") {
-		closeModal(modal);
-	}
-}
 
 function saveProfile(event) {
 	event.preventDefault(editForm);
