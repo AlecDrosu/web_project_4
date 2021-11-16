@@ -1,22 +1,23 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-	constructor(submitCallback, popupSelector) {
+	constructor({handleFormSubmit, popupSelector}) {
 		super(popupSelector);
-		this._submitCallback = submitCallback;
+		this._handleFormSubmit = handleFormSubmit;
 	}
 
 	_getInputValues() {
 		return {
-			name: this._popupElement.querySelector(".form__input_type_title").value,
-			link: this._popupElement.querySelector(".form__input_type_image-url")
-				.value,
+
+			// return the name and the link of the new card
+			name: this._popupElement.querySelector(".form__input_type_name").value,
+			link: this._popupElement.querySelector(".form__input_type_link").value
 		};
 	}
 
 	_handleSubmit(evt) {
 		evt.preventDefault();
-		this._submitCallback(this._getInputValues());
+		this._handleFormSubmit(this._getInputValues());
 	}
 
 	setEventListeners() {

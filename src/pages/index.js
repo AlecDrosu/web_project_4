@@ -43,29 +43,49 @@ const modalOverlayEdit = modalContainer.querySelector(".modal__overlay");
 const modalOverlayAdd = addModal.querySelector(".modal__overlay");
 const modalOverlayPreview = previewModal.querySelector(".modal__overlay");
 
+// get rid of all the above variables except for the 4 buttons
+
 // Functions
 
 // create an instance of the Popup class
 
-const popup = new Popup(".modal_is-open");
+// const popup = new Popup(".modal_is-open");
 
 // ! ================ UserInfo, popupWithForm, PopupWithImages ==================
 
-const userInfo = new UserInfo(
-	document.querySelector("#list-title"),
-	document.querySelector("#list-subtitle")
-);
+// create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
+const userInfo = new UserInfo({
+	userNameSelector: ".title__name",
+	userJobSelector: ".info__job",
+});
+
 // getUserInfo should take care of fillEditForm
 // setUserInfo should take care of saveProfile
 
 // create the user info popup
 const userInfoPopup = new PopupWithForm({
+	popupSelector: ".modal_type_edit",
+	// handle saving the use info data
+	// handleFormSubmit: (data) => {
+	// 	const card = new Card(data, "#elementTemplate").generateCard();
+	// 	cardsList.addItem(card);
+	// 	userInfo.setUserInfo(listTitle.value, listSubtitle.value);
+	// },
+	// set the user info data
+	// handleFormSubmit: userInfo.setUserInfo(listTitle.value, listSubtitle.value),
+
+	// none of the above card stuff should be in userInfoPopup
+});
+
+const addCardPopup = new PopupWithForm({
 	popupSelector: ".modal_type_add",
 	// handle saving the use info data
 	handleFormSubmit: (data) => {
 		const card = new Card(data, "#elementTemplate").generateCard();
 		cardsList.addItem(card);
 		// userInfo.setUserInfo(listTitle.value, listSubtitle.value);
+
+		// Figure out when to setUserInfo
 	},
 });
 
@@ -76,7 +96,9 @@ userInfoPopup.setEventListeners();
 
 editProfileButton.addEventListener("click", () => {
 	// set the user info from what is stored before opening the popup
-	userInfoPopup.getUserInfo();
+	const { name, job } = userInfo.getUserInfo();
+	listTitle.value = name; // set the value of the input to the name
+	listSubtitle.value = job; // set the value of the input to the job
 
 	userInfoPopup.open();
 });
@@ -99,7 +121,9 @@ const cardsList = new Section(
 		items: initialCards,
 		// render each card
 		renderer: (card) => {
-			const cardEl = new Card(card, "#elementTemplate").generateCard();
+			const cardEl = new Card(card, "#elementTemplate", (data) => {
+				popupImage.open(data);
+			}).generateCard();
 			// elements.prepend(cardEl);
 			cardsList.addItem(cardEl);
 		},
@@ -108,17 +132,17 @@ const cardsList = new Section(
 );
 
 // render the cards
-cardsList.renderer();
+cardsList.renderItems();
 
 // initialize the form
-const formRenderer = new Section(
-	{
-		items: [],
-	},
-	".form"
-);
+// const formRenderer = new Section(
+// 	{
+// 		items: [],
+// 	},
+// 	".form"
+// );
 // finish initializing the form using formRenderer
-formRenderer.setEventListeners();
+// formRenderer.setEventListeners();
 
 // ! ==========================================================================
 
@@ -128,37 +152,56 @@ function saveProfile(event) {
 	return userInfo.setUserInfo(listTitle.value, listSubtitle.value);
 }
 
-function createCard(event) {
-	event.preventDefault();
-	const card = {
-		title: addTitle.value,
-		image: addImage.value,
+// use the classes to create a new card object, with the name being inputed from #title and the image being inputed from #image-url
+// then add the new card to the site whenever the add card button is clicked
+
+// ! ============================== Card ======================================
+
+addCard.addEventListener("click", () => {
+	addCardPopup.open();
+});
+
+addCardPopup.setEventListeners();
+
+addModalCloseBtn.addEventListener("click", () => addCardPopup.close());
+
+addForm.addEventListener("submit", (event) => {
+	event.preventDefault(addForm);
+	const cardData = {
+		name: addTitle.value,
+		link: addImage.value,
 	};
-	const cardEl = new Card(card, "#elementTemplate").generateCard();
-	elements.prepend(cardEl);
+	const card = new Card(cardData, "#elementTemplate", (data) => {
+		popupImage.open(data);
+	}).generateCard();
 
-	addForm.reset();
+	cardsList.addItem(card);
+	addCardPopup.close();
+});
 
-	closeModal(addModal);
-}
+// ! ==========================================================================
 
 // Event Listeners
 
-editForm.addEventListener("submit", saveProfile);
+// editForm.addEventListener("submit", saveProfile);
 
-modalOverlayEdit.addEventListener("click", () => popup.close(modalContainer));
-modalOverlayAdd.addEventListener("click", () => popup.close(addModal));
-modalCloseBtn.addEventListener("click", () => popup.close(modalContainer));
-addForm.addEventListener("submit", createCard);
-addCard.addEventListener("click", () => popup.open(addModal));
-addModalCloseBtn.addEventListener("click", () => popup.close(addModal));
+modalOverlayEdit.addEventListener("click", () =>
+	userInfoPopup.close(modalContainer)
+);
+modalOverlayAdd.addEventListener("click", () => addCardPopup.close(addModal));
+modalCloseBtn.addEventListener("click", () =>
+	userInfoPopup.close(modalContainer)
+);
+// addForm.addEventListener("submit", createCard);
+addCard.addEventListener("click", () => addCardPopup.open(addModal)); //create an add popup class with userinfoform
+addModalCloseBtn.addEventListener("click", () => addCardPopup.close(addModal));
 
 // Actions
 
-initialCards.forEach((card) => {
-	const cardEl = new Card(card, "#elementTemplate").generateCard();
-	elements.prepend(cardEl);
-});
+// initialCards.forEach((card) => {
+// 	const cardEl = new Card(card, "#elementTemplate").generateCard();
+// 	elements.prepend(cardEl);
+// });
 
 const formValidationConfig = {
 	inputSelector: ".form__input",
@@ -173,3 +216,11 @@ addFormValidator.enableValidation();
 
 const editFormValidator = new FormValidator(formValidationConfig, editForm);
 editFormValidator.enableValidation();
+
+// cardsList.renderItems(InitialCards);
+
+// openEditFormButton.addEventListener("click", () => {
+// 	const currentForm = document.querySelector(".form_is-open");
+// }
+
+// should be addItem to section class

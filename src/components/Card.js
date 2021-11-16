@@ -1,5 +1,3 @@
-import { openModal } from "../pages/index.js";
-import Popup from "./Popup.js";
 import PopupWithImages from "./PopupWithImages.js";
 
 const previewModal = document.querySelector(".modal_type_preview");
@@ -7,9 +5,10 @@ const previewModalImg = previewModal.querySelector(".modal__img");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
 class Card {
-	constructor(card, cardSelector, _keyHandler) {
+	constructor(card, cardSelector, handleClick) {
 		this._title = card.title;
 		this._image = card.image;
+		this._handleClick = handleClick;
 
 		this._cardSelector = cardSelector;
 	}
@@ -25,10 +24,12 @@ class Card {
 	_setupEventListeners() {
 		this._element
 			.querySelector(".element__img")
-			.addEventListener("click", () => this._showPreview());
-		this._element
-			.querySelector(".text__label")
-			.addEventListener("click", () => this._showPreview());
+			.addEventListener("click", () =>
+				this._handleClick({ name: this._title, link: this._image })
+			);
+		// this._element
+		// 	.querySelector(".text__label")
+		// 	.addEventListener("click", () => this._showPreview());
 		this._element
 			.querySelector(".element__trash")
 			.addEventListener("click", () => this._handleDelete());
@@ -45,18 +46,6 @@ class Card {
 
 	_handleDelete() {
 		this._element.remove();
-	}
-
-	_showPreview() {
-		previewModalImg.src = this._image;
-		previewModalImg.alt = this._title;
-		previewModalCaption.textContent = this._title;
-
-		const popupWithImage = new PopupWithImages(".modal_type_preview");
-		popupWithImage.open({
-			link: this._image,
-			name: this._title,
-		});
 	}
 
 	generateCard() {

@@ -19,3 +19,6 @@ export default class UserInfo {
 
 // This.username is the same as list-title
 // This.userJob is the same as list-subtitle
+
+// username selector needs to be the same is infoTitle
+// userJob selector needs to be the same is infoSubtitle
