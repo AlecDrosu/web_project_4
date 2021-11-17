@@ -47,10 +47,6 @@ const modalOverlayPreview = previewModal.querySelector(".modal__overlay");
 
 // Functions
 
-// create an instance of the Popup class
-
-// const popup = new Popup(".modal_is-open");
-
 // ! ================ UserInfo, popupWithForm, PopupWithImages ==================
 
 // create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
@@ -65,17 +61,19 @@ const userInfo = new UserInfo({
 // create the user info popup
 const userInfoPopup = new PopupWithForm({
 	popupSelector: ".modal_type_edit",
-	// handle saving the use info data
-	// handleFormSubmit: (data) => {
-	// 	const card = new Card(data, "#elementTemplate").generateCard();
-	// 	cardsList.addItem(card);
-	// 	userInfo.setUserInfo(listTitle.value, listSubtitle.value);
-	// },
-	// set the user info data
-	// handleFormSubmit: userInfo.setUserInfo(listTitle.value, listSubtitle.value),
-
-	// none of the above card stuff should be in userInfoPopup
+	// change the title__name class to what the user inputs into #list-title, and the info__job class to what the user inputs into #list-subtitle
+	handleFormSubmit: (event) => {
+		event.preventDefault();
+		userInfo.setUserInfo({
+			name: listTitle.value,
+			job: listSubtitle.value,
+		});
+		userInfoPopup.close();
+	},
 });
+
+// run setEventListeners on the userInfoPopup
+userInfoPopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm({
 	popupSelector: ".modal_type_add",
@@ -83,14 +81,11 @@ const addCardPopup = new PopupWithForm({
 	handleFormSubmit: (data) => {
 		const card = new Card(data, "#elementTemplate").generateCard();
 		cardsList.addItem(card);
-		// userInfo.setUserInfo(listTitle.value, listSubtitle.value);
-
-		// Figure out when to setUserInfo
+		addCardPopup.close();
 	},
 });
 
-// run setEventListeners on the userInfoPopup
-userInfoPopup.setEventListeners();
+addCardPopup.setEventListeners();
 
 // editProfileButton opens the profile
 
@@ -144,43 +139,6 @@ cardsList.renderItems();
 // finish initializing the form using formRenderer
 // formRenderer.setEventListeners();
 
-// ! ==========================================================================
-
-function saveProfile(event) {
-	event.preventDefault(editForm);
-
-	return userInfo.setUserInfo(listTitle.value, listSubtitle.value);
-}
-
-// use the classes to create a new card object, with the name being inputed from #title and the image being inputed from #image-url
-// then add the new card to the site whenever the add card button is clicked
-
-// ! ============================== Card ======================================
-
-addCard.addEventListener("click", () => {
-	addCardPopup.open();
-});
-
-addCardPopup.setEventListeners();
-
-addModalCloseBtn.addEventListener("click", () => addCardPopup.close());
-
-addForm.addEventListener("submit", (event) => {
-	event.preventDefault(addForm);
-	const cardData = {
-		name: addTitle.value,
-		link: addImage.value,
-	};
-	const card = new Card(cardData, "#elementTemplate", (data) => {
-		popupImage.open(data);
-	}).generateCard();
-
-	cardsList.addItem(card);
-	addCardPopup.close();
-});
-
-// ! ==========================================================================
-
 // Event Listeners
 
 // editForm.addEventListener("submit", saveProfile);
@@ -193,8 +151,8 @@ modalCloseBtn.addEventListener("click", () =>
 	userInfoPopup.close(modalContainer)
 );
 // addForm.addEventListener("submit", createCard);
-addCard.addEventListener("click", () => addCardPopup.open(addModal)); //create an add popup class with userinfoform
-addModalCloseBtn.addEventListener("click", () => addCardPopup.close(addModal));
+addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
+addModalCloseBtn.addEventListener("click", () => addCardPopup.close());
 
 // Actions
 

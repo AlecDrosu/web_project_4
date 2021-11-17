@@ -10,8 +10,8 @@ export default class PopupWithForm extends Popup {
 		return {
 
 			// return the name and the link of the new card
-			name: this._popupElement.querySelector(".form__input_type_name").value,
-			link: this._popupElement.querySelector(".form__input_type_link").value
+			title: this._popupElement.querySelector(".form__input_type_title").value,
+			image: this._popupElement.querySelector(".form__input_type_image-url").value
 		};
 	}
 
