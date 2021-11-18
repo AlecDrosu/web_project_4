@@ -7,23 +7,16 @@ import Card from "../components/Card.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImages from "../components/PopupWithImages.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import Popup from "../components/Popup.js";
 import Section from "../components/Section.js";
 
 // Query Selectors
 
 const editProfileButton = document.querySelector(".title__button");
-const infoTitle = document.querySelector(".title__name");
-const infoSubtitle = document.querySelector(".info__job");
 const previewModal = document.querySelector(".modal_type_preview");
 
 const modalContainer = document.querySelector(".modal_type_edit");
 const addModal = document.querySelector(".modal_type_add");
 const modalCloseBtn = modalContainer.querySelector(".modal__close-btn");
-const elementTemplate = document
-	.querySelector("#elementTemplate")
-	.content.querySelector(".element");
-const elements = document.querySelector(".elements");
 
 const editForm = modalContainer.querySelector(".form");
 const addForm = addModal.querySelector(".form");
@@ -36,8 +29,6 @@ const addImage = addForm.querySelector(".form__input_type_image-url");
 const addCard = document.querySelector(".profile__button");
 const addModalCloseBtn = addModal.querySelector(".modal__close-btn");
 const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
-const previewModalImg = previewModal.querySelector(".modal__img");
-const previewModalCaption = previewModal.querySelector(".modal__caption");
 
 const modalOverlayEdit = modalContainer.querySelector(".modal__overlay");
 const modalOverlayAdd = addModal.querySelector(".modal__overlay");
@@ -61,9 +52,7 @@ const userInfo = new UserInfo({
 // create the user info popup
 const userInfoPopup = new PopupWithForm({
 	popupSelector: ".modal_type_edit",
-	// change the title__name class to what the user inputs into #list-title, and the info__job class to what the user inputs into #list-subtitle
-	handleFormSubmit: (event) => {
-		event.preventDefault();
+	handleFormSubmit: () => {
 		userInfo.setUserInfo({
 			name: listTitle.value,
 			job: listSubtitle.value,
@@ -78,8 +67,14 @@ userInfoPopup.setEventListeners();
 const addCardPopup = new PopupWithForm({
 	popupSelector: ".modal_type_add",
 	// handle saving the use info data
-	handleFormSubmit: (data) => {
-		const card = new Card(data, "#elementTemplate").generateCard();
+	handleFormSubmit: () => {
+		const card = new Card(
+			{
+				title: addTitle.value,
+				image: addImage.value,
+			},
+			"#elementTemplate"
+		).generateCard();
 		cardsList.addItem(card);
 		addCardPopup.close();
 	},
@@ -107,7 +102,6 @@ popupImage.setEventListeners();
 modalOverlayPreview.addEventListener("click", () => popupImage.close());
 previewModalCloseBtn.addEventListener("click", () => popupImage.close());
 
-// ! ==========================================================================
 // ! ============================== Section ===================================
 
 // initialize the cards
@@ -119,7 +113,6 @@ const cardsList = new Section(
 			const cardEl = new Card(card, "#elementTemplate", (data) => {
 				popupImage.open(data);
 			}).generateCard();
-			// elements.prepend(cardEl);
 			cardsList.addItem(cardEl);
 		},
 	},
@@ -129,19 +122,7 @@ const cardsList = new Section(
 // render the cards
 cardsList.renderItems();
 
-// initialize the form
-// const formRenderer = new Section(
-// 	{
-// 		items: [],
-// 	},
-// 	".form"
-// );
-// finish initializing the form using formRenderer
-// formRenderer.setEventListeners();
-
 // Event Listeners
-
-// editForm.addEventListener("submit", saveProfile);
 
 modalOverlayEdit.addEventListener("click", () =>
 	userInfoPopup.close(modalContainer)
@@ -150,16 +131,10 @@ modalOverlayAdd.addEventListener("click", () => addCardPopup.close(addModal));
 modalCloseBtn.addEventListener("click", () =>
 	userInfoPopup.close(modalContainer)
 );
-// addForm.addEventListener("submit", createCard);
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
 addModalCloseBtn.addEventListener("click", () => addCardPopup.close());
 
 // Actions
-
-// initialCards.forEach((card) => {
-// 	const cardEl = new Card(card, "#elementTemplate").generateCard();
-// 	elements.prepend(cardEl);
-// });
 
 const formValidationConfig = {
 	inputSelector: ".form__input",
@@ -174,11 +149,3 @@ addFormValidator.enableValidation();
 
 const editFormValidator = new FormValidator(formValidationConfig, editForm);
 editFormValidator.enableValidation();
-
-// cardsList.renderItems(InitialCards);
-
-// openEditFormButton.addEventListener("click", () => {
-// 	const currentForm = document.querySelector(".form_is-open");
-// }
-
-// should be addItem to section class

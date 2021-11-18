@@ -5,7 +5,6 @@ export default class Popup {
 	}
 
 	_keyHandler(evt) {
-		evt.preventDefault();
 		if (evt.key === "Escape") {
 			this.close();
 		}
@@ -23,12 +22,12 @@ export default class Popup {
 	}
 
 	open() {
-		this._popupElement.classList.add('modal_is-open');
+		this._popupElement.classList.add("modal_is-open");
 		document.addEventListener("keydown", this._keyHandler);
 	}
 
 	close() {
-		this._popupElement.classList.remove('modal_is-open');
+		this._popupElement.classList.remove("modal_is-open");
 		document.removeEventListener("keydown", this._keyHandler);
 	}
 }

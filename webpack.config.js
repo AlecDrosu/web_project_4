@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+	devtool: "inline-source-map",
 	entry: {
 		main: "./src/pages/index.js",
 	},
@@ -12,14 +13,12 @@ module.exports = {
 		path: path.resolve(__dirname, "dist"),
 		filename: "main.js",
 		publicPath: "",
-		clean: true,
 	},
 	target: ["web", "es5"],
 	stats: { children: true },
 	mode: "development",
-	devtool: "inline-source-map",
 	devServer: {
-		static: path.resolve(__dirname, "./dist"),
+		static: path.join(__dirname, "dist"),
 		compress: true,
 		port: 8080,
 		open: true,
@@ -51,7 +50,7 @@ module.exports = {
 			},
 			{
 				// add the rule for processing files
-				test: /\.(png|svg|jpg|jpeg|gif|woff(2)?|eot|ttf|otf)$/,
+				test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
 				type: "asset/resource",
 			},
 		],

@@ -1,9 +1,3 @@
-import PopupWithImages from "./PopupWithImages.js";
-
-const previewModal = document.querySelector(".modal_type_preview");
-const previewModalImg = previewModal.querySelector(".modal__img");
-const previewModalCaption = previewModal.querySelector(".modal__caption");
-
 class Card {
 	constructor(card, cardSelector, handleClick) {
 		this._title = card.title;
@@ -27,9 +21,6 @@ class Card {
 			.addEventListener("click", () =>
 				this._handleClick({ name: this._title, link: this._image })
 			);
-		// this._element
-		// 	.querySelector(".text__label")
-		// 	.addEventListener("click", () => this._showPreview());
 		this._element
 			.querySelector(".element__trash")
 			.addEventListener("click", () => this._handleDelete());
