@@ -8,6 +8,7 @@ import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImages.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
+// import { search } from "core-js/fn/symbol";
 
 // Query Selectors
 
