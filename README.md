@@ -17,5 +17,5 @@ Have fun with JavaScript!
 
 This is the finished product. (After sprint 8), the JavaScript was much much more complicated and I had to discuss the project in great detail to understand everything. However, it does work very well, and keeping the code seperated and invlolving webpack has made it much easier to work with.
 
-link to GitHub pages: https://alecdrosu.github.io/web_project_4/
+link to GitHub pages: https://AlecDrosu.github.io/web_project_4
  
