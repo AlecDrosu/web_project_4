@@ -17,8 +17,11 @@ const modalContainer = document.querySelector(".modal_type_edit");
 const addModal = document.querySelector(".modal_type_add");
 const editForm = modalContainer.querySelector(".form");
 const addForm = addModal.querySelector(".form");
+const editProfileModal = document.querySelector(".modal_type_edit-pic");
+const editProfileForm = editProfileModal.querySelector(".form");
 const listTitle = document.querySelector("#list-title");
 const listSubtitle = document.querySelector("#list-subtitle");
+const imageURL = document.querySelector("#image-url");
 const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_image-url");
 const addCard = document.querySelector(".profile__button");
@@ -59,8 +62,8 @@ userInfoPopup.setEventListeners();
 const userImagePopup = new PopupWithForm({
 	popupSelector: ".modal_type_edit-pic",
 	handleFormSubmit: () => {
-		userInfo.setUserInfo({
-			avatar: editProfileImage.value,
+		userInfo.setUserAvatar({
+			avatar: imageURL.value,
 		});
 
 		userImagePopup.close();
@@ -113,9 +116,7 @@ const deleteCardPopup = new PopupWithForm({
 // set the eventListeners on the deleteCardPopup
 
 // add an eventlistener to the editprofileimage button, so that the profile__avatar image changes to whatever image is in the input
-editProfileImage.addEventListener("click", () => {
-	userImagePopup.open();
-});
+editProfileImage.addEventListener("click", () => userImagePopup.open());
 
 // ! ============================== Section ===================================
 
@@ -158,3 +159,6 @@ addFormValidator.enableValidation();
 
 const editFormValidator = new FormValidator(formValidationConfig, editForm);
 editFormValidator.enableValidation();
+
+const editProfileFormValidator = new FormValidator(formValidationConfig, editProfileForm);
+editProfileFormValidator.enableValidation();
