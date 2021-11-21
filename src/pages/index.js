@@ -22,6 +22,9 @@ const listSubtitle = document.querySelector("#list-subtitle");
 const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_image-url");
 const addCard = document.querySelector(".profile__button");
+const cardDeletBtn = document.querySelector(".element__trash");
+const editProfileImage = document.querySelector(".profile__avatar_edit");
+const profileImage = document.querySelector(".profile__avatar");
 
 // Functions
 
@@ -31,6 +34,7 @@ const addCard = document.querySelector(".profile__button");
 const userInfo = new UserInfo({
 	userNameSelector: ".title__name",
 	userJobSelector: ".info__job",
+	avatarSelector: ".profile__avatar",
 });
 
 // getUserInfo should take care of fillEditForm
@@ -50,6 +54,21 @@ const userInfoPopup = new PopupWithForm({
 
 // run setEventListeners on the userInfoPopup
 userInfoPopup.setEventListeners();
+
+// create the change profile image popup
+const userImagePopup = new PopupWithForm({
+	popupSelector: ".modal_type_edit-pic",
+	handleFormSubmit: () => {
+		userInfo.setUserInfo({
+			avatar: editProfileImage.value,
+		});
+
+		userImagePopup.close();
+	},
+});
+
+// run setEventListeners on the userImagePopup
+userImagePopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm({
 	popupSelector: ".modal_type_add",
@@ -81,6 +100,22 @@ const popupImage = new PopupWithImage(".modal_type_preview");
 
 // run setEventListeners on the popupImage
 popupImage.setEventListeners();
+
+// create a new popupWithForm class for the new form modal_type_delete-card
+const deleteCardPopup = new PopupWithForm({
+	popupSelector: ".modal_type_delete-card",
+	handleFormSubmit: () => {
+		// delete the card
+		deleteCardPopup.close();
+	},
+});
+
+// set the eventListeners on the deleteCardPopup
+
+// add an eventlistener to the editprofileimage button, so that the profile__avatar image changes to whatever image is in the input
+editProfileImage.addEventListener("click", () => {
+	userImagePopup.open();
+});
 
 // ! ============================== Section ===================================
 

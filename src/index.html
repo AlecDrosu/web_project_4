@@ -17,11 +17,14 @@
 		<main class="main">
 			<section class="profile">
 				<div class="profile__holder">
-					<img
-						src="<%=require('./images/man.jpg')%>"
-						alt="Man in Hat"
-						class="profile__avatar"
-					/>
+					<div class="profile__image-box">
+						<img
+							src="<%=require('./images/man.jpg')%>"
+							alt="Man in Hat"
+							class="profile__avatar"
+						/>
+						<button class="profile__avatar_edit"></button>	
+					</div>
 					<div class="info">
 						<div class="title">
 							<h1 class="title__name">Jacques Cousteau</h1>
@@ -73,7 +76,30 @@
 				<div class="modal__overlay"></div>
 			</section>
 
-			<div class="modal modal_type_add">
+			<section class="modal modal_type_edit-pic">
+				<div class="modal__body">
+					<button type="button" class="modal__close-btn"></button>
+					<h2 class="modal__title">Change profile picture</h2>
+					<form method="GET" class="form" name="add" novalidate>
+						<label class="form__label">
+							<input
+								type="url"
+								name="image-url"
+								id="image-url"
+								class="form__input form__input_type_image-url"
+								placeholder="Image Link"
+								required
+							/>
+							<span class="form__error" id="image-url-error"></span>
+						</label>
+
+						<button type="submit" class="form__submit">Save</button>
+					</form>
+				</div>
+				<div class="modal__overlay"></div>
+			</section>
+
+			<section class="modal modal_type_add">
 				<div class="modal__body">
 					<button type="button" class="modal__close-btn"></button>
 					<h2 class="modal__title">New Place</h2>
@@ -107,7 +133,16 @@
 					</form>
 				</div>
 				<div class="modal__overlay"></div>
-			</div>
+			</section>
+
+			<section class="modal modal_type_delete-card">
+				<div class="modal__body">
+					<button type="button" class="modal__close-btn"></button>
+					<h2 class="modal__title modal__title_delete">Are you sure?</h2>
+					<button type="submit" class="form__submit">Yes</button>
+				</div>
+				<div class="modal__overlay"></div>
+			</section>
 
 			<div class="modal modal_type_preview">
 				<div class="modal__body modal__body_type_preview">

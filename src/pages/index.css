@@ -20,6 +20,8 @@
 @import url(../blocks/title/__button/title__button.css);
 @import url(../blocks/info/__job/info__job.css);
 @import url(../blocks/profile/__button/profile__button.css);
+@import url(../blocks/profile/__avatar/_edit/profile__avatar_edit.css);
+@import url(../blocks/profile/__image-box/profile__image-box.css);
 
 /* Elements */
 @import url(../blocks/elements/elements.css);
@@ -40,6 +42,7 @@
 @import url(../blocks/modal/__overlay/modal__overlay.css);
 @import url(../blocks/modal/__close-btn/modal__close-btn.css);
 @import url(../blocks/modal/__title/modal__title.css);
+@import url(../blocks/modal/__title/_delete/modal__title_delete.css);
 @import url(../blocks/modal/__caption/modal__caption.css);
 @import url(../blocks/form/__input/form__input.css);
 @import url(../blocks/form/__input/_type/form__input_type_error.css);

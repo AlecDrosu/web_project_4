@@ -8,6 +8,7 @@
     margin-top: 18px;
     border-radius: 2px;
     cursor: pointer;
+    width: 100%;
 }
 
 .form__submit:hover {
