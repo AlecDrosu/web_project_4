@@ -23,7 +23,7 @@
 							alt="Man in Hat"
 							class="profile__avatar"
 						/>
-						<button class="profile__avatar_edit"></button>	
+						<button class="profile__avatar_edit"></button>
 					</div>
 					<div class="info">
 						<div class="title">
@@ -139,7 +139,9 @@
 				<div class="modal__body">
 					<button type="button" class="modal__close-btn"></button>
 					<h2 class="modal__title modal__title_delete">Are you sure?</h2>
-					<button type="submit" class="form__submit">Yes</button>
+					<form method="GET" class="form" name="delete" novalidate>
+						<button type="submit" class="form__submit">Yes</button>
+					</form>
 				</div>
 				<div class="modal__overlay"></div>
 			</section>

@@ -7,6 +7,7 @@ import Card from "../components/Card.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImages.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirm from "../components/PopupWithConfirm.js";
 import Section from "../components/Section.js";
 // import { search } from "core-js/fn/symbol";
 
@@ -31,6 +32,100 @@ const profileImage = document.querySelector(".profile__avatar");
 
 // Functions
 
+// when the user presses the delete button, open the popupwithconfirm popup, and pass the function to delete the card
+
+const popupWithConfirm = new PopupWithConfirm({
+	popupSelector: ".modal_type_delete-card",
+	// delete the card when the user confirms the popup, then close the popup
+	handleConfirm: () => {
+		const cardId = cardDeletBtn.dataset.id;
+		const card = cardsList.addItem(cardId);
+		cardsList.deleteItem(cardId);
+		card.deleteCard();
+	},
+});
+// popupWithConfirm.open();
+
+// PopupWithConfirm.setEventListeners();
+
+// // ! ===========================================================================
+// // ! ============================ SPRINT 9 =====================================
+// // ! ===========================================================================
+
+// // ! ================ Load user information from the server =====================
+
+// const baseUrl = "https://around.nomoreparties.co/v1/group-11/users/me";
+// // fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
+
+// fetch(baseUrl, {
+// 	headers: {
+// 		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+// 		"Content-Type": "application/json",
+// 	},
+// });
+
+// // ! ====================== Load initial cards from the server =========================
+
+// // GET the initial cards from the server
+// const getCards = () => {
+// 	// fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
+// 	fetch(`https://around.nomoreparties.co/v1/group-11/cards`, {
+// 		headers: {
+// 			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+// 			"Content-Type": "application/json",
+// 		},
+// 	})
+// 		.then((res) => {
+// 			if (res.ok) {
+// 				return res.json();
+// 			}
+// 		})
+// 		.then((res) => {
+// 			// console.log(res);
+// 			res.forEach((item) => {
+// 				const card = new Card(
+// 					{
+// 						name: item.name,
+// 						link: item.link,
+// 					},
+// 					"#elementTemplate",
+// 					{
+// 						handleCardClick: () => {
+// 							PopupWithImage.open(item.name, item.link);
+// 						},
+// 						handleDeleteClick: () => {
+// 							PopupWithConfirm.open(
+// 								"Are you Sure?",
+// 								() => {
+// 									deleteCard(item._id);
+// 								}
+// 							);
+// 						},
+// 					}
+// 				);
+// 				card.generateCard();
+// 				cardsList.addItem(card.cardElement);
+// 			});
+// 		});
+// };
+
+// // display the cards from the cardsURl array, to the page
+const cardsList = new Section(
+	{
+		items: initialCards,
+		renderer: (item) => renderCard(item),
+	},
+	".elements"
+);
+
+cardsList.renderItems();
+
+// getCards();
+
+// ! ===========================================================================
+// ! ===========================================================================
+// ! ===========================================================================
+
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
 
 // create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
@@ -39,9 +134,6 @@ const userInfo = new UserInfo({
 	userJobSelector: ".info__job",
 	avatarSelector: ".profile__avatar",
 });
-
-// getUserInfo should take care of fillEditForm
-// setUserInfo should take care of saveProfile
 
 // create the user info popup
 const userInfoPopup = new PopupWithForm({
@@ -104,19 +196,13 @@ const popupImage = new PopupWithImage(".modal_type_preview");
 // run setEventListeners on the popupImage
 popupImage.setEventListeners();
 
-// create a new popupWithForm class for the new form modal_type_delete-card
-const deleteCardPopup = new PopupWithForm({
-	popupSelector: ".modal_type_delete-card",
-	handleFormSubmit: () => {
-		// delete the card
-		deleteCardPopup.close();
-	},
-});
+// ! ================ DeleteCardPopup ====================
 
-// set the eventListeners on the deleteCardPopup
+// ! ======================================================
 
 // add an eventlistener to the editprofileimage button, so that the profile__avatar image changes to whatever image is in the input
 editProfileImage.addEventListener("click", () => userImagePopup.open());
+// cardDeletBtn.addEventListener("click", () => daleteCardPopup.open());
 
 // ! ============================== Section ===================================
 
@@ -127,19 +213,6 @@ function renderCard(item) {
 	}).generateCard();
 	cardsList.addItem(cardEl);
 }
-
-// initialize the cards
-const cardsList = new Section(
-	{
-		items: initialCards,
-		// render each card using the renderCard function
-		renderer: (item) => renderCard(item),
-	},
-	".elements"
-);
-
-// render the cards
-cardsList.renderItems();
 
 // Event Listeners
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
@@ -160,5 +233,8 @@ addFormValidator.enableValidation();
 const editFormValidator = new FormValidator(formValidationConfig, editForm);
 editFormValidator.enableValidation();
 
-const editProfileFormValidator = new FormValidator(formValidationConfig, editProfileForm);
+const editProfileFormValidator = new FormValidator(
+	formValidationConfig,
+	editProfileForm
+);
 editProfileFormValidator.enableValidation();

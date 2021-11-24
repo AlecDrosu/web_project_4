@@ -21,9 +21,11 @@ class Card {
 			.addEventListener("click", () =>
 				this._handleClick({ name: this._title, link: this._image })
 			);
-		// this._element
-		// 	.querySelector(".element__trash")
-		// 	.addEventListener("click", () => this._handleDelete()); //make the delete happen on the form submit class instead of the button
+		this._element
+			.querySelector(".element__trash")
+			.addEventListener("click", () => this._handleDelete()); 
+		// delete the card when the form is submitted
+		
 		this._element
 			.querySelector(".text__heart")
 			.addEventListener("click", () => this._handleLike());
