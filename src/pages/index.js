@@ -224,6 +224,18 @@ const userInfoPopup = new PopupWithForm({
 	},
 });
 
+// Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
+const deleteCardPopup = new PopupWithConfirm({
+	popupSelector: ".modal_type_confirm",
+	handleConfirmClick: () => {
+		deleteCard(cardId);
+		deleteCardPopup.close();
+	},
+});
+// deleteCardPopup.open();
+
+// confirmUserDelete.setEventListeners();
+
 // run setEventListeners on the userInfoPopup
 userInfoPopup.setEventListeners();
 
