@@ -2,10 +2,12 @@
 // Group ID
 // group-11
 
-class Api {
+export default class Api {
 	constructor(options) {
 		// constructor body
-        
+        this._options = options;
+
+
 	}
 
 	getInitialCards() {
@@ -28,11 +30,3 @@ class Api {
 
 	// other methods for working with the API
 }
-
-const api = new Api({
-	baseUrl: "https://around.nomoreparties.co/v1/group-11",
-	headers: {
-		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-		"Content-Type": "application/json",
-	},
-});

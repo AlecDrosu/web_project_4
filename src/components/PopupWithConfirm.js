@@ -10,7 +10,7 @@ export default class PopupWithConfirm extends Popup {
 
     setEventListeners() {
         super.setEventListeners();
-        this._popupElement.querySelector(".modal_type_delete-card").addEventListener("click", () => {
+        this._popupElement.querySelector(".form__submit").addEventListener("click", () => {
             this._handleConfirm();
             this.close();
         });
