@@ -31,264 +31,64 @@ const cardDeletBtn = document.querySelector(".element__trash");
 const editProfileImage = document.querySelector(".profile__avatar_edit");
 const profileImage = document.querySelector(".profile__avatar");
 
-const cardUrl = "https://around.nomoreparties.co/v1/group-11/cards";
-
 // Functions
 
-const apiAuthorize = new Api({
-	baseUrl: "https://around.nomoreparties.co/v1/group-11",
+const config = {
+	baseUrl: "https://around.nomoreparties.co/v1/group-11/users/me",
+	cardUrl: "https://around.nomoreparties.co/v1/group-11/cards",
 	headers: {
 		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
 		"Content-Type": "application/json",
 	},
-});
-
-const apiDelete = new Api({
-	baseUrl: "https://around.nomoreparties.co/v1/group-11",
-	headers: {
-		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-		"Content-Type": "application/json",
-	},
-});
-
-// part 4. adding a new card. Send a POST request to add a new card to the server:
-// POST https://around.nomoreparties.co/v1/group-11/cards
-// Add Content-Type to the request headers after the authorization token, and JSON containing two properties, name and link, to the request body.
-// name should contain the name of the created card, and link should contain a link to the image.
-// If the request is successful, the server will return a response with the object of the new card:
-
-// Part 7. Deleting a card
-
-// DELETE a card from the server and the DOM when the user confirms the deletion of the card in the popup
-// send a delete request to delete a card from the server: DELETE https://around.nomoreparties.co/v1/groupId/cards/cardId
-// with the token: 807a4335-951b-4493-9e81-0010a6738faf
-function deleteCard(id) {
-	fetch(`https://around.nomoreparties.co/v1/group-11/cards/${id}`, {
-		method: "DELETE",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-		})
-		.then((res) => {
-			if (res.ok) {
-				const card = document.querySelector(`[data-id="${id}"]`);
-				card.remove();
-			}
-		});
-}
-
-// Part 8. adding and removing likes
-// Send a PUT request to like a card
-// PUT https://around.nomoreparties.co/v1/group-11/cards/likes/cardId
-// with the token: 807a4335-951b-4493-9e81-0010a6738faf
-function likeCard(id) {
-	fetch(`https://around.nomoreparties.co/v1/group-11/cards/likes/${id}`, {
-		method: "PUT",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-		})
-		.then((res) => {
-			if (res.ok) {
-				const card = document.querySelector(`[data-id="${id}"]`);
-				const like = card.querySelector(".element__like");
-				like.classList.toggle("element__like_active");
-			}
-		});
-}
-
-// Part 9. Updating the profile picture
-// Send the following PATCH request to change the profile picture:
-// PATCH https://around.nomoreparties.co/v1/group-11/users/me/avatar
-// with the token: 807a4335-951b-4493-9e81-0010a6738faf
-// pass the JSON with a single propert, avatar:
-
-function updateProfileImage(url) {
-	fetch(`https://around.nomoreparties.co/v1/group-11/users/me/avatar`, {
-		method: "PATCH",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			avatar: url,
-		}),
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-		})
-		.then((res) => {
-			if (res.ok) {
-				profileImage.src = url;
-			}
-		});
-}
-
-// ! ===========================================================================
-// ! ============================ SPRINT 9 =====================================
-// ! ===========================================================================
-
-// ! ================ Load user information from the server =====================
-
-const baseUrl = "https://around.nomoreparties.co/v1/group-11/users/me";
-// fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
-
-fetch(baseUrl, {
-	headers: {
-		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-		"Content-Type": "application/json",
-	},
-});
-
-// ! ====================== Load initial cards from the server =========================
-
-// GET the cards from the server:
-// GET https://around.nomoreparties.co/v1/group-11/cards
-// with the token: 807a4335-951b-4493-9e81-0010a6738faf
-// Use this array when displaying preloaded cards, and remove the old code for displaying the initial cards.
-// create a getCard function that will create cards based on the name and link provided from the server.
-const getCards = () => {
-	// fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
-	fetch(cardUrl, {
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-
-			return new Promise.reject(`Error: ${res.status}`);
-		})
-		.then((res) => {
-			res.forEach((item) => {
-				renderCard({
-					title: item.name,
-					image: item.link,
-				});
-			});
-		});
 };
+
+const api = new Api(config);
+
+api.getCards().then((res) => {
+	res.forEach((item) => {
+		renderCard({
+			title: item.name,
+			image: item.link,
+		});
+	});
+});
 
 // display the cards from the cardsURl array, to the page
 const cardsList = new Section(
 	{
-		items: getCards,
+		items: api.getCards(),
 		renderer: (item) => renderCard(item),
 	},
 	".elements"
 );
 
-// cardsList.renderItems();
-
-// part 3: Editing the profile
-// Once edited, profile data must be saved on the server. To do this, send a request using the PATCH method:
-// PATCH https://around.nomoreparties.co/v1/group-11/users/me
-// Add Content-Type to the request headers after the authorization token, and JSON with two properties, name and about, to the request body.
-// The values of these properties should contain the modified profile data.
-// If the update was successful, you'll receive modified profile data in the body of the server response:
-
-// const createCard = (data) => {
-// 	fetch(cardUrl, {
-// 		method: "POST",
-// 		headers: {
-// 			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-// 			"Content-Type": "application/json",
-// 		},
-// 		body: JSON.stringify(data),
-// 	})
-// 		.then((res) => {
-// 			if (res.ok) {
-// 				return res.json();
-// 			}
-// 		})
-// 		.then((res) => {
-// 			if (res.ok) {
-// 				renderCard({
-// 					title: res.name,
-// 					image: res.link,
-// 				});
-// 			}
-// 		});
-// };
-
-// live coding session
-// const createCard = (data) => {
-// 	fetch(cardUrl, {
-// 		method: "POST",
-// 		headers: {
-// 			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-// 			"Content-Type": "application/json",
-// 		},
-// 		body: JSON.stringify(data),
-// 	}).then((res) => {
-// 		console.log(res);
-// 	}).catch((err) => {
-// 		console.log(err);
-// 	});
-// };
-
-// Adding a new Card
-// Send a POST request to add a new card to the server:
-// POST https://around.nomoreparties.co/v1/groupId/cards
-// Add Content-Type to the request headers after the authorization token, and JSON containing two properties, name and link, to the request body.
-// name should contain the name of the created card, and link should contain a link to the image. If the request is successful, the server will
-// return a response with the object of the new card:
-
-const createCard = (data) => {
-	return fetch(`https://around.nomoreparties.co/v1/group-11/cards`, {
-		method: "POST",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-			console.log(res);
-		})
-		.then((res) => {
-			// renderCard({
-			// 	title: res.name,
-			// 	image: res.link,
-			// });
-			console.log(res);
+// when the card is created, save it to the server
+function saveCard(item) {
+	api.createCard(item).then((res) => {
+		renderCard({
+			title: res.name,
+			image: res.link,
 		});
-};
-// getCards();
-const init = () => {
-	new Promise(() => {
-		createCard();
-		getCards();
-	}).catch((err) => {
-		// console.log(err);
 	});
-};
+}
 
-init();
+// make and example test for the saveCard function
+saveCard({
+	title: "Alec",
+	image: "https://images.unsplash.com/photo-1558987732-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+});
 
-// ! ===========================================================================
-// ! ===========================================================================
-// ! ===========================================================================
+// save the userinfo to the server (does not work)
+api.editProfile(listTitle.value, listSubtitle.value).then((res) => {
+	userInfo.setUserInfo({
+		name: res.name,
+		job: res.about,
+	});
+	userInfo.setUserAvatar({
+		avatar: res.avatar,
+	});
+});
+// Instead of the code above, maybe figure out how to use userInfoPopup
 
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
 
@@ -392,6 +192,14 @@ function renderCard(item) {
 
 // Event Listeners
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
+// create the addEventListener for the addcard button and createcard api
+// addCard.addEventListener("click", () => {
+// 	addCardPopup.open();
+// 	// createCard({
+// 	// 	title: addTitle.value,
+// 	// 	image: addImage.value,
+// 	// });
+// });
 
 // Actions
 
