@@ -3,30 +3,38 @@
 // group-11
 
 export default class Api {
-	constructor(options) {
+	constructor(baseURL, headers, cardUrl) {
 		// constructor body
-        this._options = options;
-
+        this._url = baseURL;
+        this._headers = headers;
+        this._cardUrl = cardUrl;
 
 	}
 
-	getInitialCards() {
-		return fetch(`https://around.nomoreparties.co/v1/group-11/cards`, {
-			headers: {
-				authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-				"Content-Type": "application/json",
-			},
-		})
-			.then((res) => {
-				if (res.ok) {
-					return res.json();
-				}
-				return Promise.reject(`Error: ${res.status}`);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+    getCards() {
+        // fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
+        fetch(this._cardUrl, {
+            headers: {
+                authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+    
+                return new Promise.reject(`Error: ${res.status}`);
+            })
+            .then((res) => {
+                res.forEach((item) => {
+                    renderCard({
+                        title: item.name,
+                        image: item.link,
+                    });
+                });
+            });
+    };
 
 	// other methods for working with the API
 }

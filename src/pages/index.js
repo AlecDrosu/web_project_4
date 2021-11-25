@@ -31,9 +31,19 @@ const cardDeletBtn = document.querySelector(".element__trash");
 const editProfileImage = document.querySelector(".profile__avatar_edit");
 const profileImage = document.querySelector(".profile__avatar");
 
+const cardUrl = "https://around.nomoreparties.co/v1/group-11/cards";
+
 // Functions
 
-const api = new Api({
+const apiAuthorize = new Api({
+	baseUrl: "https://around.nomoreparties.co/v1/group-11",
+	headers: {
+		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+		"Content-Type": "application/json",
+	},
+});
+
+const apiDelete = new Api({
 	baseUrl: "https://around.nomoreparties.co/v1/group-11",
 	headers: {
 		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
@@ -146,10 +156,14 @@ fetch(baseUrl, {
 
 // ! ====================== Load initial cards from the server =========================
 
-// GET the initial cards from the server
+// GET the cards from the server:
+// GET https://around.nomoreparties.co/v1/group-11/cards
+// with the token: 807a4335-951b-4493-9e81-0010a6738faf
+// Use this array when displaying preloaded cards, and remove the old code for displaying the initial cards.
+// create a getCard function that will create cards based on the name and link provided from the server.
 const getCards = () => {
 	// fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
-	fetch(`https://around.nomoreparties.co/v1/group-11/cards`, {
+	fetch(cardUrl, {
 		headers: {
 			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
 			"Content-Type": "application/json",
@@ -159,29 +173,15 @@ const getCards = () => {
 			if (res.ok) {
 				return res.json();
 			}
+
+			return new Promise.reject(`Error: ${res.status}`);
 		})
 		.then((res) => {
-			// console.log(res);
 			res.forEach((item) => {
-				const card = new Card(
-					{
-						name: item.name,
-						link: item.link,
-					},
-					"#elementTemplate",
-					{
-						handleCardClick: () => {
-							PopupWithImage.open(item.name, item.link);
-						},
-						handleDeleteClick: () => {
-							PopupWithConfirm.open("Are you Sure?", () => {
-								deleteCard(item._id);
-							});
-						},
-					}
-				);
-				card.generateCard();
-				cardsList.addItem(card.cardElement);
+				renderCard({
+					title: item.name,
+					image: item.link,
+				});
 			});
 		});
 };
@@ -189,15 +189,102 @@ const getCards = () => {
 // display the cards from the cardsURl array, to the page
 const cardsList = new Section(
 	{
-		items: initialCards,
+		items: getCards,
 		renderer: (item) => renderCard(item),
 	},
 	".elements"
 );
 
-cardsList.renderItems();
+// cardsList.renderItems();
 
+// part 3: Editing the profile
+// Once edited, profile data must be saved on the server. To do this, send a request using the PATCH method:
+// PATCH https://around.nomoreparties.co/v1/group-11/users/me
+// Add Content-Type to the request headers after the authorization token, and JSON with two properties, name and about, to the request body.
+// The values of these properties should contain the modified profile data.
+// If the update was successful, you'll receive modified profile data in the body of the server response:
+
+// const createCard = (data) => {
+// 	fetch(cardUrl, {
+// 		method: "POST",
+// 		headers: {
+// 			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify(data),
+// 	})
+// 		.then((res) => {
+// 			if (res.ok) {
+// 				return res.json();
+// 			}
+// 		})
+// 		.then((res) => {
+// 			if (res.ok) {
+// 				renderCard({
+// 					title: res.name,
+// 					image: res.link,
+// 				});
+// 			}
+// 		});
+// };
+
+// live coding session
+// const createCard = (data) => {
+// 	fetch(cardUrl, {
+// 		method: "POST",
+// 		headers: {
+// 			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify(data),
+// 	}).then((res) => {
+// 		console.log(res);
+// 	}).catch((err) => {
+// 		console.log(err);
+// 	});
+// };
+
+// Adding a new Card
+// Send a POST request to add a new card to the server:
+// POST https://around.nomoreparties.co/v1/groupId/cards
+// Add Content-Type to the request headers after the authorization token, and JSON containing two properties, name and link, to the request body.
+// name should contain the name of the created card, and link should contain a link to the image. If the request is successful, the server will
+// return a response with the object of the new card:
+
+const createCard = (data) => {
+	return fetch(`https://around.nomoreparties.co/v1/group-11/cards`, {
+		method: "POST",
+		headers: {
+			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	})
+		.then((res) => {
+			if (res.ok) {
+				return res.json();
+			}
+			console.log(res);
+		})
+		.then((res) => {
+			// renderCard({
+			// 	title: res.name,
+			// 	image: res.link,
+			// });
+			console.log(res);
+		});
+};
 // getCards();
+const init = () => {
+	new Promise(() => {
+		createCard();
+		getCards();
+	}).catch((err) => {
+		// console.log(err);
+	});
+};
+
+init();
 
 // ! ===========================================================================
 // ! ===========================================================================
