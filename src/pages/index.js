@@ -161,36 +161,36 @@ const userImagePopup = new PopupWithForm({
 // run setEventListeners on the userImagePopup
 userImagePopup.setEventListeners();
 
-const addCardPopup = new PopupWithForm({
-	popupSelector: ".modal_type_add",
-	// handle saving the use info data
-	handleFormSubmit: (data) => {
-		renderCard(data);
-		addCardPopup.close();
-	},
-});
+// const addCardPopup = new PopupWithForm({
+// 	popupSelector: ".modal_type_add",
+// 	// handle saving the use info data
+// 	handleFormSubmit: (data) => {
+// 		renderCard(data);
+// 		addCardPopup.close();
+// 	},
+// });
 
 // new addCardPopup
 
-// const addCardPopup = new PopupWithForm({
-// 	popupSelector: ".modal_type_add",
-// 	handleFormSubmit: (item) => {
-// 		// item is logged
-// 		console.log(item);
-// 		api
-// 			.createCard(item)
-// 			.then((res) => {
-// 				// res does not exist??
-// 				console.log(res);
-// 				renderCard({
-// 					title: res.name,
-// 					image: res.link,
-// 				});
-// 			})
-// 			.catch((err) => console.log(err))
-// 			.finally(() => addCardPopup.close());
-// 	},
-// });
+const addCardPopup = new PopupWithForm({
+	popupSelector: ".modal_type_add",
+	handleFormSubmit: (item) => {
+		// item is logged
+		console.log(item);
+		api
+			.createCard(item)
+			.then((res) => {
+				// res does not exist??
+				console.log(res);
+				renderCard({
+					title: res.name,
+					image: res.link,
+				});
+			})
+			.catch((err) => console.log(err))
+			.finally(() => addCardPopup.close());
+	},
+});
 
 addCardPopup.setEventListeners();
 
