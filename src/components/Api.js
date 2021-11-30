@@ -33,9 +33,7 @@ export default class Api {
 			}
 
 			return Promise.reject(`Error: ${res.status}`);
-		}).catch((err) => {
-            console.log(err);
-        });
+		});
         
 	}
 

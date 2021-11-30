@@ -185,3 +185,38 @@ function updateProfileImage(url) {
 // 			console.log(res);
 // 		});
 // };
+
+// First attempt: when the card is created, save it to the server (This does not work)
+// function saveCard(item) {
+// 	api.createCard(item).then((res) => {
+// 		renderCard({
+// 			title: res.name,
+// 			image: res.link,
+// 		});
+// 	});
+// }
+
+// make and example test for the saveCard function (This also does not work)
+// saveCard({
+// 	title: "Alec",
+// 	image: "https://images.unsplash.com/photo-1558987732-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+// });
+
+// second attempt: ??????????? Somehow the name and link I have below ended up in the server at the bottom
+// I have no idea how or why this happened, but I have not been able to replicate it
+// even after directly copying the code. (Does not work?)
+
+// api.createCard = (data) => {
+// 	return api.post(config.cardUrl, data);
+// };
+
+// addCard.addEventListener("click", () => {
+// 	api.createCard({
+// 		name: addTitle.value,
+// 		link: addImage.value,
+// 	});
+// 	api.createCard({
+// 		name: "Alec Drosu",
+// 		link: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+// 	});
+// });
