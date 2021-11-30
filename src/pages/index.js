@@ -21,8 +21,8 @@ const editForm = modalContainer.querySelector(".form");
 const addForm = addModal.querySelector(".form");
 const editProfileModal = document.querySelector(".modal_type_edit-pic");
 const editProfileForm = editProfileModal.querySelector(".form");
-const listTitle = document.querySelector("#list-title");
-const listSubtitle = document.querySelector("#list-subtitle");
+const listTitle = modalContainer.querySelector("#name");
+const listSubtitle = modalContainer.querySelector("#about");
 const imageURL = document.querySelector("#link");
 const addTitle = addForm.querySelector(".form__input_type_title");
 const addImage = addForm.querySelector(".form__input_type_link");
@@ -45,11 +45,11 @@ const config = {
 const api = new Api(config);
 
 api.getCards().then((res) => {
-	console.log(res);
 	res.forEach((item) => {
 		renderCard({
 			title: item.name,
 			image: item.link,
+			likes: item.likes.length,
 		});
 	});
 });
@@ -64,15 +64,15 @@ const cardsList = new Section(
 );
 
 // save the userinfo to the server (does not work)
-api.editProfile(listTitle.value, listSubtitle.value).then((res) => {
-	userInfo.setUserInfo({
-		name: res.name,
-		job: res.about,
-	});
-	userInfo.setUserAvatar({
-		avatar: res.avatar,
-	});
-});
+// api.editProfile(listTitle.value, listSubtitle.value).then((res) => {
+// 	userInfo.setUserInfo({
+// 		name: res.name,
+// 		job: res.about,
+// 	});
+// 	userInfo.setUserAvatar({
+// 		avatar: res.avatar,
+// 	});
+// });
 // Instead of the code above, maybe figure out how to use userInfoPopup
 
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
@@ -85,17 +85,36 @@ const userInfo = new UserInfo({
 });
 
 // create the user info popup
+// const userInfoPopup = new PopupWithForm({
+// 	popupSelector: ".modal_type_edit",
+// 	handleFormSubmit: () => {
+// 		userInfo.setUserInfo({
+// 			name: listTitle.value,
+// 			job: listSubtitle.value,
+// 		});
+// 		userInfoPopup.close();
+// 	},
+// });
+
 const userInfoPopup = new PopupWithForm({
 	popupSelector: ".modal_type_edit",
-	handleFormSubmit: () => {
-		userInfo.setUserInfo({
-			name: listTitle.value,
-			job: listSubtitle.value,
-		});
-		userInfoPopup.close();
+	handleFormSubmit: (data) => {
+		console.log(data);
+		api.editProfile({ name: data.name, about: data.about }).then((res) => {
+			console.log(res);
+			userInfo.setUserInfo({
+				name: res.name,
+				job: res.about,
+			});
+			// userInfo.setUserAvatar({
+			// 	avatar: res.avatar,
+			// });
+		}).catch((err) => console.log(err))
+		.finally(() => userInfoPopup.close());
 	},
 });
 
+userInfoPopup.setEventListeners();
 // Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
 const deleteCardPopup = new PopupWithConfirm({
 	popupSelector: ".modal_type_confirm",
@@ -109,7 +128,6 @@ const deleteCardPopup = new PopupWithConfirm({
 // confirmUserDelete.setEventListeners();
 
 // run setEventListeners on the userInfoPopup
-userInfoPopup.setEventListeners();
 
 // create the change profile image popup
 const userImagePopup = new PopupWithForm({
@@ -147,6 +165,7 @@ const addCardPopup = new PopupWithForm({
 				renderCard({
 					title: res.name,
 					image: res.link,
+					likes: res.likes,
 				});
 			})
 			.catch((err) => console.log(err))

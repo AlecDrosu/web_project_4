@@ -46,28 +46,28 @@
 						<label class="form__label">
 							<input
 								type="text"
-								name="list-title"
-								id="list-title"
+								name="name"
+								id="name"
 								class="form__input"
 								placeholder="Name"
 								required
 								minlength="2"
 								maxlength="40"
 							/>
-							<span class="form__error" id="list-title-error"></span>
+							<span class="form__error" id="name-error"></span>
 						</label>
 						<label class="form__label">
 							<input
 								type="text"
-								name="list-subtitle"
-								id="list-subtitle"
+								name="about"
+								id="about"
 								class="form__input"
 								placeholder="About me"
 								required
 								minlength="2"
 								maxlength="200"
 							/>
-							<span class="form__error" id="list-subtitle-error"></span>
+							<span class="form__error" id="about-error"></span>
 						</label>
 
 						<button type="submit" class="form__submit">Save</button>
@@ -169,7 +169,10 @@
 					<button type="button" class="element__trash"></button>
 					<div class="text">
 						<h2 class="text__label"></h2>
-						<button type="button" class="text__heart"></button>
+						<div class="text__like">
+							<button type="button" class="text__heart"></button>
+							<span class="text__like-count">0</span>
+						</div>
 					</div>
 				</div>
 			</template>

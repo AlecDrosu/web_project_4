@@ -18,11 +18,7 @@ export default class PopupWithForm extends Popup {
 
 	_handleSubmit() {
 		this._handleFormSubmit(
-			this._getInputValues({
-				title: this._popupElement.querySelector(".form__input_type_title")
-					.value,
-				image: this._popupElement.querySelector(".form__input_type_link").value,
-			})
+			this._getInputValues()
 		);
 	}
 

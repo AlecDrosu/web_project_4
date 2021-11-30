@@ -23,7 +23,7 @@ export default class Api {
 	}
 
 	createCard(card) {
-		return fetch(this._cardUrl, { 
+		return fetch(this._cardUrl, {
 			method: "POST",
 			headers: this._headers,
 			body: JSON.stringify(card),
@@ -34,11 +34,36 @@ export default class Api {
 
 			return Promise.reject(`Error: ${res.status}`);
 		});
-        
 	}
 
 	deleteCard({ cardId }) {
 		return fetch(`${this._cardUrl}/${cardId}`, {
+			method: "DELETE",
+			headers: this._headers,
+		}).then((res) => {
+			if (res.ok) {
+				return res.json();
+			}
+
+			return Promise.reject(`Error: ${res.status}`);
+		});
+	}
+
+	likeCard({ cardId }) {
+		return fetch(`${this._cardUrl}/likes/${cardId}`, {
+			method: "PUT",
+			headers: this._headers,
+		}).then((res) => {
+			if (res.ok) {
+				return res.json();
+			}
+
+			return Promise.reject(`Error: ${res.status}`);
+		});
+	}
+
+	dislikeCard({ cardId }) {
+		return fetch(`${this._cardUrl}/likes/${cardId}`, {
 			method: "DELETE",
 			headers: this._headers,
 		}).then((res) => {

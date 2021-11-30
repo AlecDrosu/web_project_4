@@ -30,6 +30,8 @@
 @import url(../blocks/text/text.css);
 @import url(../blocks/text/__label/text__label.css);
 @import url(../blocks/text/__heart/text__heart.css);
+@import url(../blocks/text/__like/text__like.css);
+@import url(../blocks/text/__like-count/text__like-count.css);
 @import url(../blocks/text/__heart/_active/text__heart_active.css);
 @import url(../blocks/element/__img/element__img.css);
 
