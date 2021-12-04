@@ -220,3 +220,61 @@ function updateProfileImage(url) {
 // 		link: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
 // 	});
 // });
+
+
+api.getCards().then((res) => {
+	res.forEach((card) => {
+		const cardElement = new Card(
+			card,
+			"#cardTemplate",
+			(cardId) => {
+				api.deleteCard(cardId).then(() => {
+					const cardElement = document.querySelector(
+						`.element[data-id="${cardId}"]`
+					);
+					cardElement.remove();
+				});
+			},
+			(cardId) => {
+				api.likeCard(cardId).then((res) => {
+					const cardElement = document.querySelector(
+						`.element[data-id="${cardId}"]`
+					);
+					const likeElement = cardElement.querySelector(
+						".element__like-count"
+					);
+					likeElement.textContent = res.likes.length;
+				});
+			}
+		);
+		// const cardElement = cardElement.generateCard();
+		const cardList = document.querySelector(".elements");
+		cardList.append(cardElement);
+	});
+});
+
+api.getCards().then((res) => {
+	res.forEach((item) => {
+		renderCard({
+			title: item.name,
+			image: item.link,
+			likes: item.likes.length,
+		});
+	});
+});
+
+
+
+
+
+
+
+
+
+const deleteCardPopup = new PopupWithConfirm({
+	popupSelector: ".modal_type_confirm",
+	handleConfirmClick: () => {
+		deleteCard(cardId);
+		deleteCardPopup.close();
+	},
+});

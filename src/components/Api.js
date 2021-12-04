@@ -2,11 +2,12 @@
 // Group ID
 // group-11
 export default class Api {
-	constructor({ baseUrl, cardUrl, headers }) {
+	constructor({ baseUrl, cardUrl, headers, userID }) {
 		// constructor body
 		this._baseUrl = baseUrl;
 		this._cardUrl = cardUrl;
 		this._headers = headers;
+        // this._userID = userID;
 	}
 
 	getCards() {

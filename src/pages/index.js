@@ -40,16 +40,20 @@ const config = {
 		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
 		"Content-Type": "application/json",
 	},
+	// userID: '78f85ac28985def725e0e651',
 };
 
 const api = new Api(config);
 
 api.getCards().then((res) => {
 	res.forEach((item) => {
+		// console.log(item);
 		renderCard({
 			title: item.name,
 			image: item.link,
 			likes: item.likes.length,
+			owner: item.owner._id,
+			id: item._id,
 		});
 	});
 });
@@ -100,32 +104,43 @@ const userInfoPopup = new PopupWithForm({
 	popupSelector: ".modal_type_edit",
 	handleFormSubmit: (data) => {
 		console.log(data);
-		api.editProfile({ name: data.name, about: data.about }).then((res) => {
-			console.log(res);
-			userInfo.setUserInfo({
-				name: res.name,
-				job: res.about,
-			});
-			// userInfo.setUserAvatar({
-			// 	avatar: res.avatar,
-			// });
-		}).catch((err) => console.log(err))
-		.finally(() => userInfoPopup.close());
+		api
+			.editProfile({ name: data.name, about: data.about })
+			.then((res) => {
+				console.log(res);
+				userInfo.setUserInfo({
+					name: res.name,
+					job: res.about,
+				});
+				// userInfo.setUserAvatar({
+				// 	avatar: res.avatar,
+				// });
+			})
+			.catch((err) => console.log(err))
+			.finally(() => userInfoPopup.close());
 	},
 });
 
 userInfoPopup.setEventListeners();
 // Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
-const deleteCardPopup = new PopupWithConfirm({
+const cardDeletPopup = new PopupWithConfirm({
 	popupSelector: ".modal_type_confirm",
-	handleConfirmClick: () => {
-		deleteCard(cardId);
-		deleteCardPopup.close();
+	handleConfirm: (id) => {
+		api
+			.deleteCard(id)
+			.then((res) => {
+				console.log(res);
+				// remove the card from the page
+				// const card = document.querySelector(`[data-id="${id}"]`);
+				// card.remove();
+			})
+			.catch((err) => console.log(err))
+			.finally(() => cardDeletPopup.close());
 	},
 });
-// deleteCardPopup.open();
+// cardDeletPopup.open();
 
-// confirmUserDelete.setEventListeners();
+cardDeletPopup.setEventListeners();
 
 // run setEventListeners on the userInfoPopup
 
@@ -144,15 +159,6 @@ const userImagePopup = new PopupWithForm({
 // run setEventListeners on the userImagePopup
 userImagePopup.setEventListeners();
 
-// const addCardPopup = new PopupWithForm({
-// 	popupSelector: ".modal_type_add",
-// 	// handle saving the use info data
-// 	handleFormSubmit: (data) => {
-// 		renderCard(data);
-// 		addCardPopup.close();
-// 	},
-// });
-
 // new addCardPopup
 
 const addCardPopup = new PopupWithForm({
@@ -166,6 +172,8 @@ const addCardPopup = new PopupWithForm({
 					title: res.name,
 					image: res.link,
 					likes: res.likes,
+					owner: item.owner._id,
+					id: item._id,
 				});
 			})
 			.catch((err) => console.log(err))
@@ -208,18 +216,30 @@ function renderCard(item) {
 		popupImage.open(data);
 	}).generateCard();
 	cardsList.addItem(cardEl);
+
+	console.log(item.id);
+	if (item.owner !== "78f85ac28985def725e0e651") {
+		cardEl.querySelector(".element__trash").style.display = "none";
+	}
+
+	// api.deleteCard(item.id).then((res) => {
+	// 	console.log(res);
+	// 	cardEl.remove();
+	// }).catch((err) => console.log(err))
+	// .finally(() => cardDeletPopup.close());
+
+	if (item.owner === "78f85ac28985def725e0e651") {
+		cardEl.querySelector(".element__trash").addEventListener("click", () => {
+			// cardId = item._id;
+
+			cardDeletPopup.open();
+		});
+	}
 }
 
 // Event Listeners
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
 // create the addEventListener for the addcard button and createcard api
-// addCard.addEventListener("click", () => {
-// 	addCardPopup.open();
-// 	// createCard({
-// 	// 	title: addTitle.value,
-// 	// 	image: addImage.value,
-// 	// });
-// });
 
 // Actions
 

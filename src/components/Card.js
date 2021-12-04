@@ -3,6 +3,8 @@ class Card {
 		this._title = card.title;
 		this._image = card.image;
 		this._likes = card.likes;
+		this._owner = card.owner._id;
+		this._id = card._id;
 		this._handleCardClick = handleCardClick;
 
 		this._cardSelector = cardSelector;
@@ -23,9 +25,9 @@ class Card {
 				this._handleCardClick({ name: this._title, link: this._image })
 			);
 		// delete the card from the DOM when when the user confirms the deletion of the card on the popup
-		this._element
-			.querySelector(".element__trash")
-			.addEventListener("click", () => this._handleDelete());
+		// this._element
+		// 	.querySelector(".element__trash")
+		// 	.addEventListener("click", () => this._handleDelete());
 
 		this._element
 			.querySelector(".text__heart")
