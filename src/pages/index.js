@@ -123,24 +123,24 @@ const userInfoPopup = new PopupWithForm({
 
 userInfoPopup.setEventListeners();
 // Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
-const cardDeletPopup = new PopupWithConfirm({
-	popupSelector: ".modal_type_confirm",
-	handleConfirm: (id) => {
-		api
-			.deleteCard(id)
-			.then((res) => {
-				console.log(res);
-				// remove the card from the page
-				// const card = document.querySelector(`[data-id="${id}"]`);
-				// card.remove();
-			})
-			.catch((err) => console.log(err))
-			.finally(() => cardDeletPopup.close());
-	},
-});
+// const cardDeletPopup = new PopupWithConfirm({
+// 	popupSelector: ".modal_type_confirm",
+// 	handleConfirm: (id) => {
+// 		api
+// 			.deleteCard(id)
+// 			.then((res) => {
+// 				console.log(res);
+// 				// remove the card from the page
+// 				// const card = document.querySelector(`[data-id="${id}"]`);
+// 				// card.remove();
+// 			})
+// 			.catch((err) => console.log(err))
+// 			.finally(() => cardDeletPopup.close());
+// 	},
+// });
 // cardDeletPopup.open();
 
-cardDeletPopup.setEventListeners();
+// cardDeletPopup.setEventListeners();
 
 // run setEventListeners on the userInfoPopup
 
@@ -217,7 +217,7 @@ function renderCard(item) {
 	}).generateCard();
 	cardsList.addItem(cardEl);
 
-	console.log(item.id);
+	console.log(item);
 	if (item.owner !== "78f85ac28985def725e0e651") {
 		cardEl.querySelector(".element__trash").style.display = "none";
 	}
@@ -230,9 +230,26 @@ function renderCard(item) {
 
 	if (item.owner === "78f85ac28985def725e0e651") {
 		cardEl.querySelector(".element__trash").addEventListener("click", () => {
-			// cardId = item._id;
+			// cardId = item.id;
+
+			const cardDeletPopup = new PopupWithConfirm({
+				popupSelector: ".modal_type_confirm",
+				handleConfirm: (id) => {
+					console.log(id);
+					api
+						.deleteCard(id)
+						.then((res) => {
+							console.log(res);
+							// remove the card from the page
+						})
+						.catch((err) => console.log(err))
+						.finally(() => cardDeletPopup.close());
+				},
+			});
 
 			cardDeletPopup.open();
+			cardDeletPopup.setEventListeners();
+
 		});
 	}
 }
