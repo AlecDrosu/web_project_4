@@ -1,4 +1,5 @@
 import Popup from "./Popup.js";
+import { renderLoading } from "../pages/index.js";
 
 export default class PopupWithForm extends Popup {
 	constructor({ handleFormSubmit, popupSelector }) {
@@ -17,20 +18,25 @@ export default class PopupWithForm extends Popup {
 	}
 
 	_handleSubmit() {
-		this._handleFormSubmit(
-			this._getInputValues()
-		);
+		this._handleFormSubmit(this._getInputValues());
 	}
 
 	setEventListeners() {
 		super.setEventListeners();
 		this._popupElement
 			.querySelector(".form")
-			.addEventListener("submit", this._handleSubmit.bind(this));
+			.addEventListener("submit", (evt) => {
+				evt.preventDefault();
+				renderLoading(true, this._popupElement);
+				this._handleSubmit();
+			});
 	}
 
 	close() {
 		super.close();
 		this._popupElement.querySelector(".form").reset();
+		setTimeout(() => {
+			renderLoading(false, this._popupElement);
+		}, 500);
 	}
 }

@@ -31,7 +31,21 @@ const cardDeletBtn = document.querySelector(".element__trash");
 const editProfileImage = document.querySelector(".profile__avatar_edit");
 const profileImage = document.querySelector(".profile__avatar");
 
+const addSubmitBtn = addModal.querySelector(".form__submit");
+const editSubmitBtn = modalContainer.querySelector(".form__submit");
+// const submitBtn = document.querySelector(".form__submit");
+
 // Functions
+
+export function renderLoading(isLoading) {
+	if (isLoading) {
+		addSubmitBtn.textContent = "Creating...";
+		editSubmitBtn.textContent = "Saving...";
+	} else {
+		addSubmitBtn.textContent = "Create";
+		editSubmitBtn.textContent = "Save";
+	}
+}
 
 const config = {
 	baseUrl: "https://around.nomoreparties.co/v1/group-11/users/me",
@@ -100,6 +114,22 @@ const userInfo = new UserInfo({
 // 	},
 // });
 
+const userImagePopup = new PopupWithForm({
+	popupSelector: ".modal_type_edit-pic",
+	handleFormSubmit: (data) => {
+		console.log(data);
+		api
+			.editProfile({ avatar: data.avatar })
+			.then((res) => {
+				console.log(res);
+				userInfo.setUserAvatar({
+					avatar: res.avatar,
+				});
+			})
+			.catch((err) => console.log(err))
+			.finally(() => userImagePopup.close());
+	},
+});
 const userInfoPopup = new PopupWithForm({
 	popupSelector: ".modal_type_edit",
 	handleFormSubmit: (data) => {
@@ -107,7 +137,7 @@ const userInfoPopup = new PopupWithForm({
 		api
 			.editProfile({ name: data.name, about: data.about })
 			.then((res) => {
-				console.log(res);
+				console.log(res.avatar);
 				userInfo.setUserInfo({
 					name: res.name,
 					job: res.about,
@@ -121,7 +151,21 @@ const userInfoPopup = new PopupWithForm({
 	},
 });
 
+
+
+userImagePopup.setEventListeners();
 userInfoPopup.setEventListeners();
+
+
+api.getUserInfo().then((res) => {
+	userInfo.setUserInfo({
+		name: res.name,
+		job: res.about,
+	});
+	userInfo.setUserAvatar({
+		avatar: res.avatar,
+	});
+});
 // Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
 // const cardDeletPopup = new PopupWithConfirm({
 // 	popupSelector: ".modal_type_confirm",
@@ -145,19 +189,19 @@ userInfoPopup.setEventListeners();
 // run setEventListeners on the userInfoPopup
 
 // create the change profile image popup
-const userImagePopup = new PopupWithForm({
-	popupSelector: ".modal_type_edit-pic",
-	handleFormSubmit: () => {
-		userInfo.setUserAvatar({
-			avatar: imageURL.value,
-		});
+// const userImagePopup = new PopupWithForm({
+// 	popupSelector: ".modal_type_edit-pic",
+// 	handleFormSubmit: () => {
+// 		userInfo.setUserAvatar({
+// 			avatar: imageURL.value,
+// 		});
 
-		userImagePopup.close();
-	},
-});
+// 		userImagePopup.close();
+// 	},
+// });
 
-// run setEventListeners on the userImagePopup
-userImagePopup.setEventListeners();
+// // run setEventListeners on the userImagePopup
+// userImagePopup.setEventListeners();
 
 // new addCardPopup
 
@@ -190,8 +234,11 @@ editProfileButton.addEventListener("click", () => {
 	const { name, job } = userInfo.getUserInfo();
 	listTitle.value = name; // set the value of the input to the name
 	listSubtitle.value = job; // set the value of the input to the job
-
+	
 	userInfoPopup.open();
+	
+	// renderLoading(false);
+
 });
 
 // create the add card popup using the PopupWithImage class
@@ -217,7 +264,7 @@ function renderCard(item) {
 	}).generateCard();
 	cardsList.addItem(cardEl);
 
-	console.log(item);
+	// console.log(item);
 	if (item.owner !== "78f85ac28985def725e0e651") {
 		cardEl.querySelector(".element__trash").style.display = "none";
 	}
@@ -273,6 +320,9 @@ addFormValidator.enableValidation();
 
 const editFormValidator = new FormValidator(formValidationConfig, editForm);
 editFormValidator.enableValidation();
+
+const editAvatarValidator = new FormValidator(formValidationConfig, editProfileForm);
+editAvatarValidator.enableValidation();
 
 const editProfileFormValidator = new FormValidator(
 	formValidationConfig,

@@ -77,11 +77,11 @@ export default class Api {
 	}
 
 	// Editing the profile. Once edited, profile data must be saved on the server. To do this, send a request using the PATCH method:
-	editProfile({ name, about }) {
+	editProfile({ name, about, avatar }) {
 		return fetch(this._baseUrl, {
 			method: "PATCH",
 			headers: this._headers,
-			body: JSON.stringify({ name, about }),
+			body: JSON.stringify({ name, about, avatar }),
 		}).then((res) => {
 			if (res.ok) {
 				return res.json();
@@ -90,4 +90,16 @@ export default class Api {
 			return Promise.reject(`Error: ${res.status}`);
 		});
 	}
+
+    getUserInfo() {
+        return fetch(this._baseUrl, {
+            headers: this._headers,
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+
+            return Promise.reject(`Error: ${res.status}`);
+        });
+    }
 }
