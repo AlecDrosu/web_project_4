@@ -278,3 +278,42 @@ const deleteCardPopup = new PopupWithConfirm({
 		deleteCardPopup.close();
 	},
 });
+
+// Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
+// const cardDeletPopup = new PopupWithConfirm({
+// 	popupSelector: ".modal_type_confirm",
+// 	handleConfirm: (id) => {
+// 		api
+// 			.deleteCard(id)
+// 			.then((res) => {
+// 				console.log(res);
+// 				// remove the card from the page
+// 				// const card = document.querySelector(`[data-id="${id}"]`);
+// 				// card.remove();
+// 			})
+// 			.catch((err) => console.log(err))
+// 			.finally(() => cardDeletPopup.close());
+// 	},
+// });
+// cardDeletPopup.open();
+
+// cardDeletPopup.setEventListeners();
+
+// run setEventListeners on the userInfoPopup
+
+// create the change profile image popup
+// const userImagePopup = new PopupWithForm({
+// 	popupSelector: ".modal_type_edit-pic",
+// 	handleFormSubmit: () => {
+// 		userInfo.setUserAvatar({
+// 			avatar: imageURL.value,
+// 		});
+
+// 		userImagePopup.close();
+// 	},
+// });
+
+// // run setEventListeners on the userImagePopup
+// userImagePopup.setEventListeners();
+
+// new addCardPopup

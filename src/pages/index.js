@@ -20,6 +20,7 @@ const addModal = document.querySelector(".modal_type_add");
 const editForm = modalContainer.querySelector(".form");
 const addForm = addModal.querySelector(".form");
 const editProfileModal = document.querySelector(".modal_type_edit-pic");
+const deleteModal = document.querySelector(".modal_type_confirm");
 const editProfileForm = editProfileModal.querySelector(".form");
 const listTitle = modalContainer.querySelector("#name");
 const listSubtitle = modalContainer.querySelector("#about");
@@ -33,6 +34,8 @@ const profileImage = document.querySelector(".profile__avatar");
 
 const addSubmitBtn = addModal.querySelector(".form__submit");
 const editSubmitBtn = modalContainer.querySelector(".form__submit");
+const avatarSubmitBtm = editProfileModal.querySelector(".form__submit");
+const deleteSubmitBtn = deleteModal.querySelector(".form__submit");
 // const submitBtn = document.querySelector(".form__submit");
 
 // Functions
@@ -41,9 +44,13 @@ export function renderLoading(isLoading) {
 	if (isLoading) {
 		addSubmitBtn.textContent = "Creating...";
 		editSubmitBtn.textContent = "Saving...";
+		avatarSubmitBtm.textContent = "Saving...";
+		deleteSubmitBtn.textContent = "Deleting...";
 	} else {
 		addSubmitBtn.textContent = "Create";
 		editSubmitBtn.textContent = "Save";
+		avatarSubmitBtm.textContent = "Save";
+		deleteSubmitBtn.textContent = "Yes";
 	}
 }
 
@@ -80,18 +87,6 @@ const cardsList = new Section(
 	},
 	".elements"
 );
-
-// save the userinfo to the server (does not work)
-// api.editProfile(listTitle.value, listSubtitle.value).then((res) => {
-// 	userInfo.setUserInfo({
-// 		name: res.name,
-// 		job: res.about,
-// 	});
-// 	userInfo.setUserAvatar({
-// 		avatar: res.avatar,
-// 	});
-// });
-// Instead of the code above, maybe figure out how to use userInfoPopup
 
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
 
@@ -151,11 +146,8 @@ const userInfoPopup = new PopupWithForm({
 	},
 });
 
-
-
 userImagePopup.setEventListeners();
 userInfoPopup.setEventListeners();
-
 
 api.getUserInfo().then((res) => {
 	userInfo.setUserInfo({
@@ -166,44 +158,6 @@ api.getUserInfo().then((res) => {
 		avatar: res.avatar,
 	});
 });
-// Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
-// const cardDeletPopup = new PopupWithConfirm({
-// 	popupSelector: ".modal_type_confirm",
-// 	handleConfirm: (id) => {
-// 		api
-// 			.deleteCard(id)
-// 			.then((res) => {
-// 				console.log(res);
-// 				// remove the card from the page
-// 				// const card = document.querySelector(`[data-id="${id}"]`);
-// 				// card.remove();
-// 			})
-// 			.catch((err) => console.log(err))
-// 			.finally(() => cardDeletPopup.close());
-// 	},
-// });
-// cardDeletPopup.open();
-
-// cardDeletPopup.setEventListeners();
-
-// run setEventListeners on the userInfoPopup
-
-// create the change profile image popup
-// const userImagePopup = new PopupWithForm({
-// 	popupSelector: ".modal_type_edit-pic",
-// 	handleFormSubmit: () => {
-// 		userInfo.setUserAvatar({
-// 			avatar: imageURL.value,
-// 		});
-
-// 		userImagePopup.close();
-// 	},
-// });
-
-// // run setEventListeners on the userImagePopup
-// userImagePopup.setEventListeners();
-
-// new addCardPopup
 
 const addCardPopup = new PopupWithForm({
 	popupSelector: ".modal_type_add",
@@ -216,7 +170,7 @@ const addCardPopup = new PopupWithForm({
 					title: res.name,
 					image: res.link,
 					likes: res.likes,
-					owner: item.owner._id,
+					// owner: item.owner._id,
 					id: item._id,
 				});
 			})
@@ -234,11 +188,10 @@ editProfileButton.addEventListener("click", () => {
 	const { name, job } = userInfo.getUserInfo();
 	listTitle.value = name; // set the value of the input to the name
 	listSubtitle.value = job; // set the value of the input to the job
-	
-	userInfoPopup.open();
-	
-	// renderLoading(false);
 
+	userInfoPopup.open();
+
+	// renderLoading(false);
 });
 
 // create the add card popup using the PopupWithImage class
@@ -269,34 +222,26 @@ function renderCard(item) {
 		cardEl.querySelector(".element__trash").style.display = "none";
 	}
 
-	// api.deleteCard(item.id).then((res) => {
-	// 	console.log(res);
-	// 	cardEl.remove();
-	// }).catch((err) => console.log(err))
-	// .finally(() => cardDeletPopup.close());
-
 	if (item.owner === "78f85ac28985def725e0e651") {
 		cardEl.querySelector(".element__trash").addEventListener("click", () => {
-			// cardId = item.id;
-
 			const cardDeletPopup = new PopupWithConfirm({
 				popupSelector: ".modal_type_confirm",
+				id: item.id,
 				handleConfirm: (id) => {
 					console.log(id);
 					api
-						.deleteCard(id)
+						.deleteCard({ cardId: id })
 						.then((res) => {
-							console.log(res);
-							// remove the card from the page
+							cardEl.remove();
 						})
 						.catch((err) => console.log(err))
 						.finally(() => cardDeletPopup.close());
 				},
 			});
 
-			cardDeletPopup.open();
 			cardDeletPopup.setEventListeners();
 
+			cardDeletPopup.open();
 		});
 	}
 }
@@ -321,7 +266,10 @@ addFormValidator.enableValidation();
 const editFormValidator = new FormValidator(formValidationConfig, editForm);
 editFormValidator.enableValidation();
 
-const editAvatarValidator = new FormValidator(formValidationConfig, editProfileForm);
+const editAvatarValidator = new FormValidator(
+	formValidationConfig,
+	editProfileForm
+);
 editAvatarValidator.enableValidation();
 
 const editProfileFormValidator = new FormValidator(

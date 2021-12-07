@@ -25,9 +25,6 @@ class Card {
 				this._handleCardClick({ name: this._title, link: this._image })
 			);
 		// delete the card from the DOM when when the user confirms the deletion of the card on the popup
-		// this._element
-		// 	.querySelector(".element__trash")
-		// 	.addEventListener("click", () => this._handleDelete());
 
 		this._element
 			.querySelector(".text__heart")
