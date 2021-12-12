@@ -244,6 +244,30 @@ function renderCard(item) {
 			cardDeletPopup.open();
 		});
 	}
+
+	cardEl.querySelector(".text__heart").addEventListener("click", () => {
+		api
+			.likeCard({ cardId: item.id })
+			.then((res) => {
+				console.log(res);
+				cardEl.querySelector(".element__like").classList.add("element__like_active");
+				cardEl.querySelector(".element__like-count").textContent = res.likes.length;
+			})
+			.catch((err) => console.log(err))
+			.finally(() => cardDeletPopup.close());
+	});
+
+	cardEl.querySelector(".text__heart").addEventListener("click", () => {
+		api
+			.dislikeCard({ cardId: item.id })
+			.then((res) => {
+				console.log(res);
+				cardEl.querySelector(".element__like").classList.remove("element__like_active");
+				cardEl.querySelector(".element__like-count").textContent = res.likes.length;
+			})
+			.catch((err) => console.log(err))
+			.finally(() => cardDeletPopup.close());
+	});
 }
 
 // Event Listeners
