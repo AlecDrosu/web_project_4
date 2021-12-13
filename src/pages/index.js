@@ -61,21 +61,23 @@ const config = {
 		authorization: "807a4335-951b-4493-9e81-0010a6738faf",
 		"Content-Type": "application/json",
 	},
-	// userID: '78f85ac28985def725e0e651',
+	userID: '78f85ac28985def725e0e651',
 };
 
 const api = new Api(config);
 
 api.getCards().then((res) => {
 	res.forEach((item) => {
-		// console.log(item);
+		console.log(item);
 		renderCard({
 			title: item.name,
 			image: item.link,
 			likes: item.likes.length,
 			owner: item.owner._id,
 			id: item._id,
+			userLikes: item.likes,
 		});
+		// write a statement, where if the user has liked the card, then the button should be filled
 	});
 });
 
@@ -114,7 +116,7 @@ const userImagePopup = new PopupWithForm({
 	handleFormSubmit: (data) => {
 		console.log(data);
 		api
-			.editProfile({ avatar: data.avatar })
+			.editAvatar({ avatar: data.avatar })
 			.then((res) => {
 				console.log(res);
 				userInfo.setUserAvatar({
@@ -217,12 +219,17 @@ function renderCard(item) {
 	}).generateCard();
 	cardsList.addItem(cardEl);
 
-	// console.log(item);
-	if (item.owner !== "78f85ac28985def725e0e651") {
+	console.log(item);
+	// if the user likes a card, then the button should be filled
+	if (item.userLikes.filter((user) => user._id === config.userID).length > 0) {
+		cardEl.querySelector(".text__heart").classList.add("text__heart_active");
+	}
+
+	if (item.owner !== config.userID) {
 		cardEl.querySelector(".element__trash").style.display = "none";
 	}
 
-	if (item.owner === "78f85ac28985def725e0e651") {
+	if (item.owner === config.userID) {
 		cardEl.querySelector(".element__trash").addEventListener("click", () => {
 			const cardDeletPopup = new PopupWithConfirm({
 				popupSelector: ".modal_type_confirm",
@@ -250,11 +257,10 @@ function renderCard(item) {
 			.likeCard({ cardId: item.id })
 			.then((res) => {
 				console.log(res);
-				cardEl.querySelector(".element__like").classList.add("element__like_active");
-				cardEl.querySelector(".element__like-count").textContent = res.likes.length;
+				cardEl.querySelector(".text__heart").classList.add("text__heart_active");
+				cardEl.querySelector(".text__like-count").textContent = res.likes.length;
 			})
-			.catch((err) => console.log(err))
-			.finally(() => cardDeletPopup.close());
+			.catch((err) => console.log(err));
 	});
 
 	cardEl.querySelector(".text__heart").addEventListener("click", () => {
@@ -262,11 +268,10 @@ function renderCard(item) {
 			.dislikeCard({ cardId: item.id })
 			.then((res) => {
 				console.log(res);
-				cardEl.querySelector(".element__like").classList.remove("element__like_active");
-				cardEl.querySelector(".element__like-count").textContent = res.likes.length;
+				cardEl.querySelector(".text__heart").classList.remove("text__heart_active");
+				cardEl.querySelector(".text__like-count").textContent = res.likes.length;
 			})
-			.catch((err) => console.log(err))
-			.finally(() => cardDeletPopup.close());
+			.catch((err) => console.log(err));
 	});
 }
 
