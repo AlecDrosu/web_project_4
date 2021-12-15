@@ -65,28 +65,28 @@ const config = {
 
 const api = new Api(config);
 
-// api.getCards().then((res) => {
-// 	res.forEach((item) => {
-// 		renderCard({
-// 			title: item.name,
-// 			image: item.link,
-// 			likes: item.likes.length,
-// 			owner: item.owner._id,
-// 			id: item._id,
-// 			userLikes: item.likes,
-// 		});
-// 	});
-// });
-
 // display the cards from the cardsURl array, to the page
 const cardsList = new Section(
   {
-    items: api.getCards(),
-    renderer: (item) => renderCard(item),
+    // items: api.getCards(),
+    renderer: (item) =>
+      cardsList.addItem(
+        renderCard({
+          title: item.name,
+          image: item.link,
+          likes: item.likes.length,
+          owner: item.owner._id,
+          id: item._id,
+          userLikes: item.likes,
+        })
+      ),
+    // renderer: (item) => {
+    //   const element = new Card(item).generateCard();
+    //   cardsList.addItem(element);
+    // }
   },
   ".elements"
 );
-
 
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
 
@@ -144,6 +144,7 @@ api.getUserInfo().then((res) => {
   });
 });
 
+
 const addCardPopup = new PopupWithForm({
   popupSelector: ".modal_type_add",
   handleFormSubmit: (item) => {
@@ -151,20 +152,18 @@ const addCardPopup = new PopupWithForm({
       .createCard(item)
       .then((res) => {
         console.log(res);
-        renderCard({
-          title: res.name,
-          image: res.link,
-          likes: res.likes,
-          id: res._id,
-        });
+        cardsList.addItem(renderCard(res));
       })
       .catch((err) => console.log(err))
       .finally(() => {
         addCardPopup.close();
-        api.getCards().then((res) => {
-          // have the card list render the new card on the page
-          console.log(res);
-        });
+
+        // api.getCards().then((res) => {
+        //   cardsList.renderItems(res);
+        // });
+
+
+        // cardsList.renderItems(api.getCards());
       });
   },
 });
@@ -273,9 +272,8 @@ addCard.addEventListener("click", () => addCardPopup.open()); //create an add po
 // create the addEventListener for the addcard button and createcard api
 
 api.getCards().then((res) => {
-	console.log(res);
+  console.log(res);
   res.forEach((item) => {
-
     renderCard({
       title: item.name,
       image: item.link,
@@ -286,6 +284,10 @@ api.getCards().then((res) => {
     });
   });
 });
+
+// api.getCards().then((res) => {
+//   cardsList.renderItems(res);
+// });
 
 // Actions
 
