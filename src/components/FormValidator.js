@@ -14,7 +14,7 @@ class FormValidator {
 	}
 
 	_checkInputValidity(inputEl) {
-		const errorEl = this._formEl.querySelector(`#${inputEl.name}-error`);
+		const errorEl = this._formEl.querySelector(`#${inputEl.id}-error`);
 		if (!this._checkIfInputValid(inputEl)) {
 			// show error message and add error class
 			inputEl.classList.add(this._inputErrorClass);

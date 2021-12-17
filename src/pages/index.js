@@ -20,8 +20,8 @@ const addForm = addModal.querySelector(".form");
 const editProfileModal = document.querySelector(".modal_type_edit-pic");
 const deleteModal = document.querySelector(".modal_type_confirm");
 const editProfileForm = editProfileModal.querySelector(".form");
-const listTitle = modalContainer.querySelector("#name_edit");
-const listSubtitle = modalContainer.querySelector("#about_edit");
+const listTitle = modalContainer.querySelector("#name");
+const listSubtitle = modalContainer.querySelector("#about");
 const addCard = document.querySelector(".profile__button");
 const editProfileImage = document.querySelector(".profile__avatar_edit");
 const addSubmitBtn = addModal.querySelector(".form__submit");
@@ -92,7 +92,7 @@ const userImagePopup = new PopupWithForm({
   handleFormSubmit: (data) => {
     console.log(data);
     api
-      .editAvatar({ avatar: data.link })
+      .editAvatar({ avatar: data.avatar })
       .then((res) => {
         console.log(res);
         userInfo.setUserAvatar({
