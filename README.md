@@ -15,7 +15,7 @@ The way you'll do this at work is by exporting images directly from Figma — we
 
 Have fun with JavaScript!
 
-This is the finished product. (After sprint 9), the JavaScript was much much more complicated and I had to discuss the project in great detail to understand everything. However, it does work very well, and keeping the code seperated and invlolving webpack has made it much easier to work with. This project took forever to do due to some relatively simple errors that were hard to find. There was one error though, where it said I was using the wrong BEM methodology for profile__avatar_edit. I do not know why this is, but changing it to profile__avatar__edit seems to work.
+This is the finished product. (After sprint 9), the JavaScript was much much more complicated and I had to discuss the project in great detail to understand everything. However, it does work very well, and keeping the code seperated and invlolving webpack has made it much easier to work with. This project took forever to do due to some relatively simple errors that were hard to find. There was one error though, where it said I was using the wrong BEM methodology for profile__avatar_edit. I do not know why this is, but changing it to profile__avatar-edit seems to work.
 
 link to GitHub pages: https://AlecDrosu.github.io/web_project_4
  
