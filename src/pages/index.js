@@ -9,7 +9,6 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
 import Section from "../components/Section.js";
 import Api from "../components/Api.js";
-// import { search } from "core-js/fn/symbol";
 
 // Query Selectors
 
@@ -23,14 +22,8 @@ const deleteModal = document.querySelector(".modal_type_confirm");
 const editProfileForm = editProfileModal.querySelector(".form");
 const listTitle = modalContainer.querySelector("#name");
 const listSubtitle = modalContainer.querySelector("#about");
-const imageURL = document.querySelector("#link");
-const addTitle = addForm.querySelector(".form__input_type_title");
-const addImage = addForm.querySelector(".form__input_type_link");
 const addCard = document.querySelector(".profile__button");
-const cardDeletBtn = document.querySelector(".element__trash");
 const editProfileImage = document.querySelector(".profile__avatar_edit");
-const profileImage = document.querySelector(".profile__avatar");
-
 const addSubmitBtn = addModal.querySelector(".form__submit");
 const editSubmitBtn = modalContainer.querySelector(".form__submit");
 const avatarSubmitBtm = editProfileModal.querySelector(".form__submit");
@@ -68,9 +61,7 @@ const api = new Api(config);
 // display the cards from the cardsURl array, to the page
 const cardsList = new Section(
   {
-    // items: api.getCards(),
     renderer: (item) =>
-      // cardsList.addItem(
       renderCard({
         title: item.name,
         image: item.link,
@@ -79,27 +70,13 @@ const cardsList = new Section(
         id: item._id,
         userLikes: item.likes,
       }),
-    // ),
-
-    // cardsList.addItem(renderCard(item)),
-    // renderCard(item),
-
-    // renderer: (item) => {
-    //   const element = new Card(item).generateCard();
-    //   cardsList.addItem(element);
-    // }
   },
   ".elements"
 );
 
-// api.getCards().then((res) => {
-//   return cardsList.addItem(res[0]);
-// });
-
 api.getCards().then((res) => {
   cardsList.renderItems(res);
 });
-
 
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
 
@@ -160,32 +137,23 @@ const addCardPopup = new PopupWithForm({
       .createCard(item)
       .then((res) => {
         console.log(res);
-        cardsList.addItem(renderCard({
-          title: res.name,
-          image: res.link,
-          likes: res.likes.length,
-          owner: res.owner._id,
-          id: res._id,
-          userLikes: res.likes,
-        }));
-
-        
+        cardsList.addItem(
+          renderCard({
+            title: res.name,
+            image: res.link,
+            likes: res.likes.length,
+            owner: res.owner._id,
+            id: res._id,
+            userLikes: res.likes,
+          })
+        );
       })
       .catch((err) => console.log(err))
       .finally(() => {
         addCardPopup.close();
-
-        // show the card on the page immediately after the modal closes
-        // api.getCards().then((res) => {
-        //   cardsList.addItem(res[0]);
-        //   console.log(res[0]);
-        // });
-
-        
       });
   },
 });
-
 
 addCardPopup.setEventListeners();
 
@@ -290,35 +258,6 @@ function renderCard(item) {
 // Event Listeners
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
 // create the addEventListener for the addcard button and createcard api
-
-// api.getCards().then((res) => {
-//   console.log(res);
-//   res.forEach((item) => {
-//     // console.log(item);
-//     renderCard({
-//       title: item.name,
-//       image: item.link,
-//       likes: item.likes.length,
-//       owner: item.owner._id,
-//       id: item._id,
-//       userLikes: item.likes,
-//     });
-//   });
-// });
-
-// api.getCards().then((res) => {
-//   const cards = res.map((item) => {
-//     return {
-//       title: item.name,
-//       image: item.link,
-//       likes: item.likes.length,
-//       owner: item.owner._id,
-//       id: item._id,
-//       userLikes: item.likes,
-//     };
-//   });
-//   cardsList.renderItems(cards);
-// });
 
 // Actions
 
