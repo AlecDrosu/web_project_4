@@ -20,7 +20,7 @@
 @import url(../blocks/title/__button/title__button.css);
 @import url(../blocks/info/__job/info__job.css);
 @import url(../blocks/profile/__button/profile__button.css);
-@import url(../blocks/profile/__avatar/_edit/profile__avatar_edit.css);
+@import url(../blocks/profile/__avatar/_edit/profile__avatar-edit.css);
 @import url(../blocks/profile/__image-box/profile__image-box.css);
 
 /* Elements */
