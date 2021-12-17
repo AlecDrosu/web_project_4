@@ -13,6 +13,7 @@ export default class Api {
 	getCards() {
 		// fetch the url with the token: 807a4335-951b-4493-9e81-0010a6738faf
 		return fetch(this._cardUrl, {
+			method: "GET",
 			headers: this._headers,
 		}).then((res) => {
 			if (res.ok) {

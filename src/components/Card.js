@@ -3,8 +3,8 @@ class Card {
 		this._title = card.title;
 		this._image = card.image;
 		this._likes = card.likes;
-		this._owner = card.owner._id;
-		this._id = card._id;
+		this._owner = card.owner;
+		this._id = card.id;
 		this._handleCardClick = handleCardClick;
 
 		this._cardSelector = cardSelector;

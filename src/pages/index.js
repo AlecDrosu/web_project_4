@@ -70,16 +70,20 @@ const cardsList = new Section(
   {
     // items: api.getCards(),
     renderer: (item) =>
-      cardsList.addItem(
-        renderCard({
-          title: item.name,
-          image: item.link,
-          likes: item.likes.length,
-          owner: item.owner._id,
-          id: item._id,
-          userLikes: item.likes,
-        })
-      ),
+      // cardsList.addItem(
+      renderCard({
+        title: item.name,
+        image: item.link,
+        likes: item.likes.length,
+        owner: item.owner._id,
+        id: item._id,
+        userLikes: item.likes,
+      }),
+    // ),
+
+    // cardsList.addItem(renderCard(item)),
+    // renderCard(item),
+
     // renderer: (item) => {
     //   const element = new Card(item).generateCard();
     //   cardsList.addItem(element);
@@ -87,6 +91,15 @@ const cardsList = new Section(
   },
   ".elements"
 );
+
+// api.getCards().then((res) => {
+//   return cardsList.addItem(res[0]);
+// });
+
+api.getCards().then((res) => {
+  cardsList.renderItems(res);
+});
+
 
 // ! ================ UserInfo, popupWithForm, PopupWithImage ==================
 
@@ -100,11 +113,9 @@ const userInfo = new UserInfo({
 const userImagePopup = new PopupWithForm({
   popupSelector: ".modal_type_edit-pic",
   handleFormSubmit: (data) => {
-    console.log(data);
     api
       .editAvatar({ avatar: data.avatar })
       .then((res) => {
-        console.log(res);
         userInfo.setUserAvatar({
           avatar: res.avatar,
         });
@@ -116,11 +127,9 @@ const userImagePopup = new PopupWithForm({
 const userInfoPopup = new PopupWithForm({
   popupSelector: ".modal_type_edit",
   handleFormSubmit: (data) => {
-    console.log(data);
     api
       .editProfile({ name: data.name, about: data.about })
       .then((res) => {
-        console.log(res.avatar);
         userInfo.setUserInfo({
           name: res.name,
           job: res.about,
@@ -144,7 +153,6 @@ api.getUserInfo().then((res) => {
   });
 });
 
-
 const addCardPopup = new PopupWithForm({
   popupSelector: ".modal_type_add",
   handleFormSubmit: (item) => {
@@ -152,21 +160,32 @@ const addCardPopup = new PopupWithForm({
       .createCard(item)
       .then((res) => {
         console.log(res);
-        cardsList.addItem(renderCard(res));
+        cardsList.addItem(renderCard({
+          title: res.name,
+          image: res.link,
+          likes: res.likes.length,
+          owner: res.owner._id,
+          id: res._id,
+          userLikes: res.likes,
+        }));
+
+        
       })
       .catch((err) => console.log(err))
       .finally(() => {
         addCardPopup.close();
 
+        // show the card on the page immediately after the modal closes
         // api.getCards().then((res) => {
-        //   cardsList.renderItems(res);
+        //   cardsList.addItem(res[0]);
+        //   console.log(res[0]);
         // });
 
-
-        // cardsList.renderItems(api.getCards());
+        
       });
   },
 });
+
 
 addCardPopup.setEventListeners();
 
@@ -204,8 +223,9 @@ function renderCard(item) {
   const cardEl = new Card(item, "#elementTemplate", (data) => {
     popupImage.open(data);
   }).generateCard();
-  cardsList.addItem(cardEl);
+  cardsList.addCard(cardEl);
 
+  console.log(item);
   // if the user likes a card, then the button should be filled
   if (item.userLikes.filter((user) => user._id === config.userID).length > 0) {
     cardEl.querySelector(".text__heart").classList.add("text__heart_active");
@@ -221,7 +241,6 @@ function renderCard(item) {
         popupSelector: ".modal_type_confirm",
         id: item.id,
         handleConfirm: (id) => {
-          console.log(id);
           api
             .deleteCard({ cardId: id })
             .then((res) => {
@@ -242,7 +261,6 @@ function renderCard(item) {
     api
       .likeCard({ cardId: item.id })
       .then((res) => {
-        console.log(res);
         cardEl
           .querySelector(".text__heart")
           .classList.add("text__heart_active");
@@ -256,7 +274,6 @@ function renderCard(item) {
     api
       .dislikeCard({ cardId: item.id })
       .then((res) => {
-        console.log(res);
         cardEl
           .querySelector(".text__heart")
           .classList.remove("text__heart_active");
@@ -265,28 +282,42 @@ function renderCard(item) {
       })
       .catch((err) => console.log(err));
   });
+
+  // when a card is rendered, it should immediately show up on the page
+  return cardEl;
 }
 
 // Event Listeners
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
 // create the addEventListener for the addcard button and createcard api
 
-api.getCards().then((res) => {
-  console.log(res);
-  res.forEach((item) => {
-    renderCard({
-      title: item.name,
-      image: item.link,
-      likes: item.likes.length,
-      owner: item.owner._id,
-      id: item._id,
-      userLikes: item.likes,
-    });
-  });
-});
+// api.getCards().then((res) => {
+//   console.log(res);
+//   res.forEach((item) => {
+//     // console.log(item);
+//     renderCard({
+//       title: item.name,
+//       image: item.link,
+//       likes: item.likes.length,
+//       owner: item.owner._id,
+//       id: item._id,
+//       userLikes: item.likes,
+//     });
+//   });
+// });
 
 // api.getCards().then((res) => {
-//   cardsList.renderItems(res);
+//   const cards = res.map((item) => {
+//     return {
+//       title: item.name,
+//       image: item.link,
+//       likes: item.likes.length,
+//       owner: item.owner._id,
+//       id: item._id,
+//       userLikes: item.likes,
+//     };
+//   });
+//   cardsList.renderItems(cards);
 // });
 
 // Actions
