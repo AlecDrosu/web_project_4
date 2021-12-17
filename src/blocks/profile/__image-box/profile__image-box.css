@@ -3,6 +3,6 @@
     border-radius: 50%;
 }
 
-.profile__image-box:hover .profile__avatar_edit {
+.profile__image-box:hover .profile__avatar__edit {
     display: block;
 }
