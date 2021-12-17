@@ -15,7 +15,6 @@ The way you'll do this at work is by exporting images directly from Figma — we
 
 Have fun with JavaScript!
 
-This is the finished product. (After sprint 8), the JavaScript was much much more complicated and I had to discuss the project in great detail to understand everything. However, it does work very well, and keeping the code seperated and invlolving webpack has made it much easier to work with.
-
+This is the finished product. (After sprint 9), the JavaScript was much much more complicated and I had to discuss the project in great detail to understand everything. However, it does work very well, and keeping the code seperated and invlolving webpack has made it much easier to work with. This project took forever to do due to some relatively simple errors that were hard to find. **To the reviewer currently looking at my project, there was a slight error I caught after submitting the files. I fixed it immediately but it seems you started working on it. I submitted the new code. I beleive the old code won't even run but I am not sure**
 link to GitHub pages: https://AlecDrosu.github.io/web_project_4
  
