@@ -20,8 +20,8 @@ const addForm = addModal.querySelector(".form");
 const editProfileModal = document.querySelector(".modal_type_edit-pic");
 const deleteModal = document.querySelector(".modal_type_confirm");
 const editProfileForm = editProfileModal.querySelector(".form");
-const listTitle = modalContainer.querySelector("#name");
-const listSubtitle = modalContainer.querySelector("#about");
+const listTitle = modalContainer.querySelector("#name_edit");
+const listSubtitle = modalContainer.querySelector("#about_edit");
 const addCard = document.querySelector(".profile__button");
 const editProfileImage = document.querySelector(".profile__avatar_edit");
 const addSubmitBtn = addModal.querySelector(".form__submit");
@@ -90,9 +90,11 @@ const userInfo = new UserInfo({
 const userImagePopup = new PopupWithForm({
   popupSelector: ".modal_type_edit-pic",
   handleFormSubmit: (data) => {
+    console.log(data);
     api
-      .editAvatar({ avatar: data.avatar })
+      .editAvatar({ avatar: data.link })
       .then((res) => {
+        console.log(res);
         userInfo.setUserAvatar({
           avatar: res.avatar,
         });
@@ -192,8 +194,6 @@ function renderCard(item) {
     popupImage.open(data);
   }).generateCard();
   cardsList.addCard(cardEl);
-
-  console.log(item);
   // if the user likes a card, then the button should be filled
   if (item.userLikes.filter((user) => user._id === config.userID).length > 0) {
     cardEl.querySelector(".text__heart").classList.add("text__heart_active");
