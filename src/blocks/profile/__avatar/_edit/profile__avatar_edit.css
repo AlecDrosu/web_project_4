@@ -1,5 +1,5 @@
 /* layer the profile avatar edit image on top of the profile avatar class */
-.profile__avatar-edit {
+.profile__avatar_edit {
 	position: absolute;
 	top: 0%;
 	left: 0%;
@@ -15,6 +15,6 @@
 	background-color: black;
 }
 
-.profile__avatar-edit:hover {
+.profile__avatar_edit:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
