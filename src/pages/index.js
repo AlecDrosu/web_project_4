@@ -9,26 +9,23 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
 import Section from "../components/Section.js";
 import Api from "../components/Api.js";
+import {
+  editProfileButton,
+  editForm,
+  addForm,
+  editProfileForm,
+  listTitle,
+  listSubtitle,
+  addCard,
+  editProfileImage,
+  addSubmitBtn,
+  editSubmitBtn,
+  avatarSubmitBtm,
+  deleteSubmitBtn,
+  userID,
+} from "../utils/constants.js";
 
 // Query Selectors
-
-const editProfileButton = document.querySelector(".title__button");
-const modalContainer = document.querySelector(".modal_type_edit");
-const addModal = document.querySelector(".modal_type_add");
-const editForm = modalContainer.querySelector(".form");
-const addForm = addModal.querySelector(".form");
-const editProfileModal = document.querySelector(".modal_type_edit-pic");
-const deleteModal = document.querySelector(".modal_type_confirm");
-const editProfileForm = editProfileModal.querySelector(".form");
-const listTitle = modalContainer.querySelector("#name");
-const listSubtitle = modalContainer.querySelector("#about");
-const addCard = document.querySelector(".profile__button");
-const editProfileImage = document.querySelector(".profile__avatar-edit");
-const addSubmitBtn = addModal.querySelector(".form__submit");
-const editSubmitBtn = modalContainer.querySelector(".form__submit");
-const avatarSubmitBtm = editProfileModal.querySelector(".form__submit");
-const deleteSubmitBtn = deleteModal.querySelector(".form__submit");
-// const submitBtn = document.querySelector(".form__submit");
 
 // Functions
 
@@ -47,13 +44,12 @@ export function renderLoading(isLoading) {
 }
 
 const config = {
-  baseUrl: "https://around.nomoreparties.co/v1/group-11/users/me",
+  baseUrl: "https://around.nomoreparties.co/v1/group-11",
   cardUrl: "https://around.nomoreparties.co/v1/group-11/cards",
   headers: {
     authorization: "807a4335-951b-4493-9e81-0010a6738faf",
     "Content-Type": "application/json",
   },
-  userID: "78f85ac28985def725e0e651",
 };
 
 const api = new Api(config);
@@ -74,11 +70,18 @@ const cardsList = new Section(
   ".elements"
 );
 
-api.getCards().then((res) => {
-  cardsList.renderItems(res);
-});
-
-// ! ================ UserInfo, popupWithForm, PopupWithImage ==================
+Promise.all([api.getUserInfo(), api.getCards()]).then(
+  ([userInf, cards]) => {
+    userInfo.setUserInfo({
+      name: userInf.name,
+      job: userInf.about,
+    });
+    userInfo.setUserAvatar({
+      avatar: userInf.avatar,
+    });
+    cardsList.renderItems(cards);
+  }
+).catch((err) => console.log(err));
 
 // create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
 const userInfo = new UserInfo({
@@ -122,16 +125,6 @@ const userInfoPopup = new PopupWithForm({
 userImagePopup.setEventListeners();
 userInfoPopup.setEventListeners();
 
-api.getUserInfo().then((res) => {
-  userInfo.setUserInfo({
-    name: res.name,
-    job: res.about,
-  });
-  userInfo.setUserAvatar({
-    avatar: res.avatar,
-  });
-});
-
 const addCardPopup = new PopupWithForm({
   popupSelector: ".modal_type_add",
   handleFormSubmit: (item) => {
@@ -168,8 +161,6 @@ editProfileButton.addEventListener("click", () => {
   listSubtitle.value = job; // set the value of the input to the job
 
   userInfoPopup.open();
-
-  // renderLoading(false);
 });
 
 // create the add card popup using the PopupWithImage class
@@ -178,15 +169,8 @@ const popupImage = new PopupWithImage(".modal_type_preview");
 // run setEventListeners on the popupImage
 popupImage.setEventListeners();
 
-// ! ================ DeleteCardPopup ====================
-
-// ! ======================================================
-
 // add an eventlistener to the editprofileimage button, so that the profile__avatar image changes to whatever image is in the input
 editProfileImage.addEventListener("click", () => userImagePopup.open());
-// cardDeletBtn.addEventListener("click", () => daleteCardPopup.open());
-
-// ! ============================== Section ===================================
 
 // create a common renderer function to not duplicate code
 function renderCard(item) {
@@ -195,15 +179,15 @@ function renderCard(item) {
   }).generateCard();
   cardsList.addCard(cardEl);
   // if the user likes a card, then the button should be filled
-  if (item.userLikes.filter((user) => user._id === config.userID).length > 0) {
+  if (item.userLikes.filter((user) => user._id === userID).length > 0) {
     cardEl.querySelector(".text__heart").classList.add("text__heart_active");
   }
 
-  if (item.owner !== config.userID) {
+  if (item.owner !== userID) {
     cardEl.querySelector(".element__trash").style.display = "none";
   }
 
-  if (item.owner === config.userID) {
+  if (item.owner === userID) {
     cardEl.querySelector(".element__trash").addEventListener("click", () => {
       const cardDeletPopup = new PopupWithConfirm({
         popupSelector: ".modal_type_confirm",
