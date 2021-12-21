@@ -19,4 +19,8 @@ export default class Section {
 	addCard(element) {
 		this._container.append(element);
 	}
+
+	removeCard(element) {
+		element.remove();
+	}
 }

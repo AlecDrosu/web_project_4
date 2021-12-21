@@ -18,39 +18,14 @@ import {
   listSubtitle,
   addCard,
   editProfileImage,
-  addSubmitBtn,
-  editSubmitBtn,
-  avatarSubmitBtm,
-  deleteSubmitBtn,
   userID,
+  formValidationConfig,
+  config,
 } from "../utils/constants.js";
 
 // Query Selectors
 
 // Functions
-
-export function renderLoading(isLoading) {
-  if (isLoading) {
-    addSubmitBtn.textContent = "Creating...";
-    editSubmitBtn.textContent = "Saving...";
-    avatarSubmitBtm.textContent = "Saving...";
-    deleteSubmitBtn.textContent = "Deleting...";
-  } else {
-    addSubmitBtn.textContent = "Create";
-    editSubmitBtn.textContent = "Save";
-    avatarSubmitBtm.textContent = "Save";
-    deleteSubmitBtn.textContent = "Yes";
-  }
-}
-
-const config = {
-  baseUrl: "https://around.nomoreparties.co/v1/group-11",
-  cardUrl: "https://around.nomoreparties.co/v1/group-11/cards",
-  headers: {
-    authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-    "Content-Type": "application/json",
-  },
-};
 
 const api = new Api(config);
 
@@ -70,8 +45,8 @@ const cardsList = new Section(
   ".elements"
 );
 
-Promise.all([api.getUserInfo(), api.getCards()]).then(
-  ([userInf, cards]) => {
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([userInf, cards]) => {
     userInfo.setUserInfo({
       name: userInf.name,
       job: userInf.about,
@@ -80,8 +55,8 @@ Promise.all([api.getUserInfo(), api.getCards()]).then(
       avatar: userInf.avatar,
     });
     cardsList.renderItems(cards);
-  }
-).catch((err) => console.log(err));
+  })
+  .catch((err) => console.log(err));
 
 // create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
 const userInfo = new UserInfo({
@@ -152,6 +127,59 @@ const addCardPopup = new PopupWithForm({
 
 addCardPopup.setEventListeners();
 
+// create the constant cardDeletePopup that opens when the delete button is clicked. When the user confirms the deletion, the card is deleted from the server and the card is removed from the page
+// const cardDeletePopup = new PopupWithConfirm({
+//   popupSelector: ".modal_type_confirm",
+//   handleConfirm: (id) => {
+//     api
+//       .deleteCard(id)
+//       .then((res) => {
+//         console.log(res);
+//         cardsList.removeCard(id);
+//       })
+//       .catch((err) => console.log(err))
+//       .finally(() => {
+//         cardDeletePopup.close();
+//       });
+//   },
+// });
+
+// cardDeletePopup.setEventListeners();
+
+// old code -->
+// const cardDeletePopup = new PopupWithConfirm({
+//   popupSelector: ".modal_type_confirm",
+//   id: item.id,
+//   handleConfirm: (id) => {
+//     api
+//       .deleteCard({ cardId: id })
+//       .then(() => {
+//         cardEl.remove();
+//       })
+//       .catch((err) => console.log(err))
+//       .finally(() => cardDeletePopup.close());
+//   },
+// });
+
+// cardDeletePopup.setEventListeners();
+
+// create a consant for the popup of the delete card button, make the input be for any card id
+const cardDeletePopup = new PopupWithConfirm({
+  popupSelector: ".modal_type_confirm",
+  handleConfirm: (id) => {
+    api
+      .deleteCard(id)
+      .then((res) => {
+        console.log(res);
+        cardsList.removeCard(id);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => cardDeletePopup.close());
+  },
+});
+
+cardDeletePopup.setEventListeners();
+
 // editProfileButton opens the profile
 
 editProfileButton.addEventListener("click", () => {
@@ -174,66 +202,110 @@ editProfileImage.addEventListener("click", () => userImagePopup.open());
 
 // create a common renderer function to not duplicate code
 function renderCard(item) {
-  const cardEl = new Card(item, "#elementTemplate", (data) => {
-    popupImage.open(data);
-  }).generateCard();
+  const cardEl = new Card(
+    item,
+    "#elementTemplate",
+    (data) => {
+      popupImage.open(data);
+    },
+    userID,
+    (id) => {
+      // if the card was already liked by the user, then unlike it
+      if (item.userLikes.filter((user) => user._id === userID).length > 0) {
+        api
+          .dislikeCard(id)
+          .then((res) => {
+            cardEl
+              .querySelector(".text__heart")
+              .classList.remove("text__heart_active");
+            cardEl.querySelector(".text__like-count").textContent =
+              res.likes.length;
+          })
+          .catch((err) => console.log(err));
+      } else {
+        api
+          .likeCard(id)
+          .then((res) => {
+            cardEl
+              .querySelector(".text__heart")
+              .classList.add("text__heart_active");
+            cardEl.querySelector(".text__like-count").textContent =
+              res.likes.length;
+          })
+          .catch((err) => console.log(err));
+      }
+    },
+    (id) => {
+      cardDeletePopup.open(id);
+    }
+  ).generateCard();
   cardsList.addCard(cardEl);
+
   // if the user likes a card, then the button should be filled
-  if (item.userLikes.filter((user) => user._id === userID).length > 0) {
-    cardEl.querySelector(".text__heart").classList.add("text__heart_active");
-  }
+  // if (item.userLikes.filter((user) => user._id === userID).length > 0) {
+  //   cardEl.querySelector(".text__heart").classList.add("text__heart_active");
+  // }
 
-  if (item.owner !== userID) {
-    cardEl.querySelector(".element__trash").style.display = "none";
-  }
+  // if (item.owner !== userID) {
+  //   cardEl.querySelector(".element__trash").style.display = "none";
+  // }
+  // cardEl.setLike(item.userLikes.filter((user) => user._id === userID).length > 0);
+  // if the user likes a card, then the button should be filled
 
-  if (item.owner === userID) {
-    cardEl.querySelector(".element__trash").addEventListener("click", () => {
-      const cardDeletPopup = new PopupWithConfirm({
-        popupSelector: ".modal_type_confirm",
-        id: item.id,
-        handleConfirm: (id) => {
-          api
-            .deleteCard({ cardId: id })
-            .then((res) => {
-              cardEl.remove();
-            })
-            .catch((err) => console.log(err))
-            .finally(() => cardDeletPopup.close());
-        },
-      });
+  // console.log(item.userLikes);
 
-      cardDeletPopup.setEventListeners();
+  // if (item.owner === userID) {
+  //   cardEl.querySelector(".element__trash").addEventListener("click", () => {
+  //     cardDeletePopup.open();
+  //   });
+  // }
 
-      cardDeletPopup.open();
-    });
-  }
+  // cardEl.querySelector(".text__heart").addEventListener("click", () => {
+  //   api
+  //     .likeCard({ cardId: item.id })
+  //     .then((res) => {
+  //       cardEl
+  //         .querySelector(".text__heart")
+  //         .classList.add("text__heart_active");
+  //       cardEl.querySelector(".text__like-count").textContent =
+  //         res.likes.length;
+  //     })
+  //     .catch((err) => console.log(err));
+  // });
 
-  cardEl.querySelector(".text__heart").addEventListener("click", () => {
-    api
-      .likeCard({ cardId: item.id })
-      .then((res) => {
-        cardEl
-          .querySelector(".text__heart")
-          .classList.add("text__heart_active");
-        cardEl.querySelector(".text__like-count").textContent =
-          res.likes.length;
-      })
-      .catch((err) => console.log(err));
-  });
+  // cardEl.querySelector(".text__heart").addEventListener("click", () => {
+  //   api
+  //     .dislikeCard({ cardId: item.id })
+  //     .then((res) => {
+  //       cardEl
+  //         .querySelector(".text__heart")
+  //         .classList.remove("text__heart_active");
+  //       cardEl.querySelector(".text__like-count").textContent =
+  //         res.likes.length;
+  //     })
+  //     .catch((err) => console.log(err));
+  // });
 
-  cardEl.querySelector(".text__heart").addEventListener("click", () => {
-    api
-      .dislikeCard({ cardId: item.id })
-      .then((res) => {
-        cardEl
-          .querySelector(".text__heart")
-          .classList.remove("text__heart_active");
-        cardEl.querySelector(".text__like-count").textContent =
-          res.likes.length;
-      })
-      .catch((err) => console.log(err));
-  });
+  // const handleLike = (id) => {
+  //   // if the card was already liked by the user, then unlike it
+  //   if (item.userLikes.filter((user) => user._id === userID).length > 0) {
+  //     api
+  //       .dislikeCard(id)
+  //       .then((res) => {
+  //         cardEl.setLike(false);
+  //         cardEl.querySelector(".text__like-count").textContent = res.likes.length;
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else {
+  //     api
+  //       .likeCard(id)
+  //       .then((res) => {
+  //         cardEl.setLike(true);
+  //         cardEl.querySelector(".text__like-count").textContent = res.likes.length;
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
 
   // when a card is rendered, it should immediately show up on the page
   return cardEl;
@@ -244,14 +316,6 @@ addCard.addEventListener("click", () => addCardPopup.open()); //create an add po
 // create the addEventListener for the addcard button and createcard api
 
 // Actions
-
-const formValidationConfig = {
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inactiveButtonClass: "form__submit_inactive",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "popup__error_visible",
-};
 
 const addFormValidator = new FormValidator(formValidationConfig, addForm);
 addFormValidator.enableValidation();

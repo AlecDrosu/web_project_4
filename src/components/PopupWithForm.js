@@ -1,10 +1,21 @@
 import Popup from "./Popup.js";
-import { renderLoading } from "../pages/index.js";
 
 export default class PopupWithForm extends Popup {
 	constructor({ handleFormSubmit, popupSelector }) {
 		super(popupSelector);
 		this._handleFormSubmit = handleFormSubmit;
+	}
+
+	_renderLoading(isLoading) {
+		if (isLoading) {
+			this._popupElement.querySelector(".form__submit").textContent = `${this._popupElement.querySelector(".form__submit").textContent.slice(0,-1)}ing...`;
+			console.log(this._btnText);
+		} 
+		else if (this._popupElement.querySelector(".form__submit").textContent.length > 4) {
+			this._popupElement.querySelector(".form__submit").textContent = `${this._popupElement.querySelector(".form__submit").textContent.slice(0,-6)}e`;
+			console.log(this._btnText);
+
+		}
 	}
 
 	_getInputValues() {
@@ -27,7 +38,7 @@ export default class PopupWithForm extends Popup {
 			.querySelector(".form")
 			.addEventListener("submit", (evt) => {
 				evt.preventDefault();
-				renderLoading(true, this._popupElement);
+				this._renderLoading(true, this._popupElement);
 				this._handleSubmit();
 			});
 	}
@@ -36,7 +47,7 @@ export default class PopupWithForm extends Popup {
 		super.close();
 		this._popupElement.querySelector(".form").reset();
 		setTimeout(() => {
-			renderLoading(false, this._popupElement);
+			this._renderLoading(false, this._popupElement);
 		}, 500);
 	}
 }
