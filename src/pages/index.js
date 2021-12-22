@@ -164,21 +164,21 @@ addCardPopup.setEventListeners();
 // cardDeletePopup.setEventListeners();
 
 // create a consant for the popup of the delete card button, make the input be for any card id
-const cardDeletePopup = new PopupWithConfirm({
-  popupSelector: ".modal_type_confirm",
-  handleConfirm: (id) => {
-    api
-      .deleteCard(id)
-      .then((res) => {
-        console.log(res);
-        cardsList.removeCard(id);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => cardDeletePopup.close());
-  },
-});
+// const cardDeletePopup = new PopupWithConfirm({
+//   popupSelector: ".modal_type_confirm",
+//   handleConfirm: (id) => {
+//     api
+//       .deleteCard(id)
+//       .then((res) => {
+//         console.log(res);
+//         cardsList.removeCard(id);
+//       })
+//       .catch((err) => console.log(err))
+//       .finally(() => cardDeletePopup.close());
+//   },
+// });
 
-cardDeletePopup.setEventListeners();
+// cardDeletePopup.setEventListeners();
 
 // editProfileButton opens the profile
 
@@ -236,7 +236,28 @@ function renderCard(item) {
       }
     },
     (id) => {
-      cardDeletePopup.open(id);
+      const cardDeletePopup = new PopupWithConfirm({
+        popupSelector: ".modal_type_confirm",
+        handleConfirm: () => {
+          api
+            .deleteCard(id)
+            .then(() => {
+              cardEl.remove();
+            })
+            .catch((err) => console.log(err))
+            .finally(() => {
+
+              document
+                .querySelector(".modal_type_confirm")
+                .classList.remove("modal_is-open")
+              // cardDeletePopup.close()
+              // cardDeletePopup.renderLoading(false);
+            }
+
+                
+            );
+        },
+      }).setEventListeners();
     }
   ).generateCard();
   cardsList.addCard(cardEl);

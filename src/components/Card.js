@@ -1,5 +1,12 @@
 class Card {
-  constructor(card, cardSelector, handleCardClick, userId, handleLike, handleDelete) {
+  constructor(
+    card,
+    cardSelector,
+    handleCardClick,
+    userId,
+    handleLike,
+    handleDelete
+  ) {
     this._title = card.title;
     this._image = card.image;
     this._likes = card.likes;
@@ -20,8 +27,12 @@ class Card {
   }
   // if the user likes a card, then the button should have the text__heart_active class
   _setLikeButton() {
-    if (this._userLikes.filter((user) => user._id === this._userId).length > 0) {
-      this._element.querySelector(".text__heart").classList.add("text__heart_active");
+    if (
+      this._userLikes.filter((user) => user._id === this._userId).length > 0
+    ) {
+      this._element
+        .querySelector(".text__heart")
+        .classList.add("text__heart_active");
     }
   }
 
@@ -40,27 +51,24 @@ class Card {
         this._handleCardClick({ name: this._title, link: this._image })
       );
 
-    this._element.querySelector(".text__heart").addEventListener("click", () =>
-      this._handleLike({ cardId: this._id })
-    );
+    this._element
+      .querySelector(".text__heart")
+      .addEventListener("click", () => this._handleLike({ cardId: this._id }));
 
     // when the user clicks on the trash icon, the cardDeletePopup is activated, and if it is submitted, the card is deleted
-    this._element.querySelector(".element__trash").addEventListener("click", () =>
-      this._handleDelete({ cardId: this._id })
-    );
+    this._element
+      .querySelector(".element__trash")
+      .addEventListener("click", () => {
+        this._handleDelete({ cardId: this._id });
+        
+        document
+        .querySelector(".modal_type_confirm")
+        .classList.add("modal_is-open")
+      });
 
     this._setDeleteButton();
     this._setLikeButton();
-
-    // if the trash button is clicked, then the card should be deleted, using the cardDeletePopup
-    // this._element
-    // 	.querySelector(".element__trash")
-    // 	.addEventListener("click", () => this._handleDelete());
   }
-
-  // _handleDelete() {
-  //   this._handleDelete.open();
-  // }
 
   generateCard() {
     this._element = this._getTemplate();
