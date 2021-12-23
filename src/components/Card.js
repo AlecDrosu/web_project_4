@@ -60,10 +60,10 @@ class Card {
       .querySelector(".element__trash")
       .addEventListener("click", () => {
         this._handleDelete({ cardId: this._id });
-        
+
         document
-        .querySelector(".modal_type_confirm")
-        .classList.add("modal_is-open")
+          .querySelector(".modal_type_confirm")
+          .classList.add("modal_is-open");
       });
 
     this._setDeleteButton();

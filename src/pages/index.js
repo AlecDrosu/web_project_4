@@ -76,9 +76,9 @@ const userImagePopup = new PopupWithForm({
         userInfo.setUserAvatar({
           avatar: res.avatar,
         });
+        userImagePopup.close();
       })
-      .catch((err) => console.log(err))
-      .finally(() => userImagePopup.close());
+      .catch((err) => console.log(err));
   },
 });
 const userInfoPopup = new PopupWithForm({
@@ -91,9 +91,9 @@ const userInfoPopup = new PopupWithForm({
           name: res.name,
           job: res.about,
         });
+        userInfoPopup.close();
       })
-      .catch((err) => console.log(err))
-      .finally(() => userInfoPopup.close());
+      .catch((err) => console.log(err));
   },
 });
 
@@ -117,66 +117,13 @@ const addCardPopup = new PopupWithForm({
             userLikes: res.likes,
           })
         );
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
         addCardPopup.close();
-      });
+      })
+      .catch((err) => console.log(err));
   },
 });
 
 addCardPopup.setEventListeners();
-
-// create the constant cardDeletePopup that opens when the delete button is clicked. When the user confirms the deletion, the card is deleted from the server and the card is removed from the page
-// const cardDeletePopup = new PopupWithConfirm({
-//   popupSelector: ".modal_type_confirm",
-//   handleConfirm: (id) => {
-//     api
-//       .deleteCard(id)
-//       .then((res) => {
-//         console.log(res);
-//         cardsList.removeCard(id);
-//       })
-//       .catch((err) => console.log(err))
-//       .finally(() => {
-//         cardDeletePopup.close();
-//       });
-//   },
-// });
-
-// cardDeletePopup.setEventListeners();
-
-// old code -->
-// const cardDeletePopup = new PopupWithConfirm({
-//   popupSelector: ".modal_type_confirm",
-//   id: item.id,
-//   handleConfirm: (id) => {
-//     api
-//       .deleteCard({ cardId: id })
-//       .then(() => {
-//         cardEl.remove();
-//       })
-//       .catch((err) => console.log(err))
-//       .finally(() => cardDeletePopup.close());
-//   },
-// });
-
-// cardDeletePopup.setEventListeners();
-
-// create a consant for the popup of the delete card button, make the input be for any card id
-// const cardDeletePopup = new PopupWithConfirm({
-//   popupSelector: ".modal_type_confirm",
-//   handleConfirm: (id) => {
-//     api
-//       .deleteCard(id)
-//       .then((res) => {
-//         console.log(res);
-//         cardsList.removeCard(id);
-//       })
-//       .catch((err) => console.log(err))
-//       .finally(() => cardDeletePopup.close());
-//   },
-// });
 
 // cardDeletePopup.setEventListeners();
 
@@ -236,7 +183,7 @@ function renderCard(item) {
       }
     },
     (id) => {
-      const cardDeletePopup = new PopupWithConfirm({
+      new PopupWithConfirm({
         popupSelector: ".modal_type_confirm",
         handleConfirm: () => {
           api
@@ -246,89 +193,20 @@ function renderCard(item) {
             })
             .catch((err) => console.log(err))
             .finally(() => {
-
               document
                 .querySelector(".modal_type_confirm")
-                .classList.remove("modal_is-open")
-              // cardDeletePopup.close()
-              // cardDeletePopup.renderLoading(false);
-            }
+                .classList.remove("modal_is-open");
+              // cardDeletePopup.close();
+              // why is .close() not working?
 
-                
-            );
+              // cardDeletePopup.renderLoading(false);
+            });
         },
       }).setEventListeners();
     }
   ).generateCard();
   cardsList.addCard(cardEl);
 
-  // if the user likes a card, then the button should be filled
-  // if (item.userLikes.filter((user) => user._id === userID).length > 0) {
-  //   cardEl.querySelector(".text__heart").classList.add("text__heart_active");
-  // }
-
-  // if (item.owner !== userID) {
-  //   cardEl.querySelector(".element__trash").style.display = "none";
-  // }
-  // cardEl.setLike(item.userLikes.filter((user) => user._id === userID).length > 0);
-  // if the user likes a card, then the button should be filled
-
-  // console.log(item.userLikes);
-
-  // if (item.owner === userID) {
-  //   cardEl.querySelector(".element__trash").addEventListener("click", () => {
-  //     cardDeletePopup.open();
-  //   });
-  // }
-
-  // cardEl.querySelector(".text__heart").addEventListener("click", () => {
-  //   api
-  //     .likeCard({ cardId: item.id })
-  //     .then((res) => {
-  //       cardEl
-  //         .querySelector(".text__heart")
-  //         .classList.add("text__heart_active");
-  //       cardEl.querySelector(".text__like-count").textContent =
-  //         res.likes.length;
-  //     })
-  //     .catch((err) => console.log(err));
-  // });
-
-  // cardEl.querySelector(".text__heart").addEventListener("click", () => {
-  //   api
-  //     .dislikeCard({ cardId: item.id })
-  //     .then((res) => {
-  //       cardEl
-  //         .querySelector(".text__heart")
-  //         .classList.remove("text__heart_active");
-  //       cardEl.querySelector(".text__like-count").textContent =
-  //         res.likes.length;
-  //     })
-  //     .catch((err) => console.log(err));
-  // });
-
-  // const handleLike = (id) => {
-  //   // if the card was already liked by the user, then unlike it
-  //   if (item.userLikes.filter((user) => user._id === userID).length > 0) {
-  //     api
-  //       .dislikeCard(id)
-  //       .then((res) => {
-  //         cardEl.setLike(false);
-  //         cardEl.querySelector(".text__like-count").textContent = res.likes.length;
-  //       })
-  //       .catch((err) => console.log(err));
-  //   } else {
-  //     api
-  //       .likeCard(id)
-  //       .then((res) => {
-  //         cardEl.setLike(true);
-  //         cardEl.querySelector(".text__like-count").textContent = res.likes.length;
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // };
-
-  // when a card is rendered, it should immediately show up on the page
   return cardEl;
 }
 

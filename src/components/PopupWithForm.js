@@ -11,7 +11,7 @@ export default class PopupWithForm extends Popup {
 			this._popupElement.querySelector(".form__submit").textContent = `${this._popupElement.querySelector(".form__submit").textContent.slice(0,-1)}ing...`;
 			console.log(this._btnText);
 		} 
-		else if (this._popupElement.querySelector(".form__submit").textContent.length > 4) {
+		else if (this._popupElement.querySelector(".form__submit").textContent.length > 8) {
 			this._popupElement.querySelector(".form__submit").textContent = `${this._popupElement.querySelector(".form__submit").textContent.slice(0,-6)}e`;
 			console.log(this._btnText);
 
