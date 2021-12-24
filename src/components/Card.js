@@ -36,6 +36,20 @@ class Card {
     }
   }
 
+  updateLikes() {
+    this._element.querySelector('.text__heart').classList.add('text__heart_active');
+    this._element.querySelector('.text__like-count').textContent = this._likes + 1;
+  }
+
+  updateDislikes() {
+    this._element.querySelector('.text__heart').classList.remove('text__heart_active');
+    this._element.querySelector('.text__like-count').textContent = this._likes - 1;
+  }
+
+  remove() {
+    this._element.remove();
+  }
+
   _getTemplate() {
     const cardEl = document
       .querySelector(this._cardSelector)
@@ -60,10 +74,6 @@ class Card {
       .querySelector(".element__trash")
       .addEventListener("click", () => {
         this._handleDelete({ cardId: this._id });
-
-        document
-          .querySelector(".modal_type_confirm")
-          .classList.add("modal_is-open");
       });
 
     this._setDeleteButton();

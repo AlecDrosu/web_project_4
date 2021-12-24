@@ -13,7 +13,6 @@
 // 	});
 // }
 
-
 // part 3. Edit profile
 // api.editProfile(listTitle.value, listSubtitle.value).then((res) => {
 // 	userInfo.setUserInfo({
@@ -31,24 +30,24 @@
 // send a delete request to delete a card from the server: DELETE https://around.nomoreparties.co/v1/groupId/cards/cardId
 // with the token: 807a4335-951b-4493-9e81-0010a6738faf
 function deleteCard(id) {
-	fetch(`https://around.nomoreparties.co/v1/group-11/cards/${id}`, {
-		method: "DELETE",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-		})
-		.then((res) => {
-			if (res.ok) {
-				const card = document.querySelector(`[data-id="${id}"]`);
-				card.remove();
-			}
-		});
+  fetch(`https://around.nomoreparties.co/v1/group-11/cards/${id}`, {
+    method: "DELETE",
+    headers: {
+      authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        const card = document.querySelector(`[data-id="${id}"]`);
+        card.remove();
+      }
+    });
 }
 
 // Part 8. adding and removing likes
@@ -56,25 +55,25 @@ function deleteCard(id) {
 // PUT https://around.nomoreparties.co/v1/group-11/cards/likes/cardId
 // with the token: 807a4335-951b-4493-9e81-0010a6738faf
 function likeCard(id) {
-	fetch(`https://around.nomoreparties.co/v1/group-11/cards/likes/${id}`, {
-		method: "PUT",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-		})
-		.then((res) => {
-			if (res.ok) {
-				const card = document.querySelector(`[data-id="${id}"]`);
-				const like = card.querySelector(".element__like");
-				like.classList.toggle("element__like_active");
-			}
-		});
+  fetch(`https://around.nomoreparties.co/v1/group-11/cards/likes/${id}`, {
+    method: "PUT",
+    headers: {
+      authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        const card = document.querySelector(`[data-id="${id}"]`);
+        const like = card.querySelector(".element__like");
+        like.classList.toggle("element__like_active");
+      }
+    });
 }
 
 // Part 9. Updating the profile picture
@@ -84,26 +83,26 @@ function likeCard(id) {
 // pass the JSON with a single propert, avatar:
 
 function updateProfileImage(url) {
-	fetch(`https://around.nomoreparties.co/v1/group-11/users/me/avatar`, {
-		method: "PATCH",
-		headers: {
-			authorization: "807a4335-951b-4493-9e81-0010a6738faf",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			avatar: url,
-		}),
-	})
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-		})
-		.then((res) => {
-			if (res.ok) {
-				profileImage.src = url;
-			}
-		});
+  fetch(`https://around.nomoreparties.co/v1/group-11/users/me/avatar`, {
+    method: "PATCH",
+    headers: {
+      authorization: "807a4335-951b-4493-9e81-0010a6738faf",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      avatar: url,
+    }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        profileImage.src = url;
+      }
+    });
 }
 
 // cardsList.renderItems();
@@ -221,62 +220,51 @@ function updateProfileImage(url) {
 // 	});
 // });
 
-
 api.getCards().then((res) => {
-	res.forEach((card) => {
-		const cardElement = new Card(
-			card,
-			"#cardTemplate",
-			(cardId) => {
-				api.deleteCard(cardId).then(() => {
-					const cardElement = document.querySelector(
-						`.element[data-id="${cardId}"]`
-					);
-					cardElement.remove();
-				});
-			},
-			(cardId) => {
-				api.likeCard(cardId).then((res) => {
-					const cardElement = document.querySelector(
-						`.element[data-id="${cardId}"]`
-					);
-					const likeElement = cardElement.querySelector(
-						".element__like-count"
-					);
-					likeElement.textContent = res.likes.length;
-				});
-			}
-		);
-		// const cardElement = cardElement.generateCard();
-		const cardList = document.querySelector(".elements");
-		cardList.append(cardElement);
-	});
+  res.forEach((card) => {
+    const cardElement = new Card(
+      card,
+      "#cardTemplate",
+      (cardId) => {
+        api.deleteCard(cardId).then(() => {
+          const cardElement = document.querySelector(
+            `.element[data-id="${cardId}"]`
+          );
+          cardElement.remove();
+        });
+      },
+      (cardId) => {
+        api.likeCard(cardId).then((res) => {
+          const cardElement = document.querySelector(
+            `.element[data-id="${cardId}"]`
+          );
+          const likeElement = cardElement.querySelector(".element__like-count");
+          likeElement.textContent = res.likes.length;
+        });
+      }
+    );
+    // const cardElement = cardElement.generateCard();
+    const cardList = document.querySelector(".elements");
+    cardList.append(cardElement);
+  });
 });
 
 api.getCards().then((res) => {
-	res.forEach((item) => {
-		renderCard({
-			title: item.name,
-			image: item.link,
-			likes: item.likes.length,
-		});
-	});
+  res.forEach((item) => {
+    renderCard({
+      title: item.name,
+      image: item.link,
+      likes: item.likes.length,
+    });
+  });
 });
-
-
-
-
-
-
-
-
 
 const deleteCardPopup = new PopupWithConfirm({
-	popupSelector: ".modal_type_confirm",
-	handleConfirmClick: () => {
-		deleteCard(cardId);
-		deleteCardPopup.close();
-	},
+  popupSelector: ".modal_type_confirm",
+  handleConfirmClick: () => {
+    deleteCard(cardId);
+    deleteCardPopup.close();
+  },
 });
 
 // Whenever the user click the element__trash button, open the popup. Then delete the card from the server when the user click the confirm button
@@ -317,3 +305,16 @@ const deleteCardPopup = new PopupWithConfirm({
 // userImagePopup.setEventListeners();
 
 // new addCardPopup
+
+api
+  .deleteCard(id)
+  .then(() => {
+    cardEl.remove();
+  })
+  .catch((err) => console.log(err))
+  .finally(() => {
+    cardDeletePopup.close();
+    cardDeletePopup.renderLoading(false);
+  });
+  
+const cardDeletePopup = new PopupWithConfirm('.modal_type_confirm');

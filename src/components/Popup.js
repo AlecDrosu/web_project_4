@@ -24,10 +24,12 @@ export default class Popup {
   open() {
     this._popupElement.classList.add("modal_is-open");
     document.addEventListener("keydown", this._handleKeyDown);
-    if (this._popupElement.querySelector(".form__input").value === "") {
-      this._popupElement
-        .querySelector(".form__submit")
-        .classList.add("form__submit_inactive");
+    if (this._popupElement.querySelector(".form__input")) {
+      if (this._popupElement.querySelector(".form__input").value === "") {
+        this._popupElement
+          .querySelector(".form__submit")
+          .classList.add("form__submit_inactive");
+      }
     }
   }
 

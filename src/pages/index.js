@@ -68,17 +68,16 @@ const userInfo = new UserInfo({
 const userImagePopup = new PopupWithForm({
   popupSelector: ".modal_type_edit-pic",
   handleFormSubmit: (data) => {
-    console.log(data);
     api
       .editAvatar({ avatar: data.avatar })
       .then((res) => {
-        console.log(res);
         userInfo.setUserAvatar({
           avatar: res.avatar,
         });
         userImagePopup.close();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => userImagePopup.renderLoading(false));
   },
 });
 const userInfoPopup = new PopupWithForm({
@@ -93,7 +92,8 @@ const userInfoPopup = new PopupWithForm({
         });
         userInfoPopup.close();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => userInfoPopup.renderLoading(false));
   },
 });
 
@@ -106,8 +106,6 @@ const addCardPopup = new PopupWithForm({
     api
       .createCard(item)
       .then((res) => {
-        console.log(res);
-        cardsList.addItem(
           renderCard({
             title: res.name,
             image: res.link,
@@ -116,16 +114,18 @@ const addCardPopup = new PopupWithForm({
             id: res._id,
             userLikes: res.likes,
           })
-        );
         addCardPopup.close();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => addCardPopup.renderLoading(false));
   },
 });
 
 addCardPopup.setEventListeners();
 
-// cardDeletePopup.setEventListeners();
+const cardDeletePopup = new PopupWithConfirm(".modal_type_confirm");
+
+cardDeletePopup.setEventListeners();
 
 // editProfileButton opens the profile
 
@@ -162,57 +162,40 @@ function renderCard(item) {
         api
           .dislikeCard(id)
           .then((res) => {
-            cardEl
-              .querySelector(".text__heart")
-              .classList.remove("text__heart_active");
-            cardEl.querySelector(".text__like-count").textContent =
-              res.likes.length;
+            cardEl.updateDislikes(res);
           })
           .catch((err) => console.log(err));
       } else {
         api
           .likeCard(id)
           .then((res) => {
-            cardEl
-              .querySelector(".text__heart")
-              .classList.add("text__heart_active");
-            cardEl.querySelector(".text__like-count").textContent =
-              res.likes.length;
+            cardEl.updateLikes(res);
           })
           .catch((err) => console.log(err));
       }
     },
     (id) => {
-      new PopupWithConfirm({
-        popupSelector: ".modal_type_confirm",
-        handleConfirm: () => {
-          api
-            .deleteCard(id)
-            .then(() => {
-              cardEl.remove();
-            })
-            .catch((err) => console.log(err))
-            .finally(() => {
-              document
-                .querySelector(".modal_type_confirm")
-                .classList.remove("modal_is-open");
-              // cardDeletePopup.close();
-              // why is .close() not working?
-
-              // cardDeletePopup.renderLoading(false);
-            });
-        },
-      }).setEventListeners();
+      cardDeletePopup.open(id);
+      cardDeletePopup.handleConfirm = () => {
+        api
+          .deleteCard(id)
+          .then(() => {
+            cardEl.remove();
+            cardDeletePopup.close();
+          })
+          .catch((err) => console.log(err))
+          .finally(() => cardDeletePopup.renderLoading(false));
+      };
     }
-  ).generateCard();
-  cardsList.addCard(cardEl);
+  );
+  cardsList.addCard(cardEl.generateCard());
+  
 
-  return cardEl;
+  // return cardEl;
 }
 
 // Event Listeners
 addCard.addEventListener("click", () => addCardPopup.open()); //create an add popup class with userinfoform
-// create the addEventListener for the addcard button and createcard api
 
 // Actions
 

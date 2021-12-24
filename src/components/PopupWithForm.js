@@ -4,15 +4,16 @@ export default class PopupWithForm extends Popup {
 	constructor({ handleFormSubmit, popupSelector }) {
 		super(popupSelector);
 		this._handleFormSubmit = handleFormSubmit;
+		this._submitBtn = this._popupElement.querySelector(".form__submit");
 	}
 
-	_renderLoading(isLoading) {
+	renderLoading(isLoading) {
 		if (isLoading) {
-			this._popupElement.querySelector(".form__submit").textContent = `${this._popupElement.querySelector(".form__submit").textContent.slice(0,-1)}ing...`;
+			this._submitBtn.textContent = `${this._submitBtn.textContent.slice(0,-1)}ing...`;
 			console.log(this._btnText);
 		} 
-		else if (this._popupElement.querySelector(".form__submit").textContent.length > 8) {
-			this._popupElement.querySelector(".form__submit").textContent = `${this._popupElement.querySelector(".form__submit").textContent.slice(0,-6)}e`;
+		else if (this._submitBtn.textContent.length > 6) {
+			this._submitBtn.textContent = `${this._submitBtn.textContent.slice(0,-6)}e`;
 			console.log(this._btnText);
 
 		}
@@ -38,7 +39,7 @@ export default class PopupWithForm extends Popup {
 			.querySelector(".form")
 			.addEventListener("submit", (evt) => {
 				evt.preventDefault();
-				this._renderLoading(true, this._popupElement);
+				this.renderLoading(true, this._popupElement);
 				this._handleSubmit();
 			});
 	}
@@ -46,8 +47,5 @@ export default class PopupWithForm extends Popup {
 	close() {
 		super.close();
 		this._popupElement.querySelector(".form").reset();
-		setTimeout(() => {
-			this._renderLoading(false, this._popupElement);
-		}, 500);
 	}
 }
