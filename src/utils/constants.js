@@ -5,7 +5,7 @@ const editForm = modalContainer.querySelector(".form");
 const addForm = addModal.querySelector(".form");
 const editProfileModal = document.querySelector(".modal_type_edit-pic");
 const deleteModal = document.querySelector(".modal_type_confirm");
-const editProfileForm = editProfileModal.querySelector(".form");
+const editAvatarForm = editProfileModal.querySelector(".form");
 const listTitle = modalContainer.querySelector("#name");
 const listSubtitle = modalContainer.querySelector("#about");
 const addCard = document.querySelector(".profile__button");
@@ -42,7 +42,7 @@ export {
   addForm,
   editProfileModal,
   deleteModal,
-  editProfileForm,
+  editAvatarForm,
   listTitle,
   listSubtitle,
   addCard,

@@ -13,7 +13,7 @@ import {
   editProfileButton,
   editForm,
   addForm,
-  editProfileForm,
+  editAvatarForm,
   listTitle,
   listSubtitle,
   addCard,
@@ -24,6 +24,7 @@ import {
 } from "../utils/constants.js";
 
 // Query Selectors
+// let userId = null; <-- null
 
 // Functions
 
@@ -50,13 +51,18 @@ Promise.all([api.getUserInfo(), api.getCards()])
     userInfo.setUserInfo({
       name: userInf.name,
       job: userInf.about,
+      _id: userInf._id,
     });
+    // userId = userInf._id;
+    // console.log(userId) <-- the right Id
     userInfo.setUserAvatar({
       avatar: userInf.avatar,
     });
     cardsList.renderItems(cards);
   })
   .catch((err) => console.log(err));
+
+  // console.log(userId) <-- null
 
 // create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
 const userInfo = new UserInfo({
@@ -89,6 +95,7 @@ const userInfoPopup = new PopupWithForm({
         userInfo.setUserInfo({
           name: res.name,
           job: res.about,
+          // _id: res._id,
         });
         userInfoPopup.close();
       })
@@ -207,12 +214,8 @@ editFormValidator.enableValidation();
 
 const editAvatarValidator = new FormValidator(
   formValidationConfig,
-  editProfileForm
+  editAvatarForm
 );
 editAvatarValidator.enableValidation();
 
-const editProfileFormValidator = new FormValidator(
-  formValidationConfig,
-  editProfileForm
-);
-editProfileFormValidator.enableValidation();
+// console.log(userInfo.getUserInfo()) <-- returns Jacques info ??
