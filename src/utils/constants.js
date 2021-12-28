@@ -14,7 +14,6 @@ const addSubmitBtn = addModal.querySelector(".form__submit");
 const editSubmitBtn = modalContainer.querySelector(".form__submit");
 const avatarSubmitBtm = editProfileModal.querySelector(".form__submit");
 const deleteSubmitBtn = deleteModal.querySelector(".form__submit");
-const userID = "78f85ac28985def725e0e651";
 
 const formValidationConfig = {
   inputSelector: ".form__input",
@@ -51,7 +50,6 @@ export {
   editSubmitBtn,
   avatarSubmitBtm,
   deleteSubmitBtn,
-  userID,
   formValidationConfig,
   config,
 };

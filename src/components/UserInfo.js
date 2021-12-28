@@ -1,9 +1,8 @@
 export default class UserInfo {
-  constructor({ userNameSelector, userJobSelector, avatarSelector, userId }) {
+  constructor({ userNameSelector, userJobSelector, avatarSelector }) {
     this._userName = document.querySelector(userNameSelector);
     this._userJob = document.querySelector(userJobSelector);
     this._userAvatar = document.querySelector(avatarSelector);
-    this._userId = userId;
   }
 
   setUserInfo({ name, job, _id }) {
@@ -23,18 +22,7 @@ export default class UserInfo {
   setUserAvatar({ avatar }) {
     this._userAvatar.src = avatar;
   }
-
-  //   setUserId({ id }) {
-  //     this._userID = id;
-  //   }
-
-  //   getUserId() {
-  //     return this._userID;
-  //   }
 }
 
 // This.username is the same as name
 // This.userJob is the same as about
-
-// username selector needs to be the same is infoTitle
-// userJob selector needs to be the same is infoSubtitle

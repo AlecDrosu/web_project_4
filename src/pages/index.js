@@ -18,13 +18,11 @@ import {
   listSubtitle,
   addCard,
   editProfileImage,
-  userID,
   formValidationConfig,
   config,
 } from "../utils/constants.js";
 
 // Query Selectors
-// let userId = null; <-- null
 
 // Functions
 
@@ -53,16 +51,12 @@ Promise.all([api.getUserInfo(), api.getCards()])
       job: userInf.about,
       _id: userInf._id,
     });
-    // userId = userInf._id;
-    // console.log(userId) <-- the right Id
     userInfo.setUserAvatar({
       avatar: userInf.avatar,
     });
     cardsList.renderItems(cards);
   })
   .catch((err) => console.log(err));
-
-  // console.log(userId) <-- null
 
 // create the constant userInfo and pass in the selectors of infoTitle and infoSubtitle
 const userInfo = new UserInfo({
@@ -95,7 +89,6 @@ const userInfoPopup = new PopupWithForm({
         userInfo.setUserInfo({
           name: res.name,
           job: res.about,
-          // _id: res._id,
         });
         userInfoPopup.close();
       })
@@ -113,14 +106,14 @@ const addCardPopup = new PopupWithForm({
     api
       .createCard(item)
       .then((res) => {
-          renderCard({
-            title: res.name,
-            image: res.link,
-            likes: res.likes.length,
-            owner: res.owner._id,
-            id: res._id,
-            userLikes: res.likes,
-          })
+        renderCard({
+          title: res.name,
+          image: res.link,
+          likes: res.likes.length,
+          owner: res.owner._id,
+          id: res._id,
+          userLikes: res.likes,
+        });
         addCardPopup.close();
       })
       .catch((err) => console.log(err))
@@ -162,10 +155,13 @@ function renderCard(item) {
     (data) => {
       popupImage.open(data);
     },
-    userID,
+    userInfo.getUserInfo()._id,
     (id) => {
       // if the card was already liked by the user, then unlike it
-      if (item.userLikes.filter((user) => user._id === userID).length > 0) {
+      if (
+        item.userLikes.filter((user) => user._id === userInfo.getUserInfo()._id)
+          .length > 0
+      ) {
         api
           .dislikeCard(id)
           .then((res) => {
@@ -196,7 +192,6 @@ function renderCard(item) {
     }
   );
   cardsList.addCard(cardEl.generateCard());
-  
 
   // return cardEl;
 }
@@ -217,5 +212,3 @@ const editAvatarValidator = new FormValidator(
   editAvatarForm
 );
 editAvatarValidator.enableValidation();
-
-// console.log(userInfo.getUserInfo()) <-- returns Jacques info ??

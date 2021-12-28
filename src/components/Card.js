@@ -37,13 +37,19 @@ class Card {
   }
 
   updateLikes() {
-    this._element.querySelector('.text__heart').classList.add('text__heart_active');
-    this._element.querySelector('.text__like-count').textContent = this._likes + 1;
+    this._element
+      .querySelector(".text__heart")
+      .classList.add("text__heart_active");
+    this._element.querySelector(".text__like-count").textContent =
+      this._likes + 1;
   }
 
   updateDislikes() {
-    this._element.querySelector('.text__heart').classList.remove('text__heart_active');
-    this._element.querySelector('.text__like-count').textContent = this._likes - 1;
+    this._element
+      .querySelector(".text__heart")
+      .classList.remove("text__heart_active");
+    this._element.querySelector(".text__like-count").textContent =
+      this._likes - 1;
   }
 
   remove() {
